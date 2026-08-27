@@ -8,9 +8,16 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1">
 
-<title>Physical Store Inventory System</title>
+<title>
+Physical Store Inventory System
+</title>
+
 
 <style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
 
 *{
   box-sizing:border-box;
@@ -19,343 +26,651 @@ content="width=device-width, initial-scale=1">
 }
 
 body{
-  font-family:Arial,sans-serif;
+
+  font-family:
+  Arial,
+  Helvetica,
+  sans-serif;
+
   background:#f3effa;
+
   color:#292333;
+
 }
+
+
+/* =====================================================
+   LAYOUT
+===================================================== */
 
 .layout{
+
   display:flex;
+
   min-height:100vh;
+
 }
 
-/* SIDEBAR */
 
 .sidebar{
+
   width:240px;
+
   background:#5b2c83;
+
   color:white;
+
   padding:20px 15px;
+
   position:fixed;
+
   left:0;
+
   top:0;
+
   height:100vh;
+
 }
+
 
 .logo{
+
   text-align:center;
+
   margin-bottom:30px;
+
 }
+
 
 .logo h2{
+
   font-size:20px;
+
 }
+
 
 .logo p{
+
   margin-top:5px;
+
   font-size:12px;
+
   opacity:.8;
+
 }
+
 
 .menu button{
+
   width:100%;
+
   padding:13px;
+
   margin-bottom:8px;
+
   border:0;
+
   border-radius:7px;
+
   background:transparent;
+
   color:white;
+
   text-align:left;
+
   cursor:pointer;
+
   font-size:14px;
+
 }
+
 
 .menu button:hover,
+
 .menu button.active{
+
   background:#7b3db0;
+
 }
 
-/* MAIN */
+
+/* =====================================================
+   MAIN
+===================================================== */
 
 .main{
+
   margin-left:240px;
-  width:calc(100% - 240px);
+
+  width:
+  calc(100% - 240px);
+
   padding:25px;
+
 }
+
 
 .topbar{
+
   background:white;
+
   padding:18px 22px;
+
   border-radius:10px;
+
   margin-bottom:25px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+  box-shadow:
+  0 2px 8px
+  rgba(0,0,0,.08);
+
 }
+
 
 .topbar h1{
+
   color:#5b2c83;
+
   font-size:24px;
+
 }
 
-/* SECTIONS */
+
+/* =====================================================
+   SECTIONS
+===================================================== */
 
 .section{
+
   display:none;
+
 }
+
 
 .section.active{
+
   display:block;
+
 }
 
-/* CARDS */
+
+/* =====================================================
+   DASHBOARD CARDS
+===================================================== */
 
 .cards{
+
   display:grid;
+
   grid-template-columns:
-  repeat(auto-fit,minmax(180px,1fr));
+  repeat(
+    auto-fit,
+    minmax(180px,1fr)
+  );
+
   gap:18px;
+
   margin-bottom:25px;
+
 }
+
 
 .card{
+
   background:white;
+
   padding:22px;
+
   border-radius:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+  box-shadow:
+  0 2px 8px
+  rgba(0,0,0,.08);
+
 }
+
 
 .card h3{
+
   color:#777;
+
   font-size:13px;
+
   margin-bottom:10px;
+
 }
+
 
 .number{
+
   color:#5b2c83;
+
   font-size:28px;
+
   font-weight:bold;
+
 }
 
-/* BOX */
+
+/* =====================================================
+   BOX
+===================================================== */
 
 .box{
+
   background:white;
+
   padding:22px;
+
   border-radius:10px;
+
   margin-bottom:20px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+  box-shadow:
+  0 2px 8px
+  rgba(0,0,0,.08);
+
 }
+
 
 .box-header{
+
   display:flex;
-  justify-content:space-between;
+
+  justify-content:
+  space-between;
+
   align-items:center;
+
   gap:10px;
+
   flex-wrap:wrap;
+
   margin-bottom:18px;
+
 }
+
 
 .box-header h2,
+
 .box h2{
+
   color:#5b2c83;
+
   font-size:20px;
+
 }
 
-/* BUTTON */
+
+/* =====================================================
+   BUTTONS
+===================================================== */
 
 .btn{
+
   border:0;
+
   padding:10px 15px;
+
   border-radius:6px;
+
   cursor:pointer;
+
   font-weight:bold;
+
 }
+
 
 .btn-primary{
+
   background:#6d35a1;
+
   color:white;
+
 }
+
 
 .btn-primary:hover{
+
   background:#53247d;
+
 }
+
 
 .btn-danger{
+
   background:#dc3545;
+
   color:white;
+
 }
+
 
 .btn-edit{
+
   background:#f0ad4e;
+
   color:white;
+
 }
 
-/* FORMS */
+
+/* =====================================================
+   FORMS
+===================================================== */
 
 .form-grid{
+
   display:grid;
+
   grid-template-columns:
-  repeat(auto-fit,minmax(200px,1fr));
+  repeat(
+    auto-fit,
+    minmax(200px,1fr)
+  );
+
   gap:15px;
+
 }
+
 
 .form-group{
+
   margin-bottom:15px;
+
 }
+
 
 .form-group label{
+
   display:block;
+
   margin-bottom:6px;
+
   font-size:13px;
+
   font-weight:bold;
+
 }
+
 
 input,
+
 select,
+
 textarea{
+
   width:100%;
+
   padding:10px;
-  border:1px solid #ccc;
+
+  border:
+  1px solid #ccc;
+
   border-radius:6px;
+
   font-size:14px;
+
 }
+
 
 textarea{
+
   min-height:80px;
+
   resize:vertical;
+
 }
 
-/* TABLE */
+
+/* =====================================================
+   TABLE
+===================================================== */
 
 .table-wrapper{
+
   overflow-x:auto;
+
 }
+
 
 table{
+
   width:100%;
-  border-collapse:collapse;
+
+  border-collapse:
+  collapse;
+
 }
+
 
 th,
+
 td{
+
   padding:11px;
-  border-bottom:1px solid #eee;
+
+  border-bottom:
+  1px solid #eee;
+
   text-align:left;
+
   font-size:13px;
+
 }
+
 
 th{
+
   background:#f2eafa;
+
   color:#5b2c83;
+
 }
+
 
 tr:hover{
+
   background:#faf8fd;
+
 }
 
-/* STATUS */
+
+/* =====================================================
+   STATUS
+===================================================== */
 
 .status{
+
   display:inline-block;
+
   padding:5px 9px;
+
   border-radius:20px;
+
   font-size:11px;
+
   font-weight:bold;
+
 }
+
 
 .in-stock{
+
   background:#d4edda;
+
   color:#155724;
+
 }
+
 
 .low-stock{
+
   background:#fff3cd;
+
   color:#856404;
+
 }
+
 
 .out-stock{
+
   background:#f8d7da;
+
   color:#721c24;
+
 }
 
-/* SEARCH */
+
+/* =====================================================
+   SEARCH
+===================================================== */
 
 .search{
+
   max-width:300px;
+
 }
 
-/* MODAL */
+
+/* =====================================================
+   MODAL
+===================================================== */
 
 .modal{
+
   display:none;
+
   position:fixed;
+
   z-index:999;
+
   left:0;
+
   top:0;
+
   width:100%;
+
   height:100%;
-  background:rgba(0,0,0,.5);
+
+  background:
+  rgba(0,0,0,.5);
+
   align-items:center;
+
   justify-content:center;
+
 }
+
 
 .modal.show{
+
   display:flex;
+
 }
+
 
 .modal-content{
+
   background:white;
+
   width:90%;
+
   max-width:600px;
+
   max-height:90vh;
+
   overflow-y:auto;
+
   padding:25px;
+
   border-radius:10px;
+
 }
+
 
 .modal-header{
+
   display:flex;
-  justify-content:space-between;
+
+  justify-content:
+  space-between;
+
   margin-bottom:20px;
+
 }
+
 
 .close{
+
   font-size:25px;
+
   cursor:pointer;
+
 }
 
-/* NOTIFICATION */
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
 
 #notification{
+
   display:none;
+
   position:fixed;
+
   right:20px;
+
   top:20px;
+
   z-index:2000;
+
   padding:15px 20px;
+
   color:white;
+
   border-radius:7px;
+
 }
+
 
 #notification.success{
+
   background:#198754;
+
 }
+
 
 #notification.error{
+
   background:#dc3545;
+
 }
 
-/* MOBILE */
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:768px){
 
   .sidebar{
+
     width:190px;
+
   }
 
+
   .main{
+
     margin-left:190px;
-    width:calc(100% - 190px);
+
+    width:
+    calc(100% - 190px);
+
     padding:15px;
+
   }
 
 }
@@ -367,70 +682,119 @@ tr:hover{
 
 <body>
 
+
 <div id="notification"></div>
 
 
 <div class="layout">
 
-<!-- SIDEBAR -->
+
+<!-- ==================================================
+     SIDEBAR
+================================================== -->
 
 <aside class="sidebar">
 
+
 <div class="logo">
 
-<h2>Inventory System</h2>
+<h2>
+Inventory System
+</h2>
 
-<p>Physical Store</p>
+<p>
+Physical Store
+</p>
 
 </div>
 
 
 <div class="menu">
 
+
 <button
 class="active"
-onclick="showSection('dashboard',this)">
+onclick="
+showSection(
+'dashboard',
+this
+)">
 📊 Dashboard
 </button>
 
+
 <button
-onclick="showSection('products',this)">
+onclick="
+showSection(
+'products',
+this
+)">
 📦 Products
 </button>
 
+
 <button
-onclick="showSection('categories',this)">
+onclick="
+showSection(
+'categories',
+this
+)">
 🗂 Categories
 </button>
 
+
 <button
-onclick="showSection('stockin',this)">
+onclick="
+showSection(
+'stockin',
+this
+)">
 📥 Stock In
 </button>
 
+
 <button
-onclick="showSection('stockout',this)">
+onclick="
+showSection(
+'stockout',
+this
+)">
 📤 Stock Out / Sales
 </button>
 
+
 <button
-onclick="showSection('inventory',this)">
+onclick="
+showSection(
+'inventory',
+this
+)">
 📋 Inventory
 </button>
 
+
 <button
-onclick="showSection('reports',this)">
+onclick="
+showSection(
+'reports',
+this
+)">
 📑 Reports
 </button>
 
+
 </div>
+
 
 </aside>
 
 
-<!-- MAIN -->
+<!-- ==================================================
+     MAIN
+================================================== -->
 
 <main class="main">
+
 
 <div class="topbar">
 
@@ -441,106 +805,202 @@ Dashboard
 </div>
 
 
-<!-- DASHBOARD -->
+<!-- ==================================================
+     DASHBOARD
+================================================== -->
 
 <section
 id="dashboard"
 class="section active">
 
+
 <div class="cards">
 
-<div class="card">
-<h3>Total Products</h3>
-<div class="number"
-id="totalProducts">0</div>
-</div>
 
 <div class="card">
-<h3>Total Stock</h3>
-<div class="number"
-id="totalStock">0</div>
+
+<h3>
+Total Products
+</h3>
+
+<div
+class="number"
+id="totalProducts">
+0
 </div>
 
-<div class="card">
-<h3>Low Stock</h3>
-<div class="number"
-id="lowStock">0</div>
 </div>
 
-<div class="card">
-<h3>Out of Stock</h3>
-<div class="number"
-id="outOfStock">0</div>
-</div>
 
 <div class="card">
-<h3>Total Sales</h3>
-<div class="number"
-id="totalSales">₱0.00</div>
+
+<h3>
+Total Stock
+</h3>
+
+<div
+class="number"
+id="totalStock">
+0
 </div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Low Stock
+</h3>
+
+<div
+class="number"
+id="lowStock">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Out of Stock
+</h3>
+
+<div
+class="number"
+id="outOfStock">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Total Sales
+</h3>
+
+<div
+class="number"
+id="totalSales">
+₱0.00
+</div>
+
+</div>
+
 
 </div>
 
 
 <div class="box">
 
-<h2>Recent Transactions</h2>
+
+<h2>
+Recent Transactions
+</h2>
+
 
 <br>
 
+
 <div class="table-wrapper">
 
+
 <table>
+
 
 <thead>
 
 <tr>
-<th>Type</th>
-<th>Product</th>
-<th>Quantity</th>
-<th>Date</th>
+
+<th>
+Type
+</th>
+
+<th>
+Product
+</th>
+
+<th>
+Quantity
+</th>
+
+<th>
+Date
+</th>
+
 </tr>
 
 </thead>
 
-<tbody id="recentTransactions"></tbody>
+
+<tbody
+id="recentTransactions">
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- PRODUCTS -->
+<!-- ==================================================
+     PRODUCTS
+================================================== -->
 
 <section
 id="products"
 class="section">
 
+
 <div class="box">
+
 
 <div class="box-header">
 
-<h2>Product Management</h2>
+
+<h2>
+Product Management
+</h2>
+
 
 <button
 class="btn btn-primary"
-onclick="openProductModal()">
+onclick="
+openProductModal()
+">
+
 + Add Product
+
 </button>
+
 
 </div>
 
 
 <input
+
 class="search"
+
 type="text"
+
 placeholder="Search product..."
-onkeyup="filterProducts(this.value)"
->
+
+onkeyup="
+filterProducts(
+this.value
+)
+"
 
 
 <br><br>
@@ -548,147 +1008,261 @@ onkeyup="filterProducts(this.value)"
 
 <div class="table-wrapper">
 
+
 <table>
+
 
 <thead>
 
 <tr>
-<th>Code</th>
-<th>Product</th>
-<th>Category</th>
-<th>Price</th>
-<th>Stock</th>
-<th>Status</th>
-<th>Actions</th>
+
+<th>
+Code
+</th>
+
+<th>
+Product
+</th>
+
+<th>
+Category
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Stock
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Actions
+</th>
+
 </tr>
 
 </thead>
 
-<tbody id="productTable"></tbody>
+
+<tbody
+id="productTable">
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- CATEGORIES -->
+<!-- ==================================================
+     CATEGORIES
+================================================== -->
 
 <section
 id="categories"
 class="section">
 
+
 <div class="box">
+
 
 <div class="box-header">
 
-<h2>Category Management</h2>
+
+<h2>
+Category Management
+</h2>
+
 
 <button
 class="btn btn-primary"
-onclick="openCategoryModal()">
+onclick="
+openCategoryModal()
+">
+
 + Add Category
+
 </button>
+
 
 </div>
 
 
 <div class="table-wrapper">
 
+
 <table>
+
 
 <thead>
 
 <tr>
-<th>Category</th>
-<th>Description</th>
-<th>Created</th>
-<th>Actions</th>
+
+<th>
+Category
+</th>
+
+<th>
+Description
+</th>
+
+<th>
+Created
+</th>
+
+<th>
+Actions
+</th>
+
 </tr>
 
 </thead>
 
-<tbody id="categoryTable"></tbody>
+
+<tbody
+id="categoryTable">
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- STOCK IN -->
+<!-- ==================================================
+     STOCK IN
+================================================== -->
 
 <section
 id="stockin"
 class="section">
 
+
 <div class="box">
 
-<h2>Stock In / Receiving</h2>
+
+<h2>
+Stock In / Receiving
+</h2>
+
 
 <br>
 
-<form id="stockInForm">
+
+<form
+id="stockInForm">
+
 
 <div class="form-grid">
 
+
 <div class="form-group">
 
-<label>Product</label>
+
+<label>
+Product
+</label>
+
 
 <select
 id="stockInProduct"
 required>
 </select>
 
+
 </div>
 
 
 <div class="form-group">
 
-<label>Quantity</label>
+
+<label>
+Quantity
+</label>
+
 
 <input
+
 id="stockInQuantity"
+
 type="number"
+
 min="1"
-required>
+
+required
+
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Supplier</label>
 
-<input id="supplier">
+<label>
+Supplier
+</label>
+
+
+<input
+id="supplier"
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Received By</label>
 
-<input id="receivedBy">
+<label>
+Received By
+</label>
+
+
+<input
+id="receivedBy"
+>
+
 
 </div>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Remarks</label>
+
+<label>
+Remarks
+</label>
+
 
 <textarea
-id="stockInRemarks"></textarea>
+id="stockInRemarks">
+</textarea>
+
 
 </div>
 
@@ -696,105 +1270,180 @@ id="stockInRemarks"></textarea>
 <button
 class="btn btn-primary"
 type="submit">
+
 Record Stock In
+
 </button>
 
+
 </form>
+
 
 </div>
 
 
 <div class="box">
 
-<h2>Stock-In History</h2>
+
+<h2>
+Stock-In History
+</h2>
+
 
 <br>
 
+
 <div class="table-wrapper">
 
+
 <table>
+
 
 <thead>
 
 <tr>
-<th>Product</th>
-<th>Supplier</th>
-<th>Quantity</th>
-<th>Date</th>
-<th>Received By</th>
+
+<th>
+Product
+</th>
+
+<th>
+Supplier
+</th>
+
+<th>
+Quantity
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+Received By
+</th>
+
 </tr>
 
 </thead>
 
-<tbody id="stockInTable"></tbody>
+
+<tbody
+id="stockInTable">
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- STOCK OUT -->
+<!-- ==================================================
+     STOCK OUT
+================================================== -->
 
 <section
 id="stockout"
 class="section">
 
+
 <div class="box">
 
-<h2>Stock Out / Sales</h2>
+
+<h2>
+Stock Out / Sales
+</h2>
+
 
 <br>
 
-<form id="stockOutForm">
+
+<form
+id="stockOutForm">
+
 
 <div class="form-grid">
 
+
 <div class="form-group">
 
-<label>Product</label>
+
+<label>
+Product
+</label>
+
 
 <select
 id="stockOutProduct"
 required>
 </select>
 
+
 </div>
 
 
 <div class="form-group">
 
-<label>Quantity</label>
+
+<label>
+Quantity
+</label>
+
 
 <input
+
 id="stockOutQuantity"
+
 type="number"
+
 min="1"
-required>
+
+required
+
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Sold By</label>
 
-<input id="soldBy">
+<label>
+Sold By
+</label>
+
+
+<input
+id="soldBy"
+>
+
 
 </div>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Remarks</label>
+
+<label>
+Remarks
+</label>
+
 
 <textarea
-id="stockOutRemarks"></textarea>
+id="stockOutRemarks">
+</textarea>
+
 
 </div>
 
@@ -802,157 +1451,280 @@ id="stockOutRemarks"></textarea>
 <button
 class="btn btn-primary"
 type="submit">
+
 Record Sale
+
 </button>
 
+
 </form>
+
 
 </div>
 
 
 <div class="box">
 
-<h2>Sales History</h2>
+
+<h2>
+Sales History
+</h2>
+
 
 <br>
 
+
 <div class="table-wrapper">
 
+
 <table>
+
 
 <thead>
 
 <tr>
-<th>Product</th>
-<th>Quantity</th>
-<th>Price</th>
-<th>Total</th>
-<th>Date</th>
-<th>Sold By</th>
+
+<th>
+Product
+</th>
+
+<th>
+Quantity
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Total
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+Sold By
+</th>
+
 </tr>
 
 </thead>
 
-<tbody id="stockOutTable"></tbody>
+
+<tbody
+id="stockOutTable">
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- INVENTORY -->
+<!-- ==================================================
+     INVENTORY
+================================================== -->
 
 <section
 id="inventory"
 class="section">
 
+
 <div class="box">
+
 
 <div class="box-header">
 
-<h2>Inventory Monitoring</h2>
+
+<h2>
+Inventory Monitoring
+</h2>
+
 
 <input
+
 id="inventorySearch"
+
 class="search"
+
 type="text"
+
 placeholder="Search inventory..."
-onkeyup="filterInventory(this.value)">
+
+onkeyup="
+filterInventory(
+this.value
+)
+"
+
 
 </div>
 
 
 <div class="table-wrapper">
 
+
 <table>
+
 
 <thead>
 
 <tr>
-<th>Code</th>
-<th>Product</th>
-<th>Category</th>
-<th>Price</th>
-<th>Stock</th>
-<th>Reorder Level</th>
-<th>Status</th>
+
+<th>
+Code
+</th>
+
+<th>
+Product
+</th>
+
+<th>
+Category
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Stock
+</th>
+
+<th>
+Reorder Level
+</th>
+
+<th>
+Status
+</th>
+
 </tr>
 
 </thead>
 
-<tbody id="inventoryTable"></tbody>
+
+<tbody
+id="inventoryTable">
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- REPORTS -->
+<!-- ==================================================
+     REPORTS
+================================================== -->
 
 <section
 id="reports"
 class="section">
 
+
 <div class="box">
 
-<h2>Reports</h2>
+
+<h2>
+Reports
+</h2>
+
 
 <br>
 
+
 <div class="form-grid">
+
 
 <div class="form-group">
 
-<label>Start Date</label>
+
+<label>
+Start Date
+</label>
+
 
 <input
 id="reportStart"
-type="date">
+type="date"
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>End Date</label>
+
+<label>
+End Date
+</label>
+
 
 <input
 id="reportEnd"
-type="date">
+type="date"
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>&nbsp;</label>
+
+<label>
+&nbsp;
+</label>
+
 
 <button
+
 class="btn btn-primary"
-onclick="generateReport()">
+
+onclick="
+generateReport()
+">
+
 Generate Report
+
 </button>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </div>
 
 
 <div class="cards">
 
+
 <div class="card">
 
-<h3>Total Stock In</h3>
+<h3>
+Total Stock In
+</h3>
 
 <div
 class="number"
@@ -965,7 +1737,9 @@ id="reportStockIn">
 
 <div class="card">
 
-<h3>Total Stock Out</h3>
+<h3>
+Total Stock Out
+</h3>
 
 <div
 class="number"
@@ -978,7 +1752,9 @@ id="reportStockOut">
 
 <div class="card">
 
-<h3>Total Sales</h3>
+<h3>
+Total Sales
+</h3>
 
 <div
 class="number"
@@ -988,154 +1764,262 @@ id="reportSales">
 
 </div>
 
+
 </div>
 
 
 <div class="box">
 
-<h2>Sales Report</h2>
+
+<h2>
+Sales Report
+</h2>
+
 
 <br>
 
+
 <div class="table-wrapper">
 
+
 <table>
+
 
 <thead>
 
 <tr>
-<th>Product</th>
-<th>Quantity</th>
-<th>Price</th>
-<th>Total</th>
-<th>Date</th>
+
+<th>
+Product
+</th>
+
+<th>
+Quantity
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Total
+</th>
+
+<th>
+Date
+</th>
+
 </tr>
 
 </thead>
 
-<tbody id="reportTable"></tbody>
+
+<tbody
+id="reportTable">
+</tbody>
+
 
 </table>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
+
 </main>
+
 
 </div>
 
 
-<!-- PRODUCT MODAL -->
+<!-- ==================================================
+     PRODUCT MODAL
+================================================== -->
 
 <div
 id="productModal"
 class="modal">
 
-<div class="modal-content">
 
-<div class="modal-header">
+<div
+class="modal-content">
 
-<h2 id="productModalTitle">
+
+<div
+class="modal-header">
+
+
+<h2
+id="productModalTitle">
+
 Add Product
+
 </h2>
 
+
 <span
+
 class="close"
-onclick="closeProductModal()">
+
+onclick="
+closeProductModal()
+">
+
 ×
+
 </span>
+
 
 </div>
 
 
-<form id="productForm">
+<form
+id="productForm">
+
 
 <input
 type="hidden"
-id="productId">
+id="productId"
+>
 
 
 <div class="form-group">
 
-<label>Product Code / SKU</label>
+
+<label>
+Product Code / SKU
+</label>
+
 
 <input
 id="productCode"
-required>
+required
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Product Name</label>
+
+<label>
+Product Name
+</label>
+
 
 <input
 id="productName"
-required>
+required
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Category</label>
+
+<label>
+Category
+</label>
+
 
 <select
 id="productCategory">
+
 
 <option value="">
 Select Category
 </option>
 
+
 </select>
+
 
 </div>
 
 
 <div class="form-grid">
 
+
 <div class="form-group">
 
-<label>Price</label>
+
+<label>
+Price
+</label>
+
 
 <input
+
 id="productPrice"
+
 type="number"
+
 min="0"
+
 step="0.01"
-required>
+
+required
+
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Stock</label>
+
+<label>
+Stock
+</label>
+
 
 <input
+
 id="productStock"
+
 type="number"
+
 min="0"
-required>
+
+required
+
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Reorder Level</label>
+
+<label>
+Reorder Level
+</label>
+
 
 <input
+
 id="reorderLevel"
+
 type="number"
+
 min="0"
-value="10">
+
+value="10"
+
+>
 
 </div>
+
 
 </div>
 
@@ -1143,63 +2027,101 @@ value="10">
 <button
 class="btn btn-primary"
 type="submit">
+
 Save Product
+
 </button>
+
 
 </form>
 
-</div>
 
 </div>
 
 
-<!-- CATEGORY MODAL -->
+</div>
+
+
+<!-- ==================================================
+     CATEGORY MODAL
+================================================== -->
 
 <div
 id="categoryModal"
 class="modal">
 
-<div class="modal-content">
 
-<div class="modal-header">
+<div
+class="modal-content">
 
-<h2 id="categoryModalTitle">
+
+<div
+class="modal-header">
+
+
+<h2
+id="categoryModalTitle">
+
 Add Category
+
 </h2>
 
+
 <span
+
 class="close"
-onclick="closeCategoryModal()">
+
+onclick="
+closeCategoryModal()
+">
+
 ×
+
 </span>
+
 
 </div>
 
 
-<form id="categoryForm">
+<form
+id="categoryForm">
+
 
 <input
 type="hidden"
-id="categoryId">
+id="categoryId"
+>
 
 
 <div class="form-group">
 
-<label>Category Name</label>
+
+<label>
+Category Name
+</label>
+
 
 <input
 id="categoryName"
-required>
+required
+>
+
 
 </div>
 
 
 <div class="form-group">
 
-<label>Description</label>
+
+<label>
+Description
+</label>
+
 
 <textarea
-id="categoryDescription"></textarea>
+id="categoryDescription">
+</textarea>
+
 
 </div>
 
@@ -1207,1102 +2129,2159 @@ id="categoryDescription"></textarea>
 <button
 class="btn btn-primary"
 type="submit">
+
 Save Category
+
 </button>
+
 
 </form>
 
+
 </div>
+
 
 </div>
 
 
 <script>
 
-let products=[];
-let categories=[];
-let stockInData=[];
-let stockOutData=[];
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let products = [];
+
+let categories = [];
+
+let stockInData = [];
+
+let stockOutData = [];
 
 
-/* ================================
-   LOAD
-================================ */
+/* =====================================================
+   LOAD SYSTEM
+===================================================== */
 
 document.addEventListener(
-"DOMContentLoaded",
-loadData
+  "DOMContentLoaded",
+  loadData
 );
 
 
-function loadData(){
+function loadData() {
 
-google.script.run
 
-.withSuccessHandler(function(data){
+  google.script.run
 
-products=data.products;
-categories=data.categories;
-stockInData=data.stockIn;
-stockOutData=data.stockOut;
 
-renderDashboard(data.dashboard);
-renderProducts();
-renderCategories();
-renderStockIn();
-renderStockOut();
-renderInventory();
+    .withSuccessHandler(
+      function(data) {
 
-populateProductSelects();
-populateCategorySelect();
 
-})
+        products =
+          data.products;
 
-.withFailureHandler(showError)
 
-.getInitialData();
+        categories =
+          data.categories;
+
+
+        stockInData =
+          data.stockIn;
+
+
+        stockOutData =
+          data.stockOut;
+
+
+        renderDashboard(
+          data.dashboard
+        );
+
+
+        renderProducts();
+
+
+        renderCategories();
+
+
+        renderStockIn();
+
+
+        renderStockOut();
+
+
+        renderInventory();
+
+
+        populateProductSelects();
+
+
+        populateCategorySelect();
+
+
+      }
+    )
+
+
+    .withFailureHandler(
+      showError
+    )
+
+
+    .getInitialData();
 
 }
 
 
-/* ================================
+/* =====================================================
    NAVIGATION
-================================ */
+===================================================== */
 
-function showSection(id,button){
-
-document
-.querySelectorAll(".section")
-.forEach(function(section){
-section.classList.remove("active");
-});
-
-document
-.getElementById(id)
-.classList.add("active");
+function showSection(
+  id,
+  button
+) {
 
 
-document
-.querySelectorAll(".menu button")
-.forEach(function(btn){
-btn.classList.remove("active");
-});
+  document
+    .querySelectorAll(
+      ".section"
+    )
+    .forEach(
+      function(section) {
 
-button.classList.add("active");
+        section.classList.remove(
+          "active"
+        );
+
+      }
+    );
 
 
-const titles={
-dashboard:"Dashboard",
-products:"Product Management",
-categories:"Category Management",
-stockin:"Stock In / Receiving",
-stockout:"Stock Out / Sales",
-inventory:"Inventory Monitoring",
-reports:"Reports"
-};
+  document
+    .getElementById(id)
+    .classList.add(
+      "active"
+    );
 
-document
-.getElementById("pageTitle")
-.textContent=titles[id];
+
+  document
+    .querySelectorAll(
+      ".menu button"
+    )
+    .forEach(
+      function(btn) {
+
+        btn.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  button.classList.add(
+    "active"
+  );
+
+
+  const titles = {
+
+    dashboard:
+      "Dashboard",
+
+    products:
+      "Product Management",
+
+    categories:
+      "Category Management",
+
+    stockin:
+      "Stock In / Receiving",
+
+    stockout:
+      "Stock Out / Sales",
+
+    inventory:
+      "Inventory Monitoring",
+
+    reports:
+      "Reports"
+
+  };
+
+
+  document
+    .getElementById(
+      "pageTitle"
+    )
+    .textContent =
+      titles[id];
 
 }
 
 
-/* ================================
+/* =====================================================
    DASHBOARD
-================================ */
+===================================================== */
 
-function renderDashboard(data){
-
-document.getElementById("totalProducts")
-.textContent=data.totalProducts;
-
-document.getElementById("totalStock")
-.textContent=data.totalStock;
-
-document.getElementById("lowStock")
-.textContent=data.lowStock;
-
-document.getElementById("outOfStock")
-.textContent=data.outOfStock;
-
-document.getElementById("totalSales")
-.textContent=peso(data.totalSales);
+function renderDashboard(
+  data
+) {
 
 
-const table=
-document.getElementById("recentTransactions");
+  document
+    .getElementById(
+      "totalProducts"
+    )
+    .textContent =
+      data.totalProducts;
 
-table.innerHTML="";
+
+  document
+    .getElementById(
+      "totalStock"
+    )
+    .textContent =
+      data.totalStock;
 
 
-data.recentTransactions.forEach(function(item){
+  document
+    .getElementById(
+      "lowStock"
+    )
+    .textContent =
+      data.lowStock;
 
-table.innerHTML+=`
 
-<tr>
+  document
+    .getElementById(
+      "outOfStock"
+    )
+    .textContent =
+      data.outOfStock;
 
-<td>${escapeHTML(item.type)}</td>
 
-<td>${escapeHTML(item.productName)}</td>
+  document
+    .getElementById(
+      "totalSales"
+    )
+    .textContent =
+      peso(
+        data.totalSales
+      );
 
-<td>${item.quantity}</td>
 
-<td>${escapeHTML(item.date)}</td>
+  const table =
+    document
+      .getElementById(
+        "recentTransactions"
+      );
 
-</tr>
 
-`;
+  table.innerHTML = "";
 
-});
+
+  if (
+    data.recentTransactions
+      .length === 0
+  ) {
+
+    table.innerHTML = `
+
+      <tr>
+
+        <td colspan="4">
+
+          No transactions yet.
+
+        </td>
+
+      </tr>
+
+    `;
+
+    return;
+
+  }
+
+
+  data.recentTransactions
+    .forEach(
+      function(item) {
+
+
+        table.innerHTML += `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(
+                item.type
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                item.productName
+              )}
+            </td>
+
+            <td>
+              ${item.quantity}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                item.date
+              )}
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
 
 }
 
 
-/* ================================
+/* =====================================================
    PRODUCTS
-================================ */
+===================================================== */
 
-function renderProducts(list){
+function renderProducts(
+  list
+) {
 
-const data=list || products;
 
-const table=
-document.getElementById("productTable");
+  const data =
+    list || products;
 
-table.innerHTML="";
 
+  const table =
+    document
+      .getElementById(
+        "productTable"
+      );
 
-if(data.length===0){
 
-table.innerHTML=`
-<tr>
-<td colspan="7">
-No products found.
-</td>
-</tr>
-`;
+  table.innerHTML = "";
 
-return;
-}
 
+  if (
+    data.length === 0
+  ) {
 
-data.forEach(function(product){
+    table.innerHTML = `
 
-table.innerHTML+=`
+      <tr>
 
-<tr>
+        <td colspan="7">
 
-<td>${escapeHTML(product.code)}</td>
+          No products found.
 
-<td>${escapeHTML(product.name)}</td>
+        </td>
 
-<td>${escapeHTML(product.category)}</td>
+      </tr>
 
-<td>${peso(product.price)}</td>
+    `;
 
-<td>${product.stock}</td>
+    return;
 
-<td>${statusBadge(product.status)}</td>
+  }
 
-<td>
 
-<button
-class="btn btn-edit"
-onclick="editProduct('${product.id}')">
-Edit
-</button>
+  data.forEach(
+    function(product) {
 
-<button
-class="btn btn-danger"
-onclick="deleteProduct('${product.id}')">
-Delete
-</button>
 
-</td>
+      table.innerHTML += `
 
-</tr>
+        <tr>
 
-`;
+          <td>
+            ${escapeHTML(
+              product.code
+            )}
+          </td>
 
-});
+          <td>
+            ${escapeHTML(
+              product.name
+            )}
+          </td>
 
-}
+          <td>
+            ${escapeHTML(
+              product.category
+            )}
+          </td>
 
+          <td>
+            ${peso(
+              product.price
+            )}
+          </td>
 
-function openProductModal(){
+          <td>
+            ${product.stock}
+          </td>
 
-document
-.getElementById("productForm")
-.reset();
+          <td>
+            ${statusBadge(
+              product.status
+            )}
+          </td>
 
-document
-.getElementById("productId")
-.value="";
+          <td>
 
-document
-.getElementById("productModalTitle")
-.textContent="Add Product";
+            <button
 
-document
-.getElementById("productModal")
-.classList.add("show");
+              class="btn btn-edit"
 
-}
+              onclick="
+                editProduct(
+                  '${product.id}'
+                )
+              ">
 
+              Edit
 
-function closeProductModal(){
+            </button>
 
-document
-.getElementById("productModal")
-.classList.remove("show");
 
-}
+            <button
 
+              class="btn btn-danger"
 
-function editProduct(id){
+              onclick="
+                deleteProduct(
+                  '${product.id}'
+                )
+              ">
 
-const product=
-products.find(function(item){
-return String(item.id)===String(id);
-});
+              Delete
 
-if(!product)return;
+            </button>
 
+          </td>
 
-document.getElementById("productId").value=product.id;
-document.getElementById("productCode").value=product.code;
-document.getElementById("productName").value=product.name;
-document.getElementById("productCategory").value=product.category;
-document.getElementById("productPrice").value=product.price;
-document.getElementById("productStock").value=product.stock;
-document.getElementById("reorderLevel").value=product.reorderLevel;
+        </tr>
 
+      `;
 
-document
-.getElementById("productModalTitle")
-.textContent="Edit Product";
-
-document
-.getElementById("productModal")
-.classList.add("show");
-
-}
-
-
-document
-.getElementById("productForm")
-.addEventListener("submit",function(e){
-
-e.preventDefault();
-
-
-const id=
-document.getElementById("productId").value;
-
-
-const product={
-
-id:id,
-
-code:
-document.getElementById("productCode").value,
-
-name:
-document.getElementById("productName").value,
-
-category:
-document.getElementById("productCategory").value,
-
-price:
-document.getElementById("productPrice").value,
-
-stock:
-document.getElementById("productStock").value,
-
-reorderLevel:
-document.getElementById("reorderLevel").value
-
-};
-
-
-const runner=
-google.script.run
-
-.withSuccessHandler(function(result){
-
-showSuccess(result.message);
-
-closeProductModal();
-
-loadData();
-
-})
-
-.withFailureHandler(showError);
-
-
-if(id){
-
-runner.updateProduct(product);
-
-}else{
-
-runner.addProduct(product);
-
-}
-
-});
-
-
-function deleteProduct(id){
-
-if(!confirm(
-"Are you sure you want to delete this product?"
-))return;
-
-
-google.script.run
-
-.withSuccessHandler(function(result){
-
-showSuccess(result.message);
-
-loadData();
-
-})
-
-.withFailureHandler(showError)
-
-.deleteProduct(id);
+    }
+  );
 
 }
 
 
-function filterProducts(search){
+/* =====================================================
+   PRODUCT MODAL
+===================================================== */
 
-search=search.toLowerCase();
-
-
-const filtered=
-products.filter(function(product){
-
-return(
-
-String(product.code)
-.toLowerCase()
-.includes(search)
-
-||
-
-String(product.name)
-.toLowerCase()
-.includes(search)
-
-||
-
-String(product.category)
-.toLowerCase()
-.includes(search)
-
-);
-
-});
+function openProductModal() {
 
 
-renderProducts(filtered);
+  document
+    .getElementById(
+      "productForm"
+    )
+    .reset();
+
+
+  document
+    .getElementById(
+      "productId"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "productModalTitle"
+    )
+    .textContent =
+      "Add Product";
+
+
+  document
+    .getElementById(
+      "productModal"
+    )
+    .classList.add(
+      "show"
+    );
 
 }
 
 
-/* ================================
+function closeProductModal() {
+
+
+  document
+    .getElementById(
+      "productModal"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =====================================================
+   EDIT PRODUCT
+===================================================== */
+
+function editProduct(
+  id
+) {
+
+
+  const product =
+    products.find(
+      function(item) {
+
+        return (
+          String(item.id) ===
+          String(id)
+        );
+
+      }
+    );
+
+
+  if (!product) {
+    return;
+  }
+
+
+  document
+    .getElementById(
+      "productId"
+    )
+    .value =
+      product.id;
+
+
+  document
+    .getElementById(
+      "productCode"
+    )
+    .value =
+      product.code;
+
+
+  document
+    .getElementById(
+      "productName"
+    )
+    .value =
+      product.name;
+
+
+  document
+    .getElementById(
+      "productCategory"
+    )
+    .value =
+      product.category;
+
+
+  document
+    .getElementById(
+      "productPrice"
+    )
+    .value =
+      product.price;
+
+
+  document
+    .getElementById(
+      "productStock"
+    )
+    .value =
+      product.stock;
+
+
+  document
+    .getElementById(
+      "reorderLevel"
+    )
+    .value =
+      product.reorderLevel;
+
+
+  document
+    .getElementById(
+      "productModalTitle"
+    )
+    .textContent =
+      "Edit Product";
+
+
+  document
+    .getElementById(
+      "productModal"
+    )
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+/* =====================================================
+   SAVE PRODUCT
+===================================================== */
+
+document
+  .getElementById(
+    "productForm"
+  )
+  .addEventListener(
+    "submit",
+    function(e) {
+
+
+      e.preventDefault();
+
+
+      const id =
+        document
+          .getElementById(
+            "productId"
+          )
+          .value;
+
+
+      const product = {
+
+
+        id:
+          id,
+
+
+        code:
+          document
+            .getElementById(
+              "productCode"
+            )
+            .value,
+
+
+        name:
+          document
+            .getElementById(
+              "productName"
+            )
+            .value,
+
+
+        category:
+          document
+            .getElementById(
+              "productCategory"
+            )
+            .value,
+
+
+        price:
+          document
+            .getElementById(
+              "productPrice"
+            )
+            .value,
+
+
+        stock:
+          document
+            .getElementById(
+              "productStock"
+            )
+            .value,
+
+
+        reorderLevel:
+          document
+            .getElementById(
+              "reorderLevel"
+            )
+            .value
+
+      };
+
+
+      const runner =
+        google.script.run
+
+
+          .withSuccessHandler(
+            function(result) {
+
+
+              showSuccess(
+                result.message
+              );
+
+
+              closeProductModal();
+
+
+              loadData();
+
+
+            }
+          )
+
+
+          .withFailureHandler(
+            showError
+          );
+
+
+      if (id) {
+
+
+        runner.updateProduct(
+          product
+        );
+
+
+      }
+      else {
+
+
+        runner.addProduct(
+          product
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   DELETE PRODUCT
+===================================================== */
+
+function deleteProduct(
+  id
+) {
+
+
+  if (
+    !confirm(
+      "Are you sure you want to delete this product?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  google.script.run
+
+
+    .withSuccessHandler(
+      function(result) {
+
+
+        showSuccess(
+          result.message
+        );
+
+
+        loadData();
+
+      }
+    )
+
+
+    .withFailureHandler(
+      showError
+    )
+
+
+    .deleteProduct(
+      id
+    );
+
+}
+
+
+/* =====================================================
+   PRODUCT SEARCH
+===================================================== */
+
+function filterProducts(
+  search
+) {
+
+
+  search =
+    search.toLowerCase();
+
+
+  const filtered =
+    products.filter(
+      function(product) {
+
+
+        return (
+
+          String(
+            product.code
+          )
+            .toLowerCase()
+            .includes(search)
+
+
+          ||
+
+
+          String(
+            product.name
+          )
+            .toLowerCase()
+            .includes(search)
+
+
+          ||
+
+
+          String(
+            product.category
+          )
+            .toLowerCase()
+            .includes(search)
+
+        );
+
+      }
+    );
+
+
+  renderProducts(
+    filtered
+  );
+
+}
+
+
+/* =====================================================
    CATEGORIES
-================================ */
+===================================================== */
 
-function renderCategories(){
-
-const table=
-document.getElementById("categoryTable");
-
-table.innerHTML="";
+function renderCategories() {
 
 
-categories.forEach(function(category){
+  const table =
+    document
+      .getElementById(
+        "categoryTable"
+      );
 
-table.innerHTML+=`
 
-<tr>
+  table.innerHTML = "";
 
-<td>${escapeHTML(category.name)}</td>
 
-<td>${escapeHTML(category.description)}</td>
+  if (
+    categories.length === 0
+  ) {
 
-<td>${escapeHTML(category.createdAt)}</td>
+    table.innerHTML = `
 
-<td>
+      <tr>
 
-<button
-class="btn btn-edit"
-onclick="editCategory('${category.id}')">
-Edit
-</button>
+        <td colspan="4">
 
-<button
-class="btn btn-danger"
-onclick="deleteCategory('${category.id}')">
-Delete
-</button>
+          No categories found.
 
-</td>
+        </td>
 
-</tr>
+      </tr>
 
-`;
+    `;
 
-});
+    return;
+
+  }
+
+
+  categories.forEach(
+    function(category) {
+
+
+      table.innerHTML += `
+
+        <tr>
+
+          <td>
+            ${escapeHTML(
+              category.name
+            )}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              category.description
+            )}
+          </td>
+
+          <td>
+            ${escapeHTML(
+              category.createdAt
+            )}
+          </td>
+
+          <td>
+
+
+            <button
+
+              class="btn btn-edit"
+
+              onclick="
+                editCategory(
+                  '${category.id}'
+                )
+              ">
+
+              Edit
+
+            </button>
+
+
+            <button
+
+              class="btn btn-danger"
+
+              onclick="
+                deleteCategory(
+                  '${category.id}'
+                )
+              ">
+
+              Delete
+
+            </button>
+
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
 
 }
 
 
-function openCategoryModal(){
+/* =====================================================
+   CATEGORY MODAL
+===================================================== */
 
-document
-.getElementById("categoryForm")
-.reset();
-
-document
-.getElementById("categoryId")
-.value="";
-
-document
-.getElementById("categoryModalTitle")
-.textContent="Add Category";
-
-document
-.getElementById("categoryModal")
-.classList.add("show");
-
-}
+function openCategoryModal() {
 
 
-function closeCategoryModal(){
-
-document
-.getElementById("categoryModal")
-.classList.remove("show");
-
-}
+  document
+    .getElementById(
+      "categoryForm"
+    )
+    .reset();
 
 
-function editCategory(id){
-
-const category=
-categories.find(function(item){
-return String(item.id)===String(id);
-});
-
-if(!category)return;
+  document
+    .getElementById(
+      "categoryId"
+    )
+    .value = "";
 
 
-document.getElementById("categoryId").value=category.id;
+  document
+    .getElementById(
+      "categoryModalTitle"
+    )
+    .textContent =
+      "Add Category";
 
-document.getElementById("categoryName").value=
-category.name;
 
-document.getElementById("categoryDescription").value=
-category.description;
-
-
-document
-.getElementById("categoryModalTitle")
-.textContent="Edit Category";
-
-document
-.getElementById("categoryModal")
-.classList.add("show");
+  document
+    .getElementById(
+      "categoryModal"
+    )
+    .classList.add(
+      "show"
+    );
 
 }
 
 
-document
-.getElementById("categoryForm")
-.addEventListener("submit",function(e){
-
-e.preventDefault();
+function closeCategoryModal() {
 
 
-const id=
-document.getElementById("categoryId").value;
-
-
-const category={
-
-id:id,
-
-name:
-document.getElementById("categoryName").value,
-
-description:
-document.getElementById("categoryDescription").value
-
-};
-
-
-const runner=
-google.script.run
-
-.withSuccessHandler(function(result){
-
-showSuccess(result.message);
-
-closeCategoryModal();
-
-loadData();
-
-})
-
-.withFailureHandler(showError);
-
-
-if(id){
-
-runner.updateCategory(category);
-
-}else{
-
-runner.addCategory(category);
-
-}
-
-});
-
-
-function deleteCategory(id){
-
-if(!confirm(
-"Delete this category?"
-))return;
-
-
-google.script.run
-
-.withSuccessHandler(function(result){
-
-showSuccess(result.message);
-
-loadData();
-
-})
-
-.withFailureHandler(showError)
-
-.deleteCategory(id);
+  document
+    .getElementById(
+      "categoryModal"
+    )
+    .classList.remove(
+      "show"
+    );
 
 }
 
 
-/* ================================
-   SELECT BOXES
-================================ */
+/* =====================================================
+   EDIT CATEGORY
+===================================================== */
 
-function populateProductSelects(){
-
-const stockIn=
-document.getElementById("stockInProduct");
-
-const stockOut=
-document.getElementById("stockOutProduct");
+function editCategory(
+  id
+) {
 
 
-stockIn.innerHTML=
-'<option value="">Select Product</option>';
+  const category =
+    categories.find(
+      function(item) {
 
-stockOut.innerHTML=
-'<option value="">Select Product</option>';
+        return (
+          String(item.id) ===
+          String(id)
+        );
 
-
-products.forEach(function(product){
-
-const option=
-document.createElement("option");
-
-option.value=product.id;
-
-option.textContent=
-product.code+
-" - "+
-product.name+
-" (Stock: "+
-product.stock+
-")";
+      }
+    );
 
 
-stockIn.appendChild(
-option.cloneNode(true)
-);
-
-stockOut.appendChild(option);
-
-});
-
-}
+  if (!category) {
+    return;
+  }
 
 
-function populateCategorySelect(){
+  document
+    .getElementById(
+      "categoryId"
+    )
+    .value =
+      category.id;
 
-const select=
-document.getElementById("productCategory");
 
-select.innerHTML=
-'<option value="">Select Category</option>';
+  document
+    .getElementById(
+      "categoryName"
+    )
+    .value =
+      category.name;
 
 
-categories.forEach(function(category){
+  document
+    .getElementById(
+      "categoryDescription"
+    )
+    .value =
+      category.description;
 
-const option=
-document.createElement("option");
 
-option.value=category.name;
+  document
+    .getElementById(
+      "categoryModalTitle"
+    )
+    .textContent =
+      "Edit Category";
 
-option.textContent=category.name;
 
-select.appendChild(option);
-
-});
+  document
+    .getElementById(
+      "categoryModal"
+    )
+    .classList.add(
+      "show"
+    );
 
 }
 
 
-/* ================================
-   STOCK IN
-================================ */
+/* =====================================================
+   SAVE CATEGORY
+===================================================== */
 
 document
-.getElementById("stockInForm")
-.addEventListener("submit",function(e){
-
-e.preventDefault();
-
-
-const transaction={
-
-productId:
-document.getElementById("stockInProduct").value,
-
-quantity:
-document.getElementById("stockInQuantity").value,
-
-supplier:
-document.getElementById("supplier").value,
-
-receivedBy:
-document.getElementById("receivedBy").value,
-
-remarks:
-document.getElementById("stockInRemarks").value
-
-};
+  .getElementById(
+    "categoryForm"
+  )
+  .addEventListener(
+    "submit",
+    function(e) {
 
 
-google.script.run
-
-.withSuccessHandler(function(result){
-
-showSuccess(result.message);
-
-document
-.getElementById("stockInForm")
-.reset();
-
-loadData();
-
-})
-
-.withFailureHandler(showError)
-
-.stockIn(transaction);
-
-});
+      e.preventDefault();
 
 
-function renderStockIn(){
+      const id =
+        document
+          .getElementById(
+            "categoryId"
+          )
+          .value;
 
-const table=
-document.getElementById("stockInTable");
 
-table.innerHTML="";
+      const category = {
 
 
-stockInData
-.slice()
-.reverse()
-.forEach(function(item){
+        id:
+          id,
 
-table.innerHTML+=`
 
-<tr>
+        name:
+          document
+            .getElementById(
+              "categoryName"
+            )
+            .value,
 
-<td>${escapeHTML(item.productName)}</td>
 
-<td>${escapeHTML(item.supplier)}</td>
+        description:
+          document
+            .getElementById(
+              "categoryDescription"
+            )
+            .value
 
-<td>${item.quantity}</td>
+      };
 
-<td>${escapeHTML(item.date)}</td>
 
-<td>${escapeHTML(item.receivedBy)}</td>
+      const runner =
+        google.script.run
 
-</tr>
 
-`;
+          .withSuccessHandler(
+            function(result) {
 
-});
+
+              showSuccess(
+                result.message
+              );
+
+
+              closeCategoryModal();
+
+
+              loadData();
+
+            }
+          )
+
+
+          .withFailureHandler(
+            showError
+          );
+
+
+      if (id) {
+
+
+        runner.updateCategory(
+          category
+        );
+
+
+      }
+      else {
+
+
+        runner.addCategory(
+          category
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   DELETE CATEGORY
+===================================================== */
+
+function deleteCategory(
+  id
+) {
+
+
+  if (
+    !confirm(
+      "Delete this category?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  google.script.run
+
+
+    .withSuccessHandler(
+      function(result) {
+
+
+        showSuccess(
+          result.message
+        );
+
+
+        loadData();
+
+      }
+    )
+
+
+    .withFailureHandler(
+      showError
+    )
+
+
+    .deleteCategory(
+      id
+    );
 
 }
 
 
-/* ================================
-   STOCK OUT
-================================ */
+/* =====================================================
+   PRODUCT SELECTS
+===================================================== */
 
-document
-.getElementById("stockOutForm")
-.addEventListener("submit",function(e){
-
-e.preventDefault();
+function populateProductSelects() {
 
 
-const transaction={
-
-productId:
-document.getElementById("stockOutProduct").value,
-
-quantity:
-document.getElementById("stockOutQuantity").value,
-
-soldBy:
-document.getElementById("soldBy").value,
-
-remarks:
-document.getElementById("stockOutRemarks").value
-
-};
+  const stockIn =
+    document
+      .getElementById(
+        "stockInProduct"
+      );
 
 
-google.script.run
-
-.withSuccessHandler(function(result){
-
-showSuccess(
-result.message+
-" Total: "+
-peso(result.total)
-);
-
-document
-.getElementById("stockOutForm")
-.reset();
-
-loadData();
-
-})
-
-.withFailureHandler(showError)
-
-.stockOut(transaction);
-
-});
+  const stockOut =
+    document
+      .getElementById(
+        "stockOutProduct"
+      );
 
 
-function renderStockOut(){
-
-const table=
-document.getElementById("stockOutTable");
-
-table.innerHTML="";
+  stockIn.innerHTML =
+    '<option value="">Select Product</option>';
 
 
-stockOutData
-.slice()
-.reverse()
-.forEach(function(item){
+  stockOut.innerHTML =
+    '<option value="">Select Product</option>';
 
-table.innerHTML+=`
 
-<tr>
+  products.forEach(
+    function(product) {
 
-<td>${escapeHTML(item.productName)}</td>
 
-<td>${item.quantity}</td>
+      const option =
+        document.createElement(
+          "option"
+        );
 
-<td>${peso(item.price)}</td>
 
-<td>${peso(item.total)}</td>
+      option.value =
+        product.id;
 
-<td>${escapeHTML(item.date)}</td>
 
-<td>${escapeHTML(item.soldBy)}</td>
+      option.textContent =
 
-</tr>
+        product.code +
+        " - " +
+        product.name +
+        " (Stock: " +
+        product.stock +
+        ")";
 
-`;
 
-});
+      stockIn.appendChild(
+        option.cloneNode(
+          true
+        )
+      );
+
+
+      stockOut.appendChild(
+        option
+      );
+
+    }
+  );
 
 }
 
 
-/* ================================
+/* =====================================================
+   CATEGORY SELECT
+===================================================== */
+
+function populateCategorySelect() {
+
+
+  const select =
+    document
+      .getElementById(
+        "productCategory"
+      );
+
+
+  select.innerHTML =
+    '<option value="">Select Category</option>';
+
+
+  categories.forEach(
+    function(category) {
+
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        category.name;
+
+
+      option.textContent =
+        category.name;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   STOCK IN FORM
+===================================================== */
+
+document
+  .getElementById(
+    "stockInForm"
+  )
+  .addEventListener(
+    "submit",
+    function(e) {
+
+
+      e.preventDefault();
+
+
+      const transaction = {
+
+
+        productId:
+          document
+            .getElementById(
+              "stockInProduct"
+            )
+            .value,
+
+
+        quantity:
+          document
+            .getElementById(
+              "stockInQuantity"
+            )
+            .value,
+
+
+        supplier:
+          document
+            .getElementById(
+              "supplier"
+            )
+            .value,
+
+
+        receivedBy:
+          document
+            .getElementById(
+              "receivedBy"
+            )
+            .value,
+
+
+        remarks:
+          document
+            .getElementById(
+              "stockInRemarks"
+            )
+            .value
+
+      };
+
+
+      google.script.run
+
+
+        .withSuccessHandler(
+          function(result) {
+
+
+            showSuccess(
+              result.message
+            );
+
+
+            document
+              .getElementById(
+                "stockInForm"
+              )
+              .reset();
+
+
+            loadData();
+
+          }
+        )
+
+
+        .withFailureHandler(
+          showError
+        )
+
+
+        .stockIn(
+          transaction
+        );
+
+    }
+  );
+
+
+/* =====================================================
+   STOCK IN TABLE
+===================================================== */
+
+function renderStockIn() {
+
+
+  const table =
+    document
+      .getElementById(
+        "stockInTable"
+      );
+
+
+  table.innerHTML = "";
+
+
+  stockInData
+    .slice()
+    .reverse()
+    .forEach(
+      function(item) {
+
+
+        table.innerHTML += `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(
+                item.productName
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                item.supplier
+              )}
+            </td>
+
+            <td>
+              ${item.quantity}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                item.date
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                item.receivedBy
+              )}
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   STOCK OUT FORM
+===================================================== */
+
+document
+  .getElementById(
+    "stockOutForm"
+  )
+  .addEventListener(
+    "submit",
+    function(e) {
+
+
+      e.preventDefault();
+
+
+      const transaction = {
+
+
+        productId:
+          document
+            .getElementById(
+              "stockOutProduct"
+            )
+            .value,
+
+
+        quantity:
+          document
+            .getElementById(
+              "stockOutQuantity"
+            )
+            .value,
+
+
+        soldBy:
+          document
+            .getElementById(
+              "soldBy"
+            )
+            .value,
+
+
+        remarks:
+          document
+            .getElementById(
+              "stockOutRemarks"
+            )
+            .value
+
+      };
+
+
+      google.script.run
+
+
+        .withSuccessHandler(
+          function(result) {
+
+
+            showSuccess(
+
+              result.message +
+              " Total: " +
+              peso(
+                result.total
+              )
+
+            );
+
+
+            document
+              .getElementById(
+                "stockOutForm"
+              )
+              .reset();
+
+
+            loadData();
+
+          }
+        )
+
+
+        .withFailureHandler(
+          showError
+        )
+
+
+        .stockOut(
+          transaction
+        );
+
+    }
+  );
+
+
+/* =====================================================
+   STOCK OUT TABLE
+===================================================== */
+
+function renderStockOut() {
+
+
+  const table =
+    document
+      .getElementById(
+        "stockOutTable"
+      );
+
+
+  table.innerHTML = "";
+
+
+  stockOutData
+    .slice()
+    .reverse()
+    .forEach(
+      function(item) {
+
+
+        table.innerHTML += `
+
+          <tr>
+
+            <td>
+              ${escapeHTML(
+                item.productName
+              )}
+            </td>
+
+            <td>
+              ${item.quantity}
+            </td>
+
+            <td>
+              ${peso(
+                item.price
+              )}
+            </td>
+
+            <td>
+              ${peso(
+                item.total
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                item.date
+              )}
+            </td>
+
+            <td>
+              ${escapeHTML(
+                item.soldBy
+              )}
+            </td>
+
+          </tr>
+
+        `;
+
+      }
+    );
+
+}
+
+
+/* =====================================================
    INVENTORY
-================================ */
+===================================================== */
 
-function renderInventory(list){
-
-const data=list || products;
-
-const table=
-document.getElementById("inventoryTable");
-
-table.innerHTML="";
+function renderInventory(
+  list
+) {
 
 
-data.forEach(function(product){
+  const data =
+    list || products;
 
-table.innerHTML+=`
 
-<tr>
+  const table =
+    document
+      .getElementById(
+        "inventoryTable"
+      );
 
-<td>${escapeHTML(product.code)}</td>
 
-<td>${escapeHTML(product.name)}</td>
+  table.innerHTML = "";
 
-<td>${escapeHTML(product.category)}</td>
 
-<td>${peso(product.price)}</td>
+  data.forEach(
+    function(product) {
 
-<td>${product.stock}</td>
 
-<td>${product.reorderLevel}</td>
+      table.innerHTML += `
 
-<td>${statusBadge(product.status)}</td>
+        <tr>
 
-</tr>
+          <td>
+            ${escapeHTML(
+              product.code
+            )}
+          </td>
 
-`;
+          <td>
+            ${escapeHTML(
+              product.name
+            )}
+          </td>
 
-});
+          <td>
+            ${escapeHTML(
+              product.category
+            )}
+          </td>
+
+          <td>
+            ${peso(
+              product.price
+            )}
+          </td>
+
+          <td>
+            ${product.stock}
+          </td>
+
+          <td>
+            ${product.reorderLevel}
+          </td>
+
+          <td>
+            ${statusBadge(
+              product.status
+            )}
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
 
 }
 
 
-function filterInventory(search){
+/* =====================================================
+   INVENTORY SEARCH
+===================================================== */
 
-search=search.toLowerCase();
-
-
-const filtered=
-products.filter(function(product){
-
-return(
-
-String(product.code)
-.toLowerCase()
-.includes(search)
-
-||
-
-String(product.name)
-.toLowerCase()
-.includes(search)
-
-||
-
-String(product.category)
-.toLowerCase()
-.includes(search)
-
-);
-
-});
+function filterInventory(
+  search
+) {
 
 
-renderInventory(filtered);
-
-}
-
-
-/* ================================
-   REPORTS
-================================ */
-
-function generateReport(){
-
-const startDate=
-document.getElementById("reportStart").value;
-
-const endDate=
-document.getElementById("reportEnd").value;
+  search =
+    search.toLowerCase();
 
 
-google.script.run
-
-.withSuccessHandler(function(data){
-
-document.getElementById("reportStockIn")
-.textContent=data.totalStockIn;
-
-document.getElementById("reportStockOut")
-.textContent=data.totalStockOut;
-
-document.getElementById("reportSales")
-.textContent=peso(data.totalSales);
+  const filtered =
+    products.filter(
+      function(product) {
 
 
-const table=
-document.getElementById("reportTable");
+        return (
 
-table.innerHTML="";
+          String(
+            product.code
+          )
+            .toLowerCase()
+            .includes(search)
 
 
-data.stockOut
-.slice()
-.reverse()
-.forEach(function(item){
+          ||
 
-table.innerHTML+=`
 
-<tr>
+          String(
+            product.name
+          )
+            .toLowerCase()
+            .includes(search)
 
-<td>${escapeHTML(item.productName)}</td>
 
-<td>${item.quantity}</td>
+          ||
 
-<td>${peso(item.price)}</td>
 
-<td>${peso(item.total)}</td>
+          String(
+            product.category
+          )
+            .toLowerCase()
+            .includes(search)
 
-<td>${escapeHTML(item.date)}</td>
+        );
 
-</tr>
+      }
+    );
 
-`;
 
-});
-
-})
-
-.withFailureHandler(showError)
-
-.getReports(startDate,endDate);
+  renderInventory(
+    filtered
+  );
 
 }
 
 
-/* ================================
+/* =====================================================
+   REPORT
+===================================================== */
+
+function generateReport() {
+
+
+  const startDate =
+    document
+      .getElementById(
+        "reportStart"
+      )
+      .value;
+
+
+  const endDate =
+    document
+      .getElementById(
+        "reportEnd"
+      )
+      .value;
+
+
+  google.script.run
+
+
+    .withSuccessHandler(
+      function(data) {
+
+
+        document
+          .getElementById(
+            "reportStockIn"
+          )
+          .textContent =
+            data.totalStockIn;
+
+
+        document
+          .getElementById(
+            "reportStockOut"
+          )
+          .textContent =
+            data.totalStockOut;
+
+
+        document
+          .getElementById(
+            "reportSales"
+          )
+          .textContent =
+            peso(
+              data.totalSales
+            );
+
+
+        const table =
+          document
+            .getElementById(
+              "reportTable"
+            );
+
+
+        table.innerHTML = "";
+
+
+        data.stockOut
+          .slice()
+          .reverse()
+          .forEach(
+            function(item) {
+
+
+              table.innerHTML += `
+
+                <tr>
+
+                  <td>
+                    ${escapeHTML(
+                      item.productName
+                    )}
+                  </td>
+
+                  <td>
+                    ${item.quantity}
+                  </td>
+
+                  <td>
+                    ${peso(
+                      item.price
+                    )}
+                  </td>
+
+                  <td>
+                    ${peso(
+                      item.total
+                    )}
+                  </td>
+
+                  <td>
+                    ${escapeHTML(
+                      item.date
+                    )}
+                  </td>
+
+                </tr>
+
+              `;
+
+            }
+          );
+
+      }
+    )
+
+
+    .withFailureHandler(
+      showError
+    )
+
+
+    .getReports(
+      startDate,
+      endDate
+    );
+
+}
+
+
+/* =====================================================
    HELPERS
-================================ */
+===================================================== */
 
-function peso(value){
-
-return "₱"+
-Number(value||0)
-.toLocaleString(
-"en-PH",
-{
-minimumFractionDigits:2,
-maximumFractionDigits:2
-}
-);
-
-}
+function peso(
+  value
+) {
 
 
-function statusBadge(status){
+  return (
 
-let className="in-stock";
+    "₱" +
 
-if(status==="Low Stock"){
-className="low-stock";
-}
+    Number(
+      value || 0
+    ).toLocaleString(
+      "en-PH",
+      {
 
-if(status==="Out of Stock"){
-className="out-stock";
-}
+        minimumFractionDigits:
+          2,
 
-return`
-<span class="status ${className}">
-${escapeHTML(status)}
-</span>
-`;
+        maximumFractionDigits:
+          2
+
+      }
+    )
+
+  );
 
 }
 
 
-function escapeHTML(value){
+function statusBadge(
+  status
+) {
 
-if(value===null||
-value===undefined){
-return "";
+
+  let className =
+    "in-stock";
+
+
+  if (
+    status ===
+    "Low Stock"
+  ) {
+
+    className =
+      "low-stock";
+
+  }
+
+
+  if (
+    status ===
+    "Out of Stock"
+  ) {
+
+    className =
+      "out-stock";
+
+  }
+
+
+  return `
+
+    <span
+      class="status ${className}">
+
+      ${escapeHTML(
+        status
+      )}
+
+    </span>
+
+  `;
+
 }
 
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+function escapeHTML(
+  value
+) {
+
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
+    return "";
+
+  }
+
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
-/* ================================
+/* =====================================================
    NOTIFICATIONS
-================================ */
+===================================================== */
 
-function showSuccess(message){
-
-const box=
-document.getElementById("notification");
-
-box.textContent=message;
-
-box.className="success";
-
-box.style.display="block";
+function showSuccess(
+  message
+) {
 
 
-setTimeout(function(){
+  const box =
+    document
+      .getElementById(
+        "notification"
+      );
 
-box.style.display="none";
 
-},3000);
+  box.textContent =
+    message;
+
+
+  box.className =
+    "success";
+
+
+  box.style.display =
+    "block";
+
+
+  setTimeout(
+    function() {
+
+      box.style.display =
+        "none";
+
+    },
+    3000
+  );
 
 }
 
 
-function showError(error){
-
-const box=
-document.getElementById("notification");
-
-box.textContent=
-error.message ||
-"Something went wrong.";
-
-box.className="error";
-
-box.style.display="block";
+function showError(
+  error
+) {
 
 
-setTimeout(function(){
+  const box =
+    document
+      .getElementById(
+        "notification"
+      );
 
-box.style.display="none";
 
-},5000);
+  box.textContent =
+
+    error.message ||
+    "Something went wrong.";
+
+
+  box.className =
+    "error";
+
+
+  box.style.display =
+    "block";
+
+
+  setTimeout(
+    function() {
+
+      box.style.display =
+        "none";
+
+    },
+    5000
+  );
 
 }
 
 </script>
+
 
 </body>
 
