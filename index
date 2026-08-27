@@ -3,370 +3,364 @@
 
 <head>
 
-  <base target="_top">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-
-  <title>Physical Store Inventory System</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f1fb;
-      color: #292333;
-    }
-
-    .layout {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* SIDEBAR */
-
-    .sidebar {
-      width: 240px;
-      background: #5b2c83;
-      color: white;
-      padding: 20px 15px;
-      position: fixed;
-      height: 100vh;
-      left: 0;
-      top: 0;
-    }
-
-    .logo {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .logo h2 {
-      font-size: 20px;
-    }
-
-    .logo p {
-      font-size: 12px;
-      opacity: .8;
-      margin-top: 5px;
-    }
-
-    .menu button {
-      display: block;
-      width: 100%;
-      padding: 13px;
-      margin-bottom: 8px;
-      border: none;
-      border-radius: 7px;
-      background: transparent;
-      color: white;
-      text-align: left;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .menu button:hover,
-    .menu button.active {
-      background: #7b3db0;
-    }
-
-    /* MAIN */
-
-    .main {
-      margin-left: 240px;
-      width: calc(100% - 240px);
-      padding: 25px;
-    }
-
-    .topbar {
-      background: white;
-      padding: 18px 22px;
-      border-radius: 10px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    .topbar h1 {
-      font-size: 24px;
-      color: #5b2c83;
-    }
-
-    /* SECTIONS */
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    /* CARDS */
-
-    .cards {
-      display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(180px, 1fr));
-
-      gap: 18px;
-      margin-bottom: 25px;
-    }
-
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    .card h3 {
-      font-size: 13px;
-      color: #777;
-      margin-bottom: 10px;
-    }
-
-    .card .number {
-      font-size: 28px;
-      font-weight: bold;
-      color: #5b2c83;
-    }
-
-    /* CONTENT BOX */
-
-    .box {
-      background: white;
-      padding: 22px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-      margin-bottom: 20px;
-    }
-
-    .box-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .box-header h2 {
-      color: #5b2c83;
-      font-size: 20px;
-    }
-
-    /* BUTTONS */
-
-    .btn {
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn-primary {
-      background: #6d35a1;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #53247d;
-    }
-
-    .btn-danger {
-      background: #dc3545;
-      color: white;
-    }
-
-    .btn-edit {
-      background: #f0ad4e;
-      color: white;
-    }
-
-    /* FORMS */
-
-    .form-grid {
-      display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(200px, 1fr));
-
-      gap: 15px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      font-size: 13px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
-    /* TABLE */
-
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 11px;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-      font-size: 13px;
-    }
-
-    th {
-      background: #f2eafa;
-      color: #5b2c83;
-    }
-
-    tr:hover {
-      background: #faf8fd;
-    }
-
-    /* STATUS */
-
-    .status {
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: bold;
-      display: inline-block;
-    }
-
-    .in-stock {
-      background: #d4edda;
-      color: #155724;
-    }
-
-    .low-stock {
-      background: #fff3cd;
-      color: #856404;
-    }
-
-    .out-stock {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    /* SEARCH */
-
-    .search {
-      max-width: 300px;
-    }
-
-    /* MODAL */
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,.5);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-content {
-      background: white;
-      width: 90%;
-      max-width: 600px;
-      padding: 25px;
-      border-radius: 10px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .close {
-      cursor: pointer;
-      font-size: 25px;
-    }
-
-    /* NOTIFICATION */
-
-    #notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 15px 20px;
-      background: #333;
-      color: white;
-      border-radius: 7px;
-      display: none;
-      z-index: 2000;
-    }
-
-    #notification.success {
-      background: #198754;
-    }
-
-    #notification.error {
-      background: #dc3545;
-    }
-
-    /* MOBILE */
-
-    @media(max-width: 768px) {
-
-      .sidebar {
-        width: 190px;
-      }
-
-      .main {
-        margin-left: 190px;
-        width: calc(100% - 190px);
-        padding: 15px;
-      }
-
-      .sidebar button {
-        font-size: 12px;
-      }
-
-    }
-
-  </style>
+<base target="_top">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
+
+<title>Physical Store Inventory System</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f3effa;
+  color:#292333;
+}
+
+.layout{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  width:240px;
+  background:#5b2c83;
+  color:white;
+  padding:20px 15px;
+  position:fixed;
+  left:0;
+  top:0;
+  height:100vh;
+}
+
+.logo{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.logo h2{
+  font-size:20px;
+}
+
+.logo p{
+  margin-top:5px;
+  font-size:12px;
+  opacity:.8;
+}
+
+.menu button{
+  width:100%;
+  padding:13px;
+  margin-bottom:8px;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:white;
+  text-align:left;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.menu button:hover,
+.menu button.active{
+  background:#7b3db0;
+}
+
+/* MAIN */
+
+.main{
+  margin-left:240px;
+  width:calc(100% - 240px);
+  padding:25px;
+}
+
+.topbar{
+  background:white;
+  padding:18px 22px;
+  border-radius:10px;
+  margin-bottom:25px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.topbar h1{
+  color:#5b2c83;
+  font-size:24px;
+}
+
+/* SECTIONS */
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+/* CARDS */
+
+.cards{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(180px,1fr));
+  gap:18px;
+  margin-bottom:25px;
+}
+
+.card{
+  background:white;
+  padding:22px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.card h3{
+  color:#777;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.number{
+  color:#5b2c83;
+  font-size:28px;
+  font-weight:bold;
+}
+
+/* BOX */
+
+.box{
+  background:white;
+  padding:22px;
+  border-radius:10px;
+  margin-bottom:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.box-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.box-header h2,
+.box h2{
+  color:#5b2c83;
+  font-size:20px;
+}
+
+/* BUTTON */
+
+.btn{
+  border:0;
+  padding:10px 15px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn-primary{
+  background:#6d35a1;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#53247d;
+}
+
+.btn-danger{
+  background:#dc3545;
+  color:white;
+}
+
+.btn-edit{
+  background:#f0ad4e;
+  color:white;
+}
+
+/* FORMS */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-size:14px;
+}
+
+textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+/* TABLE */
+
+.table-wrapper{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,
+td{
+  padding:11px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+  font-size:13px;
+}
+
+th{
+  background:#f2eafa;
+  color:#5b2c83;
+}
+
+tr:hover{
+  background:#faf8fd;
+}
+
+/* STATUS */
+
+.status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.in-stock{
+  background:#d4edda;
+  color:#155724;
+}
+
+.low-stock{
+  background:#fff3cd;
+  color:#856404;
+}
+
+.out-stock{
+  background:#f8d7da;
+  color:#721c24;
+}
+
+/* SEARCH */
+
+.search{
+  max-width:300px;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  z-index:999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+  align-items:center;
+  justify-content:center;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-content{
+  background:white;
+  width:90%;
+  max-width:600px;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:25px;
+  border-radius:10px;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.close{
+  font-size:25px;
+  cursor:pointer;
+}
+
+/* NOTIFICATION */
+
+#notification{
+  display:none;
+  position:fixed;
+  right:20px;
+  top:20px;
+  z-index:2000;
+  padding:15px 20px;
+  color:white;
+  border-radius:7px;
+}
+
+#notification.success{
+  background:#198754;
+}
+
+#notification.error{
+  background:#dc3545;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  .sidebar{
+    width:190px;
+  }
+
+  .main{
+    margin-left:190px;
+    width:calc(100% - 190px);
+    padding:15px;
+  }
+
+}
+
+</style>
 
 </head>
 
@@ -378,2008 +372,1933 @@
 
 <div class="layout">
 
-  <!-- SIDEBAR -->
+<!-- SIDEBAR -->
 
-  <aside class="sidebar">
+<aside class="sidebar">
 
-    <div class="logo">
+<div class="logo">
 
-      <h2>Inventory System</h2>
+<h2>Inventory System</h2>
 
-      <p>Physical Store</p>
-
-    </div>
-
-
-    <div class="menu">
-
-      <button class="active"
-              onclick="showSection('dashboard', this)">
-        📊 Dashboard
-      </button>
-
-      <button onclick="showSection('products', this)">
-        📦 Products
-      </button>
-
-      <button onclick="showSection('categories', this)">
-        🗂 Categories
-      </button>
-
-      <button onclick="showSection('stockin', this)">
-        📥 Stock In
-      </button>
-
-      <button onclick="showSection('stockout', this)">
-        📤 Stock Out / Sales
-      </button>
-
-      <button onclick="showSection('inventory', this)">
-        📋 Inventory
-      </button>
-
-      <button onclick="showSection('reports', this)">
-        📑 Reports
-      </button>
-
-    </div>
-
-  </aside>
-
-
-  <!-- MAIN -->
-
-  <main class="main">
-
-    <div class="topbar">
-
-      <h1 id="pageTitle">
-        Dashboard
-      </h1>
-
-    </div>
-
-
-    <!-- =================================================
-         DASHBOARD
-    ================================================== -->
-
-    <section id="dashboard"
-             class="section active">
-
-      <div class="cards">
-
-        <div class="card">
-
-          <h3>Total Products</h3>
-
-          <div class="number"
-               id="totalProducts">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <h3>Total Stock</h3>
-
-          <div class="number"
-               id="totalStock">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <h3>Low Stock</h3>
-
-          <div class="number"
-               id="lowStock">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <h3>Out of Stock</h3>
-
-          <div class="number"
-               id="outOfStock">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <h3>Total Sales</h3>
-
-          <div class="number"
-               id="totalSales">
-            ₱0.00
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="box">
-
-        <div class="box-header">
-
-          <h2>Recent Transactions</h2>
-
-        </div>
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Type</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Date</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="recentTransactions">
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         PRODUCTS
-    ================================================== -->
-
-    <section id="products"
-             class="section">
-
-      <div class="box">
-
-        <div class="box-header">
-
-          <h2>Product Management</h2>
-
-          <button class="btn btn-primary"
-                  onclick="openProductModal()">
-            + Add Product
-          </button>
-
-        </div>
-
-
-        <input
-          class="search"
-          type="text"
-          placeholder="Search product..."
-          onkeyup="filterProducts(this.value)"
-        >
-
-
-        <br><br>
-
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Code</th>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="productTable">
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         CATEGORIES
-    ================================================== -->
-
-    <section id="categories"
-             class="section">
-
-      <div class="box">
-
-        <div class="box-header">
-
-          <h2>Category Management</h2>
-
-          <button class="btn btn-primary"
-                  onclick="openCategoryModal()">
-            + Add Category
-          </button>
-
-        </div>
-
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="categoryTable">
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         STOCK IN
-    ================================================== -->
-
-    <section id="stockin"
-             class="section">
-
-      <div class="box">
-
-        <div class="box-header">
-
-          <h2>Stock In / Receiving</h2>
-
-        </div>
-
-
-        <form id="stockInForm">
-
-          <div class="form-grid">
-
-            <div class="form-group">
-
-              <label>Product</label>
-
-              <select id="stockInProduct"
-                      required>
-              </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label>Quantity</label>
-
-              <input
-                id="stockInQuantity"
-                type="number"
-                min="1"
-                required
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label>Supplier</label>
-
-              <input
-                id="supplier"
-                type="text"
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label>Received By</label>
-
-              <input
-                id="receivedBy"
-                type="text"
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>Remarks</label>
-
-            <textarea id="stockInRemarks"></textarea>
-
-          </div>
-
-
-          <button
-            type="submit"
-            class="btn btn-primary">
-            Record Stock In
-          </button>
-
-        </form>
-
-      </div>
-
-
-      <div class="box">
-
-        <h2>Stock-In History</h2>
-
-        <br>
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Product</th>
-                <th>Supplier</th>
-                <th>Quantity</th>
-                <th>Date</th>
-                <th>Received By</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="stockInTable">
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         STOCK OUT
-    ================================================== -->
-
-    <section id="stockout"
-             class="section">
-
-      <div class="box">
-
-        <div class="box-header">
-
-          <h2>Stock Out / Sales</h2>
-
-        </div>
-
-
-        <form id="stockOutForm">
-
-          <div class="form-grid">
-
-            <div class="form-group">
-
-              <label>Product</label>
-
-              <select id="stockOutProduct"
-                      required>
-              </select>
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label>Quantity</label>
-
-              <input
-                id="stockOutQuantity"
-                type="number"
-                min="1"
-                required
-              >
-
-            </div>
-
-
-            <div class="form-group">
-
-              <label>Sold By</label>
-
-              <input
-                id="soldBy"
-                type="text"
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>Remarks</label>
-
-            <textarea id="stockOutRemarks"></textarea>
-
-          </div>
-
-
-          <button
-            type="submit"
-            class="btn btn-primary">
-            Record Sale
-          </button>
-
-        </form>
-
-      </div>
-
-
-      <div class="box">
-
-        <h2>Sales / Stock-Out History</h2>
-
-        <br>
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-                <th>Date</th>
-                <th>Sold By</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="stockOutTable">
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         INVENTORY
-    ================================================== -->
-
-    <section id="inventory"
-             class="section">
-
-      <div class="box">
-
-        <div class="box-header">
-
-          <h2>Inventory Monitoring</h2>
-
-          <input
-            class="search"
-            id="inventorySearch"
-            type="text"
-            placeholder="Search inventory..."
-            onkeyup="filterInventory(this.value)"
-          >
-
-        </div>
-
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Code</th>
-                <th>Product</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Reorder Level</th>
-                <th>Status</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="inventoryTable">
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =================================================
-         REPORTS
-    ================================================== -->
-
-    <section id="reports"
-             class="section">
-
-      <div class="box">
-
-        <div class="box-header">
-
-          <h2>Inventory Reports</h2>
-
-        </div>
-
-
-        <div class="form-grid">
-
-          <div class="form-group">
-
-            <label>Start Date</label>
-
-            <input
-              id="reportStart"
-              type="date"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>End Date</label>
-
-            <input
-              id="reportEnd"
-              type="date"
-            >
-
-          </div>
-
-
-          <div class="form-group">
-
-            <label>&nbsp;</label>
-
-            <button
-              class="btn btn-primary"
-              onclick="generateReport()">
-              Generate Report
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="cards">
-
-        <div class="card">
-
-          <h3>Total Stock In</h3>
-
-          <div
-            class="number"
-            id="reportStockIn">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <h3>Total Stock Out</h3>
-
-          <div
-            class="number"
-            id="reportStockOut">
-            0
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <h3>Total Sales</h3>
-
-          <div
-            class="number"
-            id="reportSales">
-            ₱0.00
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="box">
-
-        <h2>Sales Report</h2>
-
-        <br>
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-
-              <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-                <th>Date</th>
-              </tr>
-
-            </thead>
-
-            <tbody id="reportTable">
-            </tbody>
-
-          </table>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
+<p>Physical Store</p>
 
 </div>
 
 
-<!-- =====================================================
-     PRODUCT MODAL
-====================================================== -->
+<div class="menu">
 
-<div id="productModal"
-     class="modal">
+<button
+class="active"
+onclick="showSection('dashboard',this)">
+📊 Dashboard
+</button>
 
-  <div class="modal-content">
+<button
+onclick="showSection('products',this)">
+📦 Products
+</button>
 
-    <div class="modal-header">
+<button
+onclick="showSection('categories',this)">
+🗂 Categories
+</button>
 
-      <h2 id="productModalTitle">
-        Add Product
-      </h2>
+<button
+onclick="showSection('stockin',this)">
+📥 Stock In
+</button>
 
-      <span class="close"
-            onclick="closeProductModal()">
-        ×
-      </span>
+<button
+onclick="showSection('stockout',this)">
+📤 Stock Out / Sales
+</button>
 
-    </div>
+<button
+onclick="showSection('inventory',this)">
+📋 Inventory
+</button>
 
+<button
+onclick="showSection('reports',this)">
+📑 Reports
+</button>
 
-    <form id="productForm">
+</div>
 
-      <input
-        type="hidden"
-        id="productId"
-      >
-
-
-      <div class="form-group">
-
-        <label>Product Code / SKU</label>
-
-        <input
-          id="productCode"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Product Name</label>
-
-        <input
-          id="productName"
-          required
-        >
-
-      </div>
+</aside>
 
 
-      <div class="form-group">
+<!-- MAIN -->
 
-        <label>Category</label>
+<main class="main">
 
-        <select id="productCategory">
+<div class="topbar">
 
-          <option value="">
-            Select Category
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <div class="form-grid">
-
-        <div class="form-group">
-
-          <label>Price</label>
-
-          <input
-            id="productPrice"
-            type="number"
-            min="0"
-            step="0.01"
-            required
-          >
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label>Stock</label>
-
-          <input
-            id="productStock"
-            type="number"
-            min="0"
-            required
-          >
-
-        </div>
-
-
-        <div class="form-group">
-
-          <label>Reorder Level</label>
-
-          <input
-            id="reorderLevel"
-            type="number"
-            min="0"
-            value="10"
-          >
-
-        </div>
-
-      </div>
-
-
-      <button
-        class="btn btn-primary"
-        type="submit">
-        Save Product
-      </button>
-
-    </form>
-
-  </div>
+<h1 id="pageTitle">
+Dashboard
+</h1>
 
 </div>
 
 
-<!-- =====================================================
-     CATEGORY MODAL
-====================================================== -->
+<!-- DASHBOARD -->
 
-<div id="categoryModal"
-     class="modal">
+<section
+id="dashboard"
+class="section active">
 
-  <div class="modal-content">
+<div class="cards">
 
-    <div class="modal-header">
+<div class="card">
+<h3>Total Products</h3>
+<div class="number"
+id="totalProducts">0</div>
+</div>
 
-      <h2 id="categoryModalTitle">
-        Add Category
-      </h2>
+<div class="card">
+<h3>Total Stock</h3>
+<div class="number"
+id="totalStock">0</div>
+</div>
 
-      <span class="close"
-            onclick="closeCategoryModal()">
-        ×
-      </span>
+<div class="card">
+<h3>Low Stock</h3>
+<div class="number"
+id="lowStock">0</div>
+</div>
 
-    </div>
+<div class="card">
+<h3>Out of Stock</h3>
+<div class="number"
+id="outOfStock">0</div>
+</div>
 
+<div class="card">
+<h3>Total Sales</h3>
+<div class="number"
+id="totalSales">₱0.00</div>
+</div>
 
-    <form id="categoryForm">
-
-      <input
-        type="hidden"
-        id="categoryId"
-      >
-
-
-      <div class="form-group">
-
-        <label>Category Name</label>
-
-        <input
-          id="categoryName"
-          required
-        >
-
-      </div>
+</div>
 
 
-      <div class="form-group">
+<div class="box">
 
-        <label>Description</label>
+<h2>Recent Transactions</h2>
 
-        <textarea id="categoryDescription"></textarea>
+<br>
 
-      </div>
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Type</th>
+<th>Product</th>
+<th>Quantity</th>
+<th>Date</th>
+</tr>
+
+</thead>
+
+<tbody id="recentTransactions"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
 
 
-      <button
-        class="btn btn-primary"
-        type="submit">
-        Save Category
-      </button>
+<!-- PRODUCTS -->
 
-    </form>
+<section
+id="products"
+class="section">
 
-  </div>
+<div class="box">
+
+<div class="box-header">
+
+<h2>Product Management</h2>
+
+<button
+class="btn btn-primary"
+onclick="openProductModal()">
++ Add Product
+</button>
+
+</div>
+
+
+<input
+class="search"
+type="text"
+placeholder="Search product..."
+onkeyup="filterProducts(this.value)"
+>
+
+
+<br><br>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Code</th>
+<th>Product</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+
+</thead>
+
+<tbody id="productTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section
+id="categories"
+class="section">
+
+<div class="box">
+
+<div class="box-header">
+
+<h2>Category Management</h2>
+
+<button
+class="btn btn-primary"
+onclick="openCategoryModal()">
++ Add Category
+</button>
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Category</th>
+<th>Description</th>
+<th>Created</th>
+<th>Actions</th>
+</tr>
+
+</thead>
+
+<tbody id="categoryTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- STOCK IN -->
+
+<section
+id="stockin"
+class="section">
+
+<div class="box">
+
+<h2>Stock In / Receiving</h2>
+
+<br>
+
+<form id="stockInForm">
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>Product</label>
+
+<select
+id="stockInProduct"
+required>
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Quantity</label>
+
+<input
+id="stockInQuantity"
+type="number"
+min="1"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Supplier</label>
+
+<input id="supplier">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Received By</label>
+
+<input id="receivedBy">
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Remarks</label>
+
+<textarea
+id="stockInRemarks"></textarea>
+
+</div>
+
+
+<button
+class="btn btn-primary"
+type="submit">
+Record Stock In
+</button>
+
+</form>
+
+</div>
+
+
+<div class="box">
+
+<h2>Stock-In History</h2>
+
+<br>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Product</th>
+<th>Supplier</th>
+<th>Quantity</th>
+<th>Date</th>
+<th>Received By</th>
+</tr>
+
+</thead>
+
+<tbody id="stockInTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- STOCK OUT -->
+
+<section
+id="stockout"
+class="section">
+
+<div class="box">
+
+<h2>Stock Out / Sales</h2>
+
+<br>
+
+<form id="stockOutForm">
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>Product</label>
+
+<select
+id="stockOutProduct"
+required>
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Quantity</label>
+
+<input
+id="stockOutQuantity"
+type="number"
+min="1"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Sold By</label>
+
+<input id="soldBy">
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Remarks</label>
+
+<textarea
+id="stockOutRemarks"></textarea>
+
+</div>
+
+
+<button
+class="btn btn-primary"
+type="submit">
+Record Sale
+</button>
+
+</form>
+
+</div>
+
+
+<div class="box">
+
+<h2>Sales History</h2>
+
+<br>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Product</th>
+<th>Quantity</th>
+<th>Price</th>
+<th>Total</th>
+<th>Date</th>
+<th>Sold By</th>
+</tr>
+
+</thead>
+
+<tbody id="stockOutTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- INVENTORY -->
+
+<section
+id="inventory"
+class="section">
+
+<div class="box">
+
+<div class="box-header">
+
+<h2>Inventory Monitoring</h2>
+
+<input
+id="inventorySearch"
+class="search"
+type="text"
+placeholder="Search inventory..."
+onkeyup="filterInventory(this.value)">
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Code</th>
+<th>Product</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Reorder Level</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="inventoryTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REPORTS -->
+
+<section
+id="reports"
+class="section">
+
+<div class="box">
+
+<h2>Reports</h2>
+
+<br>
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>Start Date</label>
+
+<input
+id="reportStart"
+type="date">
+
+</div>
+
+
+<div class="form-group">
+
+<label>End Date</label>
+
+<input
+id="reportEnd"
+type="date">
+
+</div>
+
+
+<div class="form-group">
+
+<label>&nbsp;</label>
+
+<button
+class="btn btn-primary"
+onclick="generateReport()">
+Generate Report
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Total Stock In</h3>
+
+<div
+class="number"
+id="reportStockIn">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Total Stock Out</h3>
+
+<div
+class="number"
+id="reportStockOut">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Total Sales</h3>
+
+<div
+class="number"
+id="reportSales">
+₱0.00
+</div>
+
+</div>
+
+</div>
+
+
+<div class="box">
+
+<h2>Sales Report</h2>
+
+<br>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Product</th>
+<th>Quantity</th>
+<th>Price</th>
+<th>Total</th>
+<th>Date</th>
+</tr>
+
+</thead>
+
+<tbody id="reportTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- PRODUCT MODAL -->
+
+<div
+id="productModal"
+class="modal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2 id="productModalTitle">
+Add Product
+</h2>
+
+<span
+class="close"
+onclick="closeProductModal()">
+×
+</span>
+
+</div>
+
+
+<form id="productForm">
+
+<input
+type="hidden"
+id="productId">
+
+
+<div class="form-group">
+
+<label>Product Code / SKU</label>
+
+<input
+id="productCode"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Product Name</label>
+
+<input
+id="productName"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Category</label>
+
+<select
+id="productCategory">
+
+<option value="">
+Select Category
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>Price</label>
+
+<input
+id="productPrice"
+type="number"
+min="0"
+step="0.01"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Stock</label>
+
+<input
+id="productStock"
+type="number"
+min="0"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Reorder Level</label>
+
+<input
+id="reorderLevel"
+type="number"
+min="0"
+value="10">
+
+</div>
+
+</div>
+
+
+<button
+class="btn btn-primary"
+type="submit">
+Save Product
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- CATEGORY MODAL -->
+
+<div
+id="categoryModal"
+class="modal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2 id="categoryModalTitle">
+Add Category
+</h2>
+
+<span
+class="close"
+onclick="closeCategoryModal()">
+×
+</span>
+
+</div>
+
+
+<form id="categoryForm">
+
+<input
+type="hidden"
+id="categoryId">
+
+
+<div class="form-group">
+
+<label>Category Name</label>
+
+<input
+id="categoryName"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Description</label>
+
+<textarea
+id="categoryDescription"></textarea>
+
+</div>
+
+
+<button
+class="btn btn-primary"
+type="submit">
+Save Category
+</button>
+
+</form>
+
+</div>
 
 </div>
 
 
 <script>
 
-/* =====================================================
-   GLOBAL DATA
-===================================================== */
-
-let products = [];
-let categories = [];
-let stockInData = [];
-let stockOutData = [];
+let products=[];
+let categories=[];
+let stockInData=[];
+let stockOutData=[];
 
 
-/* =====================================================
-   START APPLICATION
-===================================================== */
+/* ================================
+   LOAD
+================================ */
 
 document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    loadData();
-
-  }
+"DOMContentLoaded",
+loadData
 );
 
 
-/* =====================================================
-   LOAD DATA
-===================================================== */
+function loadData(){
 
-function loadData() {
+google.script.run
 
-  google.script.run
-    .withSuccessHandler(function(data) {
+.withSuccessHandler(function(data){
 
-      products = data.products;
-      categories = data.categories;
-      stockInData = data.stockIn;
-      stockOutData = data.stockOut;
+products=data.products;
+categories=data.categories;
+stockInData=data.stockIn;
+stockOutData=data.stockOut;
 
-      renderDashboard(data.dashboard);
-      renderProducts();
-      renderCategories();
-      renderStockIn();
-      renderStockOut();
-      renderInventory();
-      populateProductSelects();
-      populateCategorySelect();
+renderDashboard(data.dashboard);
+renderProducts();
+renderCategories();
+renderStockIn();
+renderStockOut();
+renderInventory();
 
-    })
-    .withFailureHandler(showError)
-    .getInitialData();
+populateProductSelects();
+populateCategorySelect();
+
+})
+
+.withFailureHandler(showError)
+
+.getInitialData();
+
 }
 
 
-/* =====================================================
+/* ================================
    NAVIGATION
-===================================================== */
+================================ */
 
-function showSection(sectionId, button) {
+function showSection(id,button){
 
-  document
-    .querySelectorAll(".section")
-    .forEach(function(section) {
+document
+.querySelectorAll(".section")
+.forEach(function(section){
+section.classList.remove("active");
+});
 
-      section.classList.remove("active");
-
-    });
-
-
-  document
-    .getElementById(sectionId)
-    .classList.add("active");
+document
+.getElementById(id)
+.classList.add("active");
 
 
-  document
-    .querySelectorAll(".menu button")
-    .forEach(function(btn) {
+document
+.querySelectorAll(".menu button")
+.forEach(function(btn){
+btn.classList.remove("active");
+});
 
-      btn.classList.remove("active");
-
-    });
-
-
-  button.classList.add("active");
+button.classList.add("active");
 
 
-  const titles = {
+const titles={
+dashboard:"Dashboard",
+products:"Product Management",
+categories:"Category Management",
+stockin:"Stock In / Receiving",
+stockout:"Stock Out / Sales",
+inventory:"Inventory Monitoring",
+reports:"Reports"
+};
 
-    dashboard: "Dashboard",
-    products: "Product Management",
-    categories: "Category Management",
-    stockin: "Stock In / Receiving",
-    stockout: "Stock Out / Sales",
-    inventory: "Inventory Monitoring",
-    reports: "Reports"
-
-  };
-
-  document.getElementById("pageTitle")
-    .textContent = titles[sectionId];
+document
+.getElementById("pageTitle")
+.textContent=titles[id];
 
 }
 
 
-/* =====================================================
+/* ================================
    DASHBOARD
-===================================================== */
+================================ */
 
-function renderDashboard(data) {
+function renderDashboard(data){
 
-  document.getElementById("totalProducts")
-    .textContent = data.totalProducts;
+document.getElementById("totalProducts")
+.textContent=data.totalProducts;
 
-  document.getElementById("totalStock")
-    .textContent = data.totalStock;
+document.getElementById("totalStock")
+.textContent=data.totalStock;
 
-  document.getElementById("lowStock")
-    .textContent = data.lowStock;
+document.getElementById("lowStock")
+.textContent=data.lowStock;
 
-  document.getElementById("outOfStock")
-    .textContent = data.outOfStock;
+document.getElementById("outOfStock")
+.textContent=data.outOfStock;
 
-  document.getElementById("totalSales")
-    .textContent = peso(data.totalSales);
-
-
-  const table =
-    document.getElementById("recentTransactions");
-
-  table.innerHTML = "";
+document.getElementById("totalSales")
+.textContent=peso(data.totalSales);
 
 
-  data.recentTransactions.forEach(function(item) {
+const table=
+document.getElementById("recentTransactions");
 
-    table.innerHTML += `
-      <tr>
-        <td>${escapeHTML(item.type)}</td>
-        <td>${escapeHTML(item.productName)}</td>
-        <td>${item.quantity}</td>
-        <td>${escapeHTML(item.date)}</td>
-      </tr>
-    `;
-
-  });
-
-}
+table.innerHTML="";
 
 
-/* =====================================================
-   PRODUCT MANAGEMENT
-===================================================== */
+data.recentTransactions.forEach(function(item){
 
-function renderProducts(list) {
+table.innerHTML+=`
 
-  const data = list || products;
+<tr>
 
-  const table =
-    document.getElementById("productTable");
+<td>${escapeHTML(item.type)}</td>
 
-  table.innerHTML = "";
+<td>${escapeHTML(item.productName)}</td>
 
+<td>${item.quantity}</td>
 
-  if (data.length === 0) {
+<td>${escapeHTML(item.date)}</td>
 
-    table.innerHTML =
-      `<tr><td colspan="7">No products found.</td></tr>`;
+</tr>
 
-    return;
-  }
+`;
 
-
-  data.forEach(function(product) {
-
-    table.innerHTML += `
-
-      <tr>
-
-        <td>${escapeHTML(product.code)}</td>
-
-        <td>${escapeHTML(product.name)}</td>
-
-        <td>${escapeHTML(product.category)}</td>
-
-        <td>${peso(product.price)}</td>
-
-        <td>${product.stock}</td>
-
-        <td>
-          ${statusBadge(product.status)}
-        </td>
-
-        <td>
-
-          <button
-            class="btn btn-edit"
-            onclick="editProduct('${product.id}')">
-            Edit
-          </button>
-
-          <button
-            class="btn btn-danger"
-            onclick="deleteProduct('${product.id}')">
-            Delete
-          </button>
-
-        </td>
-
-      </tr>
-
-    `;
-
-  });
+});
 
 }
 
 
-function openProductModal() {
+/* ================================
+   PRODUCTS
+================================ */
 
-  document.getElementById("productForm").reset();
+function renderProducts(list){
 
-  document.getElementById("productId").value = "";
+const data=list || products;
 
-  document.getElementById("productModalTitle")
-    .textContent = "Add Product";
+const table=
+document.getElementById("productTable");
 
-  document.getElementById("productModal")
-    .classList.add("show");
+table.innerHTML="";
+
+
+if(data.length===0){
+
+table.innerHTML=`
+<tr>
+<td colspan="7">
+No products found.
+</td>
+</tr>
+`;
+
+return;
+}
+
+
+data.forEach(function(product){
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${escapeHTML(product.code)}</td>
+
+<td>${escapeHTML(product.name)}</td>
+
+<td>${escapeHTML(product.category)}</td>
+
+<td>${peso(product.price)}</td>
+
+<td>${product.stock}</td>
+
+<td>${statusBadge(product.status)}</td>
+
+<td>
+
+<button
+class="btn btn-edit"
+onclick="editProduct('${product.id}')">
+Edit
+</button>
+
+<button
+class="btn btn-danger"
+onclick="deleteProduct('${product.id}')">
+Delete
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
 
 }
 
 
-function closeProductModal() {
+function openProductModal(){
 
-  document.getElementById("productModal")
-    .classList.remove("show");
+document
+.getElementById("productForm")
+.reset();
 
-}
+document
+.getElementById("productId")
+.value="";
 
+document
+.getElementById("productModalTitle")
+.textContent="Add Product";
 
-function editProduct(id) {
-
-  const product =
-    products.find(function(item) {
-
-      return String(item.id) === String(id);
-
-    });
-
-
-  if (!product) return;
-
-
-  document.getElementById("productId").value =
-    product.id;
-
-  document.getElementById("productCode").value =
-    product.code;
-
-  document.getElementById("productName").value =
-    product.name;
-
-  document.getElementById("productCategory").value =
-    product.category;
-
-  document.getElementById("productPrice").value =
-    product.price;
-
-  document.getElementById("productStock").value =
-    product.stock;
-
-  document.getElementById("reorderLevel").value =
-    product.reorderLevel;
-
-
-  document.getElementById("productModalTitle")
-    .textContent = "Edit Product";
-
-  document.getElementById("productModal")
-    .classList.add("show");
+document
+.getElementById("productModal")
+.classList.add("show");
 
 }
 
 
-document.getElementById("productForm")
-  .addEventListener("submit", function(e) {
+function closeProductModal(){
 
-    e.preventDefault();
-
-
-    const id =
-      document.getElementById("productId").value;
-
-
-    const product = {
-
-      id: id,
-
-      code:
-        document.getElementById("productCode").value,
-
-      name:
-        document.getElementById("productName").value,
-
-      category:
-        document.getElementById("productCategory").value,
-
-      price:
-        document.getElementById("productPrice").value,
-
-      stock:
-        document.getElementById("productStock").value,
-
-      reorderLevel:
-        document.getElementById("reorderLevel").value
-
-    };
-
-
-    const runner =
-      google.script.run
-        .withSuccessHandler(function(result) {
-
-          showSuccess(result.message);
-
-          closeProductModal();
-
-          loadData();
-
-        })
-        .withFailureHandler(showError);
-
-
-    if (id) {
-
-      runner.updateProduct(product);
-
-    } else {
-
-      runner.addProduct(product);
-
-    }
-
-  });
-
-
-function deleteProduct(id) {
-
-  if (!confirm(
-    "Are you sure you want to delete this product?"
-  )) {
-    return;
-  }
-
-
-  google.script.run
-
-    .withSuccessHandler(function(result) {
-
-      showSuccess(result.message);
-
-      loadData();
-
-    })
-
-    .withFailureHandler(showError)
-
-    .deleteProduct(id);
+document
+.getElementById("productModal")
+.classList.remove("show");
 
 }
 
 
-function filterProducts(search) {
+function editProduct(id){
 
-  search =
-    search.toLowerCase();
+const product=
+products.find(function(item){
+return String(item.id)===String(id);
+});
 
-
-  const filtered =
-    products.filter(function(product) {
-
-      return (
-
-        product.code.toLowerCase().includes(search) ||
-
-        product.name.toLowerCase().includes(search) ||
-
-        product.category.toLowerCase().includes(search)
-
-      );
-
-    });
+if(!product)return;
 
 
-  renderProducts(filtered);
-
-}
-
-
-/* =====================================================
-   CATEGORY MANAGEMENT
-===================================================== */
-
-function renderCategories() {
-
-  const table =
-    document.getElementById("categoryTable");
-
-  table.innerHTML = "";
+document.getElementById("productId").value=product.id;
+document.getElementById("productCode").value=product.code;
+document.getElementById("productName").value=product.name;
+document.getElementById("productCategory").value=product.category;
+document.getElementById("productPrice").value=product.price;
+document.getElementById("productStock").value=product.stock;
+document.getElementById("reorderLevel").value=product.reorderLevel;
 
 
-  if (categories.length === 0) {
+document
+.getElementById("productModalTitle")
+.textContent="Edit Product";
 
-    table.innerHTML =
-      `<tr><td colspan="4">No categories found.</td></tr>`;
-
-    return;
-  }
-
-
-  categories.forEach(function(category) {
-
-    table.innerHTML += `
-
-      <tr>
-
-        <td>${escapeHTML(category.name)}</td>
-
-        <td>${escapeHTML(category.description)}</td>
-
-        <td>${escapeHTML(category.createdAt)}</td>
-
-        <td>
-
-          <button
-            class="btn btn-edit"
-            onclick="editCategory('${category.id}')">
-            Edit
-          </button>
-
-          <button
-            class="btn btn-danger"
-            onclick="deleteCategory('${category.id}')">
-            Delete
-          </button>
-
-        </td>
-
-      </tr>
-
-    `;
-
-  });
+document
+.getElementById("productModal")
+.classList.add("show");
 
 }
 
 
-function openCategoryModal() {
+document
+.getElementById("productForm")
+.addEventListener("submit",function(e){
 
-  document.getElementById("categoryForm").reset();
+e.preventDefault();
 
-  document.getElementById("categoryId").value = "";
 
-  document.getElementById("categoryModalTitle")
-    .textContent = "Add Category";
+const id=
+document.getElementById("productId").value;
 
-  document.getElementById("categoryModal")
-    .classList.add("show");
+
+const product={
+
+id:id,
+
+code:
+document.getElementById("productCode").value,
+
+name:
+document.getElementById("productName").value,
+
+category:
+document.getElementById("productCategory").value,
+
+price:
+document.getElementById("productPrice").value,
+
+stock:
+document.getElementById("productStock").value,
+
+reorderLevel:
+document.getElementById("reorderLevel").value
+
+};
+
+
+const runner=
+google.script.run
+
+.withSuccessHandler(function(result){
+
+showSuccess(result.message);
+
+closeProductModal();
+
+loadData();
+
+})
+
+.withFailureHandler(showError);
+
+
+if(id){
+
+runner.updateProduct(product);
+
+}else{
+
+runner.addProduct(product);
+
+}
+
+});
+
+
+function deleteProduct(id){
+
+if(!confirm(
+"Are you sure you want to delete this product?"
+))return;
+
+
+google.script.run
+
+.withSuccessHandler(function(result){
+
+showSuccess(result.message);
+
+loadData();
+
+})
+
+.withFailureHandler(showError)
+
+.deleteProduct(id);
 
 }
 
 
-function closeCategoryModal() {
+function filterProducts(search){
 
-  document.getElementById("categoryModal")
-    .classList.remove("show");
-
-}
+search=search.toLowerCase();
 
 
-function editCategory(id) {
+const filtered=
+products.filter(function(product){
 
-  const category =
-    categories.find(function(item) {
+return(
 
-      return String(item.id) === String(id);
+String(product.code)
+.toLowerCase()
+.includes(search)
 
-    });
+||
+
+String(product.name)
+.toLowerCase()
+.includes(search)
+
+||
+
+String(product.category)
+.toLowerCase()
+.includes(search)
+
+);
+
+});
 
 
-  if (!category) return;
-
-
-  document.getElementById("categoryId").value =
-    category.id;
-
-  document.getElementById("categoryName").value =
-    category.name;
-
-  document.getElementById("categoryDescription").value =
-    category.description;
-
-
-  document.getElementById("categoryModalTitle")
-    .textContent = "Edit Category";
-
-  document.getElementById("categoryModal")
-    .classList.add("show");
+renderProducts(filtered);
 
 }
 
 
-document.getElementById("categoryForm")
-  .addEventListener("submit", function(e) {
+/* ================================
+   CATEGORIES
+================================ */
 
-    e.preventDefault();
+function renderCategories(){
 
+const table=
+document.getElementById("categoryTable");
 
-    const id =
-      document.getElementById("categoryId").value;
-
-
-    const category = {
-
-      id: id,
-
-      name:
-        document.getElementById("categoryName").value,
-
-      description:
-        document.getElementById("categoryDescription").value
-
-    };
+table.innerHTML="";
 
 
-    const runner =
-      google.script.run
-        .withSuccessHandler(function(result) {
+categories.forEach(function(category){
 
-          showSuccess(result.message);
+table.innerHTML+=`
 
-          closeCategoryModal();
+<tr>
 
-          loadData();
+<td>${escapeHTML(category.name)}</td>
 
-        })
-        .withFailureHandler(showError);
+<td>${escapeHTML(category.description)}</td>
 
+<td>${escapeHTML(category.createdAt)}</td>
 
-    if (id) {
+<td>
 
-      runner.updateCategory(category);
+<button
+class="btn btn-edit"
+onclick="editCategory('${category.id}')">
+Edit
+</button>
 
-    } else {
+<button
+class="btn btn-danger"
+onclick="deleteCategory('${category.id}')">
+Delete
+</button>
 
-      runner.addCategory(category);
+</td>
 
-    }
+</tr>
 
-  });
+`;
 
-
-function deleteCategory(id) {
-
-  if (!confirm(
-    "Are you sure you want to delete this category?"
-  )) {
-    return;
-  }
-
-
-  google.script.run
-
-    .withSuccessHandler(function(result) {
-
-      showSuccess(result.message);
-
-      loadData();
-
-    })
-
-    .withFailureHandler(showError)
-
-    .deleteCategory(id);
+});
 
 }
 
 
-/* =====================================================
-   PRODUCT SELECTS
-===================================================== */
+function openCategoryModal(){
 
-function populateProductSelects() {
+document
+.getElementById("categoryForm")
+.reset();
 
-  const stockInSelect =
-    document.getElementById("stockInProduct");
+document
+.getElementById("categoryId")
+.value="";
 
-  const stockOutSelect =
-    document.getElementById("stockOutProduct");
+document
+.getElementById("categoryModalTitle")
+.textContent="Add Category";
 
-
-  stockInSelect.innerHTML =
-    '<option value="">Select Product</option>';
-
-  stockOutSelect.innerHTML =
-    '<option value="">Select Product</option>';
-
-
-  products.forEach(function(product) {
-
-    const option = document.createElement("option");
-
-    option.value = product.id;
-
-    option.textContent =
-      product.code + " - " +
-      product.name +
-      " (Stock: " +
-      product.stock +
-      ")";
-
-
-    stockInSelect.appendChild(
-      option.cloneNode(true)
-    );
-
-    stockOutSelect.appendChild(
-      option
-    );
-
-  });
+document
+.getElementById("categoryModal")
+.classList.add("show");
 
 }
 
 
-function populateCategorySelect() {
+function closeCategoryModal(){
 
-  const select =
-    document.getElementById("productCategory");
-
-  select.innerHTML =
-    '<option value="">Select Category</option>';
-
-
-  categories.forEach(function(category) {
-
-    const option =
-      document.createElement("option");
-
-    option.value =
-      category.name;
-
-    option.textContent =
-      category.name;
-
-    select.appendChild(option);
-
-  });
+document
+.getElementById("categoryModal")
+.classList.remove("show");
 
 }
 
 
-/* =====================================================
+function editCategory(id){
+
+const category=
+categories.find(function(item){
+return String(item.id)===String(id);
+});
+
+if(!category)return;
+
+
+document.getElementById("categoryId").value=category.id;
+
+document.getElementById("categoryName").value=
+category.name;
+
+document.getElementById("categoryDescription").value=
+category.description;
+
+
+document
+.getElementById("categoryModalTitle")
+.textContent="Edit Category";
+
+document
+.getElementById("categoryModal")
+.classList.add("show");
+
+}
+
+
+document
+.getElementById("categoryForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+
+const id=
+document.getElementById("categoryId").value;
+
+
+const category={
+
+id:id,
+
+name:
+document.getElementById("categoryName").value,
+
+description:
+document.getElementById("categoryDescription").value
+
+};
+
+
+const runner=
+google.script.run
+
+.withSuccessHandler(function(result){
+
+showSuccess(result.message);
+
+closeCategoryModal();
+
+loadData();
+
+})
+
+.withFailureHandler(showError);
+
+
+if(id){
+
+runner.updateCategory(category);
+
+}else{
+
+runner.addCategory(category);
+
+}
+
+});
+
+
+function deleteCategory(id){
+
+if(!confirm(
+"Delete this category?"
+))return;
+
+
+google.script.run
+
+.withSuccessHandler(function(result){
+
+showSuccess(result.message);
+
+loadData();
+
+})
+
+.withFailureHandler(showError)
+
+.deleteCategory(id);
+
+}
+
+
+/* ================================
+   SELECT BOXES
+================================ */
+
+function populateProductSelects(){
+
+const stockIn=
+document.getElementById("stockInProduct");
+
+const stockOut=
+document.getElementById("stockOutProduct");
+
+
+stockIn.innerHTML=
+'<option value="">Select Product</option>';
+
+stockOut.innerHTML=
+'<option value="">Select Product</option>';
+
+
+products.forEach(function(product){
+
+const option=
+document.createElement("option");
+
+option.value=product.id;
+
+option.textContent=
+product.code+
+" - "+
+product.name+
+" (Stock: "+
+product.stock+
+")";
+
+
+stockIn.appendChild(
+option.cloneNode(true)
+);
+
+stockOut.appendChild(option);
+
+});
+
+}
+
+
+function populateCategorySelect(){
+
+const select=
+document.getElementById("productCategory");
+
+select.innerHTML=
+'<option value="">Select Category</option>';
+
+
+categories.forEach(function(category){
+
+const option=
+document.createElement("option");
+
+option.value=category.name;
+
+option.textContent=category.name;
+
+select.appendChild(option);
+
+});
+
+}
+
+
+/* ================================
    STOCK IN
-===================================================== */
+================================ */
 
-document.getElementById("stockInForm")
-  .addEventListener("submit", function(e) {
+document
+.getElementById("stockInForm")
+.addEventListener("submit",function(e){
 
-    e.preventDefault();
-
-
-    const transaction = {
-
-      productId:
-        document.getElementById("stockInProduct").value,
-
-      quantity:
-        document.getElementById("stockInQuantity").value,
-
-      supplier:
-        document.getElementById("supplier").value,
-
-      receivedBy:
-        document.getElementById("receivedBy").value,
-
-      remarks:
-        document.getElementById("stockInRemarks").value
-
-    };
+e.preventDefault();
 
 
-    google.script.run
+const transaction={
 
-      .withSuccessHandler(function(result) {
+productId:
+document.getElementById("stockInProduct").value,
 
-        showSuccess(result.message);
+quantity:
+document.getElementById("stockInQuantity").value,
 
-        document.getElementById("stockInForm").reset();
+supplier:
+document.getElementById("supplier").value,
 
-        loadData();
+receivedBy:
+document.getElementById("receivedBy").value,
 
-      })
+remarks:
+document.getElementById("stockInRemarks").value
 
-      .withFailureHandler(showError)
+};
 
-      .stockIn(transaction);
+
+google.script.run
+
+.withSuccessHandler(function(result){
+
+showSuccess(result.message);
+
+document
+.getElementById("stockInForm")
+.reset();
+
+loadData();
+
+})
+
+.withFailureHandler(showError)
+
+.stockIn(transaction);
 
 });
 
 
-function renderStockIn() {
+function renderStockIn(){
 
-  const table =
-    document.getElementById("stockInTable");
+const table=
+document.getElementById("stockInTable");
 
-  table.innerHTML = "";
+table.innerHTML="";
 
 
-  stockInData.slice().reverse()
-    .forEach(function(item) {
+stockInData
+.slice()
+.reverse()
+.forEach(function(item){
 
-      table.innerHTML += `
+table.innerHTML+=`
 
-        <tr>
+<tr>
 
-          <td>${escapeHTML(item.productName)}</td>
+<td>${escapeHTML(item.productName)}</td>
 
-          <td>${escapeHTML(item.supplier)}</td>
+<td>${escapeHTML(item.supplier)}</td>
 
-          <td>${item.quantity}</td>
+<td>${item.quantity}</td>
 
-          <td>${escapeHTML(item.date)}</td>
+<td>${escapeHTML(item.date)}</td>
 
-          <td>${escapeHTML(item.receivedBy)}</td>
+<td>${escapeHTML(item.receivedBy)}</td>
 
-        </tr>
+</tr>
 
-      `;
+`;
 
-    });
+});
 
 }
 
 
-/* =====================================================
+/* ================================
    STOCK OUT
-===================================================== */
+================================ */
 
-document.getElementById("stockOutForm")
-  .addEventListener("submit", function(e) {
+document
+.getElementById("stockOutForm")
+.addEventListener("submit",function(e){
 
-    e.preventDefault();
-
-
-    const transaction = {
-
-      productId:
-        document.getElementById("stockOutProduct").value,
-
-      quantity:
-        document.getElementById("stockOutQuantity").value,
-
-      soldBy:
-        document.getElementById("soldBy").value,
-
-      remarks:
-        document.getElementById("stockOutRemarks").value
-
-    };
+e.preventDefault();
 
 
-    google.script.run
+const transaction={
 
-      .withSuccessHandler(function(result) {
+productId:
+document.getElementById("stockOutProduct").value,
 
-        showSuccess(
-          result.message +
-          " Total: " +
-          peso(result.total)
-        );
+quantity:
+document.getElementById("stockOutQuantity").value,
 
-        document.getElementById("stockOutForm").reset();
+soldBy:
+document.getElementById("soldBy").value,
 
-        loadData();
+remarks:
+document.getElementById("stockOutRemarks").value
 
-      })
+};
 
-      .withFailureHandler(showError)
 
-      .stockOut(transaction);
+google.script.run
+
+.withSuccessHandler(function(result){
+
+showSuccess(
+result.message+
+" Total: "+
+peso(result.total)
+);
+
+document
+.getElementById("stockOutForm")
+.reset();
+
+loadData();
+
+})
+
+.withFailureHandler(showError)
+
+.stockOut(transaction);
 
 });
 
 
-function renderStockOut() {
+function renderStockOut(){
 
-  const table =
-    document.getElementById("stockOutTable");
+const table=
+document.getElementById("stockOutTable");
 
-  table.innerHTML = "";
+table.innerHTML="";
 
 
-  stockOutData.slice().reverse()
-    .forEach(function(item) {
+stockOutData
+.slice()
+.reverse()
+.forEach(function(item){
 
-      table.innerHTML += `
+table.innerHTML+=`
 
-        <tr>
+<tr>
 
-          <td>${escapeHTML(item.productName)}</td>
+<td>${escapeHTML(item.productName)}</td>
 
-          <td>${item.quantity}</td>
+<td>${item.quantity}</td>
 
-          <td>${peso(item.price)}</td>
+<td>${peso(item.price)}</td>
 
-          <td>${peso(item.total)}</td>
+<td>${peso(item.total)}</td>
 
-          <td>${escapeHTML(item.date)}</td>
+<td>${escapeHTML(item.date)}</td>
 
-          <td>${escapeHTML(item.soldBy)}</td>
+<td>${escapeHTML(item.soldBy)}</td>
 
-        </tr>
+</tr>
 
-      `;
+`;
 
-    });
+});
 
 }
 
 
-/* =====================================================
+/* ================================
    INVENTORY
-===================================================== */
+================================ */
 
-function renderInventory(list) {
+function renderInventory(list){
 
-  const data =
-    list || products;
+const data=list || products;
 
+const table=
+document.getElementById("inventoryTable");
 
-  const table =
-    document.getElementById("inventoryTable");
-
-  table.innerHTML = "";
+table.innerHTML="";
 
 
-  data.forEach(function(product) {
+data.forEach(function(product){
 
-    table.innerHTML += `
+table.innerHTML+=`
 
-      <tr>
+<tr>
 
-        <td>${escapeHTML(product.code)}</td>
+<td>${escapeHTML(product.code)}</td>
 
-        <td>${escapeHTML(product.name)}</td>
+<td>${escapeHTML(product.name)}</td>
 
-        <td>${escapeHTML(product.category)}</td>
+<td>${escapeHTML(product.category)}</td>
 
-        <td>${peso(product.price)}</td>
+<td>${peso(product.price)}</td>
 
-        <td>${product.stock}</td>
+<td>${product.stock}</td>
 
-        <td>${product.reorderLevel}</td>
+<td>${product.reorderLevel}</td>
 
-        <td>
-          ${statusBadge(product.status)}
-        </td>
+<td>${statusBadge(product.status)}</td>
 
-      </tr>
+</tr>
 
-    `;
+`;
 
-  });
+});
 
 }
 
 
-function filterInventory(search) {
+function filterInventory(search){
 
-  search =
-    search.toLowerCase();
-
-
-  const filtered =
-    products.filter(function(product) {
-
-      return (
-
-        product.code.toLowerCase().includes(search) ||
-
-        product.name.toLowerCase().includes(search) ||
-
-        product.category.toLowerCase().includes(search)
-
-      );
-
-    });
+search=search.toLowerCase();
 
 
-  renderInventory(filtered);
+const filtered=
+products.filter(function(product){
+
+return(
+
+String(product.code)
+.toLowerCase()
+.includes(search)
+
+||
+
+String(product.name)
+.toLowerCase()
+.includes(search)
+
+||
+
+String(product.category)
+.toLowerCase()
+.includes(search)
+
+);
+
+});
+
+
+renderInventory(filtered);
 
 }
 
 
-/* =====================================================
+/* ================================
    REPORTS
-===================================================== */
+================================ */
 
-function generateReport() {
+function generateReport(){
 
-  const startDate =
-    document.getElementById("reportStart").value;
+const startDate=
+document.getElementById("reportStart").value;
 
-  const endDate =
-    document.getElementById("reportEnd").value;
-
-
-  google.script.run
-
-    .withSuccessHandler(function(data) {
-
-      document.getElementById("reportStockIn")
-        .textContent = data.totalStockIn;
-
-      document.getElementById("reportStockOut")
-        .textContent = data.totalStockOut;
-
-      document.getElementById("reportSales")
-        .textContent = peso(data.totalSales);
+const endDate=
+document.getElementById("reportEnd").value;
 
 
-      const table =
-        document.getElementById("reportTable");
+google.script.run
 
-      table.innerHTML = "";
+.withSuccessHandler(function(data){
+
+document.getElementById("reportStockIn")
+.textContent=data.totalStockIn;
+
+document.getElementById("reportStockOut")
+.textContent=data.totalStockOut;
+
+document.getElementById("reportSales")
+.textContent=peso(data.totalSales);
 
 
-      data.stockOut
-        .slice()
-        .reverse()
-        .forEach(function(item) {
+const table=
+document.getElementById("reportTable");
 
-          table.innerHTML += `
+table.innerHTML="";
 
-            <tr>
 
-              <td>
-                ${escapeHTML(item.productName)}
-              </td>
+data.stockOut
+.slice()
+.reverse()
+.forEach(function(item){
 
-              <td>
-                ${item.quantity}
-              </td>
+table.innerHTML+=`
 
-              <td>
-                ${peso(item.price)}
-              </td>
+<tr>
 
-              <td>
-                ${peso(item.total)}
-              </td>
+<td>${escapeHTML(item.productName)}</td>
 
-              <td>
-                ${escapeHTML(item.date)}
-              </td>
+<td>${item.quantity}</td>
 
-            </tr>
+<td>${peso(item.price)}</td>
 
-          `;
+<td>${peso(item.total)}</td>
 
-        });
+<td>${escapeHTML(item.date)}</td>
 
-    })
+</tr>
 
-    .withFailureHandler(showError)
+`;
 
-    .getReports(startDate, endDate);
+});
+
+})
+
+.withFailureHandler(showError)
+
+.getReports(startDate,endDate);
 
 }
 
 
-/* =====================================================
-   HELPER FUNCTIONS
-===================================================== */
+/* ================================
+   HELPERS
+================================ */
 
-function peso(value) {
+function peso(value){
 
-  return "₱" +
-    Number(value || 0)
-      .toLocaleString(
-        "en-PH",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }
-      );
+return "₱"+
+Number(value||0)
+.toLocaleString(
+"en-PH",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
 
 }
 
 
-function statusBadge(status) {
+function statusBadge(status){
 
-  let className = "in-stock";
+let className="in-stock";
 
+if(status==="Low Stock"){
+className="low-stock";
+}
 
-  if (status === "Low Stock") {
-    className = "low-stock";
-  }
+if(status==="Out of Stock"){
+className="out-stock";
+}
 
-
-  if (status === "Out of Stock") {
-    className = "out-stock";
-  }
-
-
-  return `
-    <span class="status ${className}">
-      ${escapeHTML(status)}
-    </span>
-  `;
+return`
+<span class="status ${className}">
+${escapeHTML(status)}
+</span>
+`;
 
 }
 
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
-  if (value === null ||
-      value === undefined) {
-    return "";
-  }
+if(value===null||
+value===undefined){
+return "";
+}
 
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
-/* =====================================================
+/* ================================
    NOTIFICATIONS
-===================================================== */
+================================ */
 
-function showSuccess(message) {
+function showSuccess(message){
 
-  const notification =
-    document.getElementById("notification");
+const box=
+document.getElementById("notification");
 
+box.textContent=message;
 
-  notification.textContent =
-    message;
+box.className="success";
 
-  notification.className =
-    "success";
-
-  notification.style.display =
-    "block";
+box.style.display="block";
 
 
-  setTimeout(function() {
+setTimeout(function(){
 
-    notification.style.display =
-      "none";
+box.style.display="none";
 
-  }, 3000);
+},3000);
 
 }
 
 
-function showError(error) {
+function showError(error){
 
-  const notification =
-    document.getElementById("notification");
+const box=
+document.getElementById("notification");
 
+box.textContent=
+error.message ||
+"Something went wrong.";
 
-  notification.textContent =
-    error.message ||
-    "An error occurred.";
+box.className="error";
 
-  notification.className =
-    "error";
-
-  notification.style.display =
-    "block";
+box.style.display="block";
 
 
-  setTimeout(function() {
+setTimeout(function(){
 
-    notification.style.display =
-      "none";
+box.style.display="none";
 
-  }, 5000);
+},5000);
 
 }
 
