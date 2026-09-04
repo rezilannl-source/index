@@ -2604,4 +2604,758 @@ async function loadSales() {
 
   try {
 
-    const result
+    const result =
+      await apiGet(
+        "sales"
+      );
+
+
+    const table =
+      document
+        .getElementById(
+          "salesTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (
+      !result.sales ||
+      result.sales.length === 0
+    ) {
+
+      table.innerHTML =
+        `<tr>
+          <td colspan="7">
+            No sales records found.
+          </td>
+        </tr>`;
+
+      return;
+
+    }
+
+
+    result.sales.forEach(
+      function(sale) {
+
+        table.innerHTML +=
+
+          `<tr>
+
+            <td>
+              ${escapeHtml(sale.saleId)}
+            </td>
+
+            <td>
+              ${escapeHtml(sale.productName)}
+            </td>
+
+            <td>
+              ${sale.quantity}
+            </td>
+
+            <td>
+              ${formatCurrency(sale.unitPrice)}
+            </td>
+
+            <td>
+              ${formatCurrency(sale.total)}
+            </td>
+
+            <td>
+              ${escapeHtml(sale.date)}
+            </td>
+
+            <td>
+              ${escapeHtml(sale.user)}
+            </td>
+
+          </tr>`;
+
+      }
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Sales:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SALE MODAL
+========================================================= */
+
+async function openSaleModal() {
+
+  await populateProductSelect(
+    "saleProduct"
+  );
+
+
+  document
+    .getElementById(
+      "saleQuantity"
+    )
+    .value = "";
+
+
+  document
+    .getElementById(
+      "saleModal"
+    )
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+/* =========================================================
+   RECORD SALE
+========================================================= */
+
+document
+  .getElementById(
+    "saleForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const productId =
+        document
+          .getElementById(
+            "saleProduct"
+          )
+          .value;
+
+
+      const quantity =
+        document
+          .getElementById(
+            "saleQuantity"
+          )
+          .value;
+
+
+      if (
+        !productId ||
+        Number(quantity) <= 0
+      ) {
+
+        alert(
+          "Please enter a valid product and quantity."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const result =
+          await apiPost({
+
+            action:
+              "recordSale",
+
+            productId:
+              productId,
+
+            quantity:
+              quantity,
+
+            user:
+              currentUser?.username ||
+              "admin"
+
+          });
+
+
+        alert(
+          result.message ||
+          "Sale recorded."
+        );
+
+
+        if (
+          result.success
+        ) {
+
+          closeModal(
+            "saleModal"
+          );
+
+
+          this.reset();
+
+
+          loadSales();
+
+          loadDashboard();
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Record Sale:",
+          error
+        );
+
+
+        alert(
+          "Unable to record sale."
+        );
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   PRODUCT SELECT
+========================================================= */
+
+async function populateProductSelect(
+  selectId
+) {
+
+  const select =
+    document
+      .getElementById(
+        selectId
+      );
+
+
+  select.innerHTML =
+    `<option value="">
+      Loading products...
+    </option>`;
+
+
+  try {
+
+    const result =
+      await apiGet(
+        "products"
+      );
+
+
+    select.innerHTML =
+      `<option value="">
+        Select Product
+      </option>`;
+
+
+    if (
+      !result.products ||
+      result.products.length === 0
+    ) {
+
+      select.innerHTML =
+        `<option value="">
+          No products available
+        </option>`;
+
+      return;
+
+    }
+
+
+    result.products.forEach(
+      function(product) {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          product.productId;
+
+
+        option.textContent =
+          product.productName +
+          " — Stock: " +
+          product.quantity;
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Products:",
+      error
+    );
+
+
+    select.innerHTML =
+      `<option value="">
+        Unable to load products
+      </option>`;
+
+  }
+
+}
+
+
+/* =========================================================
+   LOW STOCK
+========================================================= */
+
+async function loadLowStock() {
+
+  try {
+
+    const result =
+      await apiGet(
+        "lowstock"
+      );
+
+
+    const table =
+      document
+        .getElementById(
+          "lowStockTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (
+      !result.products ||
+      result.products.length === 0
+    ) {
+
+      table.innerHTML =
+        `<tr>
+
+          <td colspan="6">
+            No low-stock products.
+          </td>
+
+        </tr>`;
+
+      return;
+
+    }
+
+
+    result.products.forEach(
+      function(product) {
+
+        let badge =
+          "badge-low";
+
+
+        let status =
+          "Low Stock";
+
+
+        if (
+          Number(product.quantity) === 0
+        ) {
+
+          badge =
+            "badge-out";
+
+          status =
+            "Out of Stock";
+
+        }
+
+
+        table.innerHTML +=
+
+          `<tr>
+
+            <td>
+              ${escapeHtml(product.productId)}
+            </td>
+
+            <td>
+              ${escapeHtml(product.productName)}
+            </td>
+
+            <td>
+              ${escapeHtml(product.category)}
+            </td>
+
+            <td>
+              ${product.quantity}
+            </td>
+
+            <td>
+              ${product.reorderLevel}
+            </td>
+
+            <td>
+
+              <span
+                class="badge ${badge}"
+              >
+                ${status}
+              </span>
+
+            </td>
+
+          </tr>`;
+
+      }
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Low Stock:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+async function loadReport() {
+
+  try {
+
+    const result =
+      await apiGet(
+        "report"
+      );
+
+
+    if (
+      !result.success
+    ) {
+
+      console.error(
+        result.message
+      );
+
+      return;
+
+    }
+
+
+    document
+      .getElementById(
+        "inventoryValue"
+      )
+      .innerText =
+        formatCurrency(
+          result.inventoryValue || 0
+        );
+
+
+    document
+      .getElementById(
+        "reportSales"
+      )
+      .innerText =
+        formatCurrency(
+          result.totalSales || 0
+        );
+
+
+    document
+      .getElementById(
+        "itemsSold"
+      )
+      .innerText =
+        result.itemsSold || 0;
+
+
+    document
+      .getElementById(
+        "stockTransactions"
+      )
+      .innerText =
+        result.stockTransactions || 0;
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Report:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   MODAL FUNCTIONS
+========================================================= */
+
+function closeModal(
+  modalId
+) {
+
+  document
+    .getElementById(
+      modalId
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    if (
+      event.target.classList.contains(
+        "modal"
+      )
+    ) {
+
+      event.target.classList.remove(
+        "show"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+  value
+) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
+    return "";
+
+  }
+
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+========================================================= */
+
+function escapeAttribute(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+
+    .replace(
+      /\\/g,
+      "\\\\"
+    )
+
+    .replace(
+      /'/g,
+      "\\'"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    );
+
+}
+
+
+/* =========================================================
+   CURRENCY FORMAT
+========================================================= */
+
+function formatCurrency(
+  value
+) {
+
+  const number =
+    Number(value) || 0;
+
+
+  return number.toLocaleString(
+    "en-PH",
+    {
+      style:
+        "currency",
+
+      currency:
+        "PHP",
+
+      minimumFractionDigits:
+        2
+    }
+  );
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    /*
+     * If the user is already logged in,
+     * openApplication() handles the dashboard.
+     */
+
+    if (
+      currentUser
+    ) {
+
+      openApplication();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   KEYBOARD SUPPORT
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      document
+        .querySelectorAll(
+          ".modal.show"
+        )
+        .forEach(
+          function(modal) {
+
+            modal.classList.remove(
+              "show"
+            );
+
+          }
+        );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   PERIODIC DASHBOARD REFRESH
+========================================================= */
+
+setInterval(
+  function() {
+
+    if (
+      currentUser &&
+      document
+        .getElementById(
+          "app"
+        )
+        .style.display !==
+        "none"
+    ) {
+
+      loadDashboard();
+
+    }
+
+  },
+  60000
+);
+
+</script>
+
+</body>
+
+</html>
