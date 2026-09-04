@@ -1,1117 +1,514 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-  <title>Products - Mini Mart Inventory</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      background: #f4f5f7;
-
-      color: #222;
-
-      min-height: 100vh;
-    }
-
-
-    /* =========================================
-       SIDEBAR
-       ========================================= */
-
-    .sidebar {
-
-      position: fixed;
-
-      left: 0;
-      top: 0;
-
-      width: 250px;
-
-      height: 100vh;
-
-      background: #281038;
-
-      color: white;
-
-      z-index: 1000;
-
-      overflow-y: auto;
-    }
-
-
-    .logo {
-
-      height: 70px;
-
-      display: flex;
-
-      align-items: center;
-
-      padding: 0 25px;
-
-      font-size: 21px;
-
-      font-weight: bold;
-
-      border-bottom:
-        1px solid
-        rgba(255,255,255,0.12);
-    }
-
-    .logo .inventory {
-      color: #a66cff;
-    }
-
-
-    .menu {
-
-      padding: 25px 0;
-    }
-
-
-    .menu a {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 12px;
-
-      padding: 15px 25px;
-
-      color: #eeeeee;
-
-      text-decoration: none;
-
-      font-size: 16px;
-
-      transition: 0.2s;
-    }
-
-
-    .menu a:hover {
-
-      background:
-        rgba(255,255,255,0.08);
-
-    }
-
-
-    .menu a.active {
-
-      background:
-        rgba(255,255,255,0.13);
-
-      border-right:
-        4px solid
-        #ff2d55;
-
-    }
-
-
-    .menu-icon {
-
-      width: 20px;
-
-      text-align: center;
-
-      font-size: 18px;
-    }
-
-
-    /* =========================================
-       MAIN AREA
-       ========================================= */
-
-    .main {
-
-      margin-left: 250px;
-
-      min-height: 100vh;
-    }
-
-
-    /* =========================================
-       TOP BAR
-       ========================================= */
-
-    .topbar {
-
-      height: 70px;
-
-      background: white;
-
-      border-bottom:
-        1px solid
-        #ddd;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      padding: 0 30px;
-    }
-
-
-    .page-title {
-
-      font-size: 26px;
-
-      font-weight: bold;
-
-      color: #241036;
-    }
-
-
-    .user-area {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 15px;
-
-      font-weight: bold;
-    }
-
-
-    .username {
-
-      color: #222;
-    }
-
-
-    .logout-btn {
-
-      border: none;
-
-      background: #ef2948;
-
-      color: white;
-
-      padding: 10px 18px;
-
-      border-radius: 6px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-    }
-
-
-    .logout-btn:hover {
-
-      background: #d91f3c;
-
-    }
-
-
-    /* =========================================
-       CONTENT
-       ========================================= */
-
-    .content {
-
-      padding: 30px;
-    }
-
-
-    .products-card {
-
-      background: white;
-
-      border-radius: 14px;
-
-      padding: 25px;
-
-      box-shadow:
-        0 3px 15px
-        rgba(0,0,0,0.08);
-    }
-
-
-    .products-header {
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      margin-bottom: 25px;
-
-      gap: 20px;
-
-      flex-wrap: wrap;
-    }
-
-
-    .products-heading h2 {
-
-      font-size: 25px;
-
-      color: #111;
-
-      margin-bottom: 5px;
-    }
-
-
-    .products-heading p {
-
-      color: #666;
-
-      font-size: 14px;
-    }
-
-
-    .add-btn {
-
-      background: #ef2948;
-
-      color: white;
-
-      border: none;
-
-      padding: 12px 20px;
-
-      border-radius: 7px;
-
-      cursor: pointer;
-
-      font-weight: bold;
-
-      font-size: 14px;
-    }
-
-
-    .add-btn:hover {
-
-      background: #d91f3c;
-
-    }
-
-
-    /* =========================================
-       STAT CARDS
-       ========================================= */
-
-    .stats {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      gap: 15px;
-
-      margin-bottom: 25px;
-    }
-
-
-    .stat-card {
-
-      border: 1px solid #e4e4e4;
-
-      border-radius: 10px;
-
-      padding: 18px;
-
-      background: #fff;
-    }
-
-
-    .stat-label {
-
-      color: #777;
-
-      font-size: 13px;
-
-      margin-bottom: 8px;
-    }
-
-
-    .stat-number {
-
-      font-size: 27px;
-
-      font-weight: bold;
-
-      color: #281038;
-    }
-
-
-    /* =========================================
-       TOOLBAR
-       ========================================= */
-
-    .toolbar {
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 12px;
-
-      margin-bottom: 20px;
-
-      flex-wrap: wrap;
-    }
-
-
-    .search-box {
-
-      flex: 1;
-
-      min-width: 230px;
-
-      position: relative;
-    }
-
-
-    .search-box input {
-
-      width: 100%;
-
-      padding: 12px 15px 12px 40px;
-
-      border:
-        1px solid
-        #d4d4d4;
-
-      border-radius: 7px;
-
-      font-size: 14px;
-
-      outline: none;
-    }
-
-
-    .search-box input:focus {
-
-      border-color: #281038;
-
-    }
-
-
-    .search-icon {
-
-      position: absolute;
-
-      left: 14px;
-
-      top: 50%;
-
-      transform:
-        translateY(-50%);
-
-      color: #777;
-    }
-
-
-    .filter-select {
-
-      min-width: 180px;
-
-      padding: 12px;
-
-      border:
-        1px solid
-        #d4d4d4;
-
-      border-radius: 7px;
-
-      background: white;
-
-      outline: none;
-    }
-
-
-    /* =========================================
-       TABLE
-       ========================================= */
-
-    .table-container {
-
-      width: 100%;
-
-      overflow-x: auto;
-    }
-
-
-    table {
-
-      width: 100%;
-
-      border-collapse: collapse;
-
-      min-width: 950px;
-    }
-
-
-    thead {
-
-      background: #f7f7f8;
-    }
-
-
-    th {
-
-      text-align: left;
-
-      padding: 14px;
-
-      font-size: 13px;
-
-      color: #555;
-
-      border-bottom:
-        1px solid
-        #ddd;
-
-      white-space: nowrap;
-    }
-
-
-    td {
-
-      padding: 15px 14px;
-
-      border-bottom:
-        1px solid
-        #eeeeee;
-
-      font-size: 14px;
-
-      vertical-align: middle;
-    }
-
-
-    tbody tr:hover {
-
-      background: #fafafa;
-
-    }
-
-
-    .product-name {
-
-      font-weight: bold;
-
-      color: #281038;
-    }
-
-
-    .price {
-
-      font-weight: bold;
-    }
-
-
-    /* =========================================
-       STATUS
-       ========================================= */
-
-    .status {
-
-      display: inline-block;
-
-      padding: 6px 10px;
-
-      border-radius: 20px;
-
-      font-size: 12px;
-
-      font-weight: bold;
-
-      white-space: nowrap;
-    }
-
-
-    .status-in {
-
-      background: #dff7e7;
-
-      color: #157347;
-    }
-
-
-    .status-low {
-
-      background: #fff1cc;
-
-      color: #9a6700;
-    }
-
-
-    .status-out {
-
-      background: #ffe0e0;
-
-      color: #b42318;
-    }
-
-
-    /* =========================================
-       ACTION BUTTONS
-       ========================================= */
-
-    .actions {
-
-      display: flex;
-
-      gap: 7px;
-    }
-
-
-    .action-btn {
-
-      border: none;
-
-      border-radius: 5px;
-
-      padding: 7px 10px;
-
-      cursor: pointer;
-
-      font-size: 12px;
-
-      font-weight: bold;
-    }
-
-
-    .edit-btn {
-
-      background: #eee5ff;
-
-      color: #5b20a6;
-    }
-
-
-    .edit-btn:hover {
-
-      background: #dfcfff;
-
-    }
-
-
-    .delete-btn {
-
-      background: #ffe5e5;
-
-      color: #c52222;
-    }
-
-
-    .delete-btn:hover {
-
-      background: #ffd0d0;
-
-    }
-
-
-    /* =========================================
-       EMPTY STATE
-       ========================================= */
-
-    .empty {
-
-      text-align: center;
-
-      padding: 50px 20px;
-
-      color: #777;
-
-      display: none;
-    }
-
-
-    .empty-icon {
-
-      font-size: 45px;
-
-      margin-bottom: 10px;
-    }
-
-
-    /* =========================================
-       LOADING
-       ========================================= */
-
-    .loading {
-
-      text-align: center;
-
-      padding: 40px;
-
-      color: #777;
-    }
-
-
-    .spinner {
-
-      width: 35px;
-
-      height: 35px;
-
-      border:
-        4px solid
-        #eee;
-
-      border-top-color:
-        #281038;
-
-      border-radius: 50%;
-
-      animation:
-        spin 0.8s linear infinite;
-
-      margin:
-        0 auto 12px;
-    }
-
-
-    @keyframes spin {
-
-      to {
-        transform:
-          rotate(360deg);
-      }
-
-    }
-
-
-    /* =========================================
-       MODAL
-       ========================================= */
-
-    .modal {
-
-      display: none;
-
-      position: fixed;
-
-      inset: 0;
-
-      background:
-        rgba(0,0,0,0.55);
-
-      z-index: 2000;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-    }
-
-
-    .modal.show {
-
-      display: flex;
-
-    }
-
-
-    .modal-card {
-
-      background: white;
-
-      width: 100%;
-
-      max-width: 650px;
-
-      max-height: 90vh;
-
-      overflow-y: auto;
-
-      border-radius: 12px;
-
-      box-shadow:
-        0 10px 40px
-        rgba(0,0,0,0.25);
-    }
-
-
-    .modal-header {
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      padding: 20px 25px;
-
-      border-bottom:
-        1px solid
-        #eee;
-    }
-
-
-    .modal-header h3 {
-
-      font-size: 21px;
-
-      color: #281038;
-    }
-
-
-    .close-btn {
-
-      border: none;
-
-      background: transparent;
-
-      font-size: 25px;
-
-      cursor: pointer;
-
-      color: #777;
-    }
-
-
-    .modal-body {
-
-      padding: 25px;
-    }
-
-
-    .form-grid {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
-      gap: 18px;
-    }
-
-
-    .form-group {
-
-      display: flex;
-
-      flex-direction: column;
-
-      gap: 7px;
-    }
-
-
-    .form-group.full {
-
-      grid-column:
-        1 / -1;
-    }
-
-
-    .form-group label {
-
-      font-size: 13px;
-
-      font-weight: bold;
-
-      color: #333;
-    }
-
-
-    .form-group input,
-    .form-group select {
-
-      width: 100%;
-
-      padding: 11px 12px;
-
-      border:
-        1px solid
-        #d2d2d2;
-
-      border-radius: 6px;
-
-      font-size: 14px;
-
-      outline: none;
-    }
-
-
-    .form-group input:focus,
-    .form-group select:focus {
-
-      border-color: #281038;
-
-    }
-
-
-    .modal-footer {
-
-      padding: 18px 25px;
-
-      border-top:
-        1px solid
-        #eee;
-
-      display: flex;
-
-      justify-content: flex-end;
-
-      gap: 10px;
-    }
-
-
-    .cancel-btn {
-
-      padding: 11px 18px;
-
-      border:
-        1px solid
-        #ccc;
-
-      background: white;
-
-      border-radius: 6px;
-
-      cursor: pointer;
-
-      font-weight: bold;
-    }
-
-
-    .save-btn {
-
-      padding: 11px 20px;
-
-      border: none;
-
-      background: #ef2948;
-
-      color: white;
-
-      border-radius: 6px;
-
-      cursor: pointer;
-
-      font-weight: bold;
-    }
-
-
-    .save-btn:hover {
-
-      background: #d91f3c;
-
-    }
-
-
-    .save-btn:disabled {
-
-      opacity: 0.6;
-
-      cursor: not-allowed;
-    }
-
-
-    /* =========================================
-       TOAST
-       ========================================= */
-
-    .toast {
-
-      position: fixed;
-
-      right: 25px;
-
-      bottom: 25px;
-
-      min-width: 280px;
-
-      max-width: 400px;
-
-      background: #281038;
-
-      color: white;
-
-      padding: 15px 18px;
-
-      border-radius: 8px;
-
-      box-shadow:
-        0 5px 20px
-        rgba(0,0,0,0.2);
-
-      transform:
-        translateY(100px);
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: 0.3s;
-
-      z-index: 3000;
-    }
-
-
-    .toast.show {
-
-      transform:
-        translateY(0);
-
-      opacity: 1;
-
-    }
-
-
-    .toast.success {
-
-      background: #157347;
-
-    }
-
-
-    .toast.error {
-
-      background: #b42318;
-
-    }
-
-
-    /* =========================================
-       MOBILE
-       ========================================= */
-
-    @media (max-width: 900px) {
-
-      .sidebar {
-
-        width: 210px;
-
-      }
-
-      .main {
-
-        margin-left: 210px;
-
-      }
-
-      .stats {
-
-        grid-template-columns:
-          repeat(2, 1fr);
-
-      }
-
-    }
-
-
-    @media (max-width: 650px) {
-
-      .sidebar {
-
-        position: relative;
-
-        width: 100%;
-
-        height: auto;
-
-      }
-
-      .main {
-
-        margin-left: 0;
-
-      }
-
-      .menu {
-
-        display: flex;
-
-        overflow-x: auto;
-
-        padding: 0;
-
-      }
-
-      .menu a {
-
-        min-width: 130px;
-
-      }
-
-      .topbar {
-
-        padding: 0 15px;
-
-      }
-
-      .content {
-
-        padding: 15px;
-
-      }
-
-      .stats {
-
-        grid-template-columns: 1fr 1fr;
-
-      }
-
-      .form-grid {
-
-        grid-template-columns: 1fr;
-
-      }
-
-      .form-group.full {
-
-        grid-column: auto;
-
-      }
-
-      .username {
-
-        display: none;
-
-      }
-
-    }
-
-
-    @media (max-width: 420px) {
-
-      .stats {
-
-        grid-template-columns: 1fr;
-
-      }
-
-      .products-card {
-
-        padding: 16px;
-
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Mini-Mart Inventory System</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #222;
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    linear-gradient(
+      135deg,
+      #1d4ed8,
+      #2563eb,
+      #60a5fa
+    );
+}
+
+.login-card {
+  width: 400px;
+  max-width: 92%;
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.2);
+}
+
+.login-logo {
+  text-align: center;
+  font-size: 55px;
+  margin-bottom: 10px;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #2563eb;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #1d4ed8;
+}
+
+.login-message {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   APPLICATION
+===================================================== */
+
+.app {
+  display: none;
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 245px;
+  background: #111827;
+  color: white;
+  padding: 20px 15px;
+  overflow-y: auto;
+}
+
+.logo {
+  padding: 10px;
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.nav-item {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #d1d5db;
+  text-align: left;
+  padding: 13px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: #2563eb;
+  color: white;
+}
+
+.logout-btn {
+  margin-top: 25px;
+  color: #fca5a5;
+}
+
+.main {
+  margin-left: 245px;
+  min-height: 100vh;
+}
+
+.topbar {
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+}
+
+.topbar-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.content {
+  padding: 25px;
+}
+
+
+/* =====================================================
+   PAGES
+===================================================== */
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.page-description {
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+
+/* =====================================================
+   DASHBOARD CARDS
+===================================================== */
+
+.cards {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 13px;
+  box-shadow:
+    0 2px 10px rgba(0,0,0,.05);
+}
+
+.card-label {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.card-value {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-success {
+  background: #16a34a;
+  color: white;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-secondary {
+  background: #6b7280;
+  color: white;
+}
+
+.btn:hover {
+  opacity: .9;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table-container {
+  background: white;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow:
+    0 2px 10px rgba(0,0,0,.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 13px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+th {
+  background: #f9fafb;
+  font-size: 13px;
+}
+
+td {
+  font-size: 14px;
+}
+
+tr:hover {
+  background: #f9fafb;
+}
+
+
+/* =====================================================
+   BADGES
+===================================================== */
+
+.badge {
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-low {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-out {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  background: white;
+  width: 500px;
+  max-width: 94%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.close {
+  border: none;
+  background: transparent;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   REPORT
+===================================================== */
+
+.report-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, 1fr);
+  gap: 20px;
+}
+
+.report-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .cards {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .sidebar {
+    width: 70px;
+    padding: 15px 8px;
+  }
+
+  .logo {
+    font-size: 0;
+    text-align: center;
+  }
+
+  .logo:first-letter {
+    font-size: 25px;
+  }
+
+  .nav-item {
+    text-align: center;
+    font-size: 0;
+  }
+
+  .nav-item::first-letter {
+    font-size: 20px;
+  }
+
+  .main {
+    margin-left: 70px;
+  }
+
+  .cards {
+    grid-template-columns:
+      1fr;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .topbar {
+    padding: 0 15px;
+  }
+
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+</style>
 
 </head>
 
@@ -1119,233 +516,296 @@
 <body>
 
 
-  <!-- =========================================
-       SIDEBAR
-       ========================================= -->
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
+
+<div
+  id="loginScreen"
+  class="login-screen"
+>
+
+  <div class="login-card">
+
+    <div class="login-logo">
+      🛒
+    </div>
+
+    <div class="login-title">
+      Mini-Mart Inventory
+    </div>
+
+    <div class="login-subtitle">
+      Admin Login Portal
+    </div>
+
+
+    <form
+      id="loginForm"
+    >
+
+      <div class="form-group">
+
+        <label>
+          Username
+        </label>
+
+        <input
+          id="username"
+          type="text"
+          placeholder="Enter username"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter password"
+          required
+        >
+
+      </div>
+
+
+      <button
+        class="login-btn"
+        type="submit"
+      >
+        Login
+      </button>
+
+    </form>
+
+
+    <div
+      id="loginMessage"
+      class="login-message"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div
+  id="app"
+  class="app"
+>
+
+
+  <!-- SIDEBAR -->
 
   <aside class="sidebar">
 
     <div class="logo">
-
-      Mini Mart
-      <span class="inventory">
-        &nbsp;Inventory
-      </span>
-
+      🛒 Mini-Mart
     </div>
 
 
-    <nav class="menu">
-
-      <a href="dashboard.html">
-
-        <span class="menu-icon">📊</span>
-
-        Dashboard
-
-      </a>
+    <button
+      class="nav-item active"
+      onclick="showPage('dashboard', this)"
+    >
+      📊 Dashboard
+    </button>
 
 
-      <a href="products.html"
-         class="active">
-
-        <span class="menu-icon">📦</span>
-
-        Products
-
-      </a>
+    <button
+      class="nav-item"
+      onclick="showPage('products', this)"
+    >
+      📦 Products
+    </button>
 
 
-      <a href="stock.html">
-
-        <span class="menu-icon">🛒</span>
-
-        Inventory
-
-      </a>
-
-
-      <a href="categories.html">
-
-        <span class="menu-icon">📁</span>
-
-        Categories
-
-      </a>
+    <button
+      class="nav-item"
+      onclick="showPage('stock', this)"
+    >
+      📥 Stock
+    </button>
 
 
-      <a href="suppliers.html">
-
-        <span class="menu-icon">🚚</span>
-
-        Suppliers
-
-      </a>
-
-
-      <a href="reports.html">
-
-        <span class="menu-icon">📈</span>
-
-        Reports
-
-      </a>
+    <button
+      class="nav-item"
+      onclick="showPage('sales', this)"
+    >
+      🧾 Sales
+    </button>
 
 
-      <a href="users.html">
+    <button
+      class="nav-item"
+      onclick="showPage('lowstock', this)"
+    >
+      ⚠️ Low Stock
+    </button>
 
-        <span class="menu-icon">👥</span>
 
-        Users
+    <button
+      class="nav-item"
+      onclick="showPage('reports', this)"
+    >
+      📈 Reports
+    </button>
 
-      </a>
 
-
-      <a href="settings.html">
-
-        <span class="menu-icon">⚙️</span>
-
-        Settings
-
-      </a>
-
-    </nav>
+    <button
+      class="nav-item logout-btn"
+      onclick="logout()"
+    >
+      🚪 Logout
+    </button>
 
   </aside>
 
 
-
-  <!-- =========================================
-       MAIN
-       ========================================= -->
+  <!-- MAIN -->
 
   <main class="main">
 
 
-    <!-- TOP BAR -->
+    <!-- TOPBAR -->
 
     <header class="topbar">
 
-      <div class="page-title">
-        Products
+      <div
+        id="topbarTitle"
+        class="topbar-title"
+      >
+        Dashboard
       </div>
 
 
-      <div class="user-area">
+      <div class="user-info">
 
-        <span
-          class="username"
-          id="username">
-          admin
-        </span>
+        <div
+          id="userName"
+        >
+          Admin
+        </div>
 
-        <button
-          class="logout-btn"
-          onclick="logout()">
-          Logout
-        </button>
+        <div
+          id="userAvatar"
+          class="avatar"
+        >
+          A
+        </div>
 
       </div>
 
     </header>
 
 
-
-    <!-- CONTENT -->
-
     <section class="content">
 
 
-      <div class="products-card">
+      <!-- =================================================
+           DASHBOARD
+      ================================================= -->
 
+      <div
+        id="page-dashboard"
+        class="page active"
+      >
 
-        <!-- HEADER -->
+        <div class="page-header">
 
-        <div class="products-header">
+          <div>
 
-          <div class="products-heading">
+            <div class="page-title">
+              Dashboard
+            </div>
 
-            <h2>
-              Products
-            </h2>
-
-            <p>
-              Manage products and product information.
-            </p>
+            <div class="page-description">
+              Overview of your mini-mart inventory
+            </div>
 
           </div>
 
-
           <button
-            class="add-btn"
-            onclick="openAddModal()">
-
-            + Add Product
-
+            class="btn btn-primary"
+            onclick="loadDashboard()"
+          >
+            🔄 Refresh
           </button>
 
         </div>
 
 
+        <div class="cards">
 
-        <!-- STATISTICS -->
+          <div class="card">
 
-        <div class="stats">
-
-          <div class="stat-card">
-
-            <div class="stat-label">
+            <div class="card-label">
               Total Products
             </div>
 
             <div
-              class="stat-number"
-              id="totalProducts">
+              id="totalProducts"
+              class="card-value"
+            >
               0
             </div>
 
           </div>
 
 
-          <div class="stat-card">
+          <div class="card">
 
-            <div class="stat-label">
-              In Stock
+            <div class="card-label">
+              Available Stock
             </div>
 
             <div
-              class="stat-number"
-              id="inStock">
+              id="availableStock"
+              class="card-value"
+            >
               0
             </div>
 
           </div>
 
 
-          <div class="stat-card">
+          <div class="card">
 
-            <div class="stat-label">
+            <div class="card-label">
               Low Stock
             </div>
 
             <div
-              class="stat-number"
-              id="lowStock">
+              id="lowStock"
+              class="card-value"
+            >
               0
             </div>
 
           </div>
 
 
-          <div class="stat-card">
+          <div class="card">
 
-            <div class="stat-label">
+            <div class="card-label">
               Out of Stock
             </div>
 
             <div
-              class="stat-number"
-              id="outStock">
+              id="outOfStock"
+              class="card-value"
+            >
               0
             </div>
 
@@ -1354,1656 +814,1794 @@
         </div>
 
 
+        <div class="card">
 
-        <!-- SEARCH / FILTER -->
+          <h3>
+            Inventory Summary
+          </h3>
 
-        <div class="toolbar">
+          <br>
 
-          <div class="search-box">
+          <p>
+            Total Sales:
+            <strong id="dashboardSales">
+              ₱0.00
+            </strong>
+          </p>
 
-            <span class="search-icon">
-              🔎
-            </span>
+          <br>
 
-            <input
-              type="text"
-              id="searchInput"
-              placeholder="Search products..."
-              oninput="filterProducts()">
+          <button
+            class="btn btn-primary"
+            onclick="showPageByName('products')"
+          >
+            Manage Products
+          </button>
+
+          <button
+            class="btn btn-success"
+            onclick="showPageByName('sales')"
+          >
+            Record Sale
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           PRODUCTS
+      ================================================= -->
+
+      <div
+        id="page-products"
+        class="page"
+      >
+
+        <div class="page-header">
+
+          <div>
+
+            <div class="page-title">
+              Products
+            </div>
+
+            <div class="page-description">
+              Manage your mini-mart products
+            </div>
 
           </div>
 
-
-          <select
-            class="filter-select"
-            id="categoryFilter"
-            onchange="filterProducts()">
-
-            <option value="">
-              All Categories
-            </option>
-
-          </select>
+          <button
+            class="btn btn-primary"
+            onclick="openProductModal()"
+          >
+            + Add Product
+          </button>
 
         </div>
 
 
-
-        <!-- TABLE -->
-
         <div class="table-container">
 
-
-          <div
-            class="loading"
-            id="loading">
-
-            <div class="spinner"></div>
-
-            Loading products...
-
-          </div>
-
-
-          <table id="productsTable"
-                 style="display:none;">
+          <table>
 
             <thead>
 
               <tr>
 
                 <th>
-                  PRODUCT
+                  Product ID
                 </th>
 
                 <th>
-                  CATEGORY
+                  Product Name
                 </th>
 
                 <th>
-                  PRICE
+                  Category
                 </th>
 
                 <th>
-                  STOCK
+                  Price
                 </th>
 
                 <th>
-                  SUPPLIER
+                  Quantity
                 </th>
 
                 <th>
-                  REORDER LEVEL
+                  Reorder Level
                 </th>
 
                 <th>
-                  STATUS
+                  Status
                 </th>
 
                 <th>
-                  ACTION
+                  Actions
                 </th>
 
               </tr>
 
             </thead>
 
-
             <tbody
-              id="productsBody">
-            </tbody>
+              id="productsTable"
+            ></tbody>
 
           </table>
-
-
-          <div
-            class="empty"
-            id="emptyState">
-
-            <div class="empty-icon">
-              📦
-            </div>
-
-            <h3>
-              No Products Found
-            </h3>
-
-            <p>
-              Add your first product or change your search.
-            </p>
-
-          </div>
-
 
         </div>
 
       </div>
+
+
+      <!-- =================================================
+           STOCK
+      ================================================= -->
+
+      <div
+        id="page-stock"
+        class="page"
+      >
+
+        <div class="page-header">
+
+          <div>
+
+            <div class="page-title">
+              Stock
+            </div>
+
+            <div class="page-description">
+              Monitor stock-in and stock-out transactions
+            </div>
+
+          </div>
+
+          <button
+            class="btn btn-success"
+            onclick="openStockModal()"
+          >
+            + Add Stock
+          </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Stock ID
+                </th>
+
+                <th>
+                  Product
+                </th>
+
+                <th>
+                  Type
+                </th>
+
+                <th>
+                  Quantity
+                </th>
+
+                <th>
+                  Date
+                </th>
+
+                <th>
+                  User
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody
+              id="stockTable"
+            ></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           SALES
+      ================================================= -->
+
+      <div
+        id="page-sales"
+        class="page"
+      >
+
+        <div class="page-header">
+
+          <div>
+
+            <div class="page-title">
+              Sales
+            </div>
+
+            <div class="page-description">
+              Record product sales
+            </div>
+
+          </div>
+
+          <button
+            class="btn btn-primary"
+            onclick="openSaleModal()"
+          >
+            + Record Sale
+          </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Sale ID
+                </th>
+
+                <th>
+                  Product
+                </th>
+
+                <th>
+                  Quantity
+                </th>
+
+                <th>
+                  Unit Price
+                </th>
+
+                <th>
+                  Total
+                </th>
+
+                <th>
+                  Date
+                </th>
+
+                <th>
+                  User
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody
+              id="salesTable"
+            ></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           LOW STOCK
+      ================================================= -->
+
+      <div
+        id="page-lowstock"
+        class="page"
+      >
+
+        <div class="page-header">
+
+          <div>
+
+            <div class="page-title">
+              Low Stock
+            </div>
+
+            <div class="page-description">
+              Products that need replenishment
+            </div>
+
+          </div>
+
+          <button
+            class="btn btn-primary"
+            onclick="loadLowStock()"
+          >
+            🔄 Refresh
+          </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Product ID
+                </th>
+
+                <th>
+                  Product
+                </th>
+
+                <th>
+                  Category
+                </th>
+
+                <th>
+                  Quantity
+                </th>
+
+                <th>
+                  Reorder Level
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+              </tr>
+
+            </thead>
+
+            <tbody
+              id="lowStockTable"
+            ></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           REPORTS
+      ================================================= -->
+
+      <div
+        id="page-reports"
+        class="page"
+      >
+
+        <div class="page-header">
+
+          <div>
+
+            <div class="page-title">
+              Reports
+            </div>
+
+            <div class="page-description">
+              Inventory and sales summary
+            </div>
+
+          </div>
+
+          <button
+            class="btn btn-primary"
+            onclick="loadReport()"
+          >
+            🔄 Refresh
+          </button>
+
+        </div>
+
+
+        <div class="report-grid">
+
+          <div class="report-box">
+
+            <h3>
+              Inventory Value
+            </h3>
+
+            <br>
+
+            <h2
+              id="inventoryValue"
+            >
+              ₱0.00
+            </h2>
+
+          </div>
+
+
+          <div class="report-box">
+
+            <h3>
+              Total Sales
+            </h3>
+
+            <br>
+
+            <h2
+              id="reportSales"
+            >
+              ₱0.00
+            </h2>
+
+          </div>
+
+
+          <div class="report-box">
+
+            <h3>
+              Items Sold
+            </h3>
+
+            <br>
+
+            <h2
+              id="itemsSold"
+            >
+              0
+            </h2>
+
+          </div>
+
+
+          <div class="report-box">
+
+            <h3>
+              Stock Transactions
+            </h3>
+
+            <br>
+
+            <h2
+              id="stockTransactions"
+            >
+              0
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
 
     </section>
 
   </main>
 
+</div>
 
 
-  <!-- =========================================
-       ADD / EDIT MODAL
-       ========================================= -->
+<!-- =====================================================
+     PRODUCT MODAL
+===================================================== -->
 
-  <div
-    class="modal"
-    id="productModal">
+<div
+  id="productModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>
+        Add Product
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeModal('productModal')"
+      >
+        ×
+      </button>
+
+    </div>
 
 
-    <div class="modal-card">
+    <form
+      id="productForm"
+    >
 
+      <div class="form-group">
 
-      <div class="modal-header">
+        <label>
+          Product Name
+        </label>
 
-        <h3 id="modalTitle">
-          Add Product
-        </h3>
-
-        <button
-          class="close-btn"
-          onclick="closeModal()">
-
-          ×
-
-        </button>
+        <input
+          id="productName"
+          required
+        >
 
       </div>
 
 
+      <div class="form-group">
 
-      <form
-        id="productForm"
-        onsubmit="saveProduct(event)">
+        <label>
+          Category
+        </label>
 
+        <input
+          id="category"
+          placeholder="e.g. Beverages"
+        >
 
-        <div class="modal-body">
-
-
-          <div class="form-grid">
-
-
-            <!-- PRODUCT NAME -->
-
-            <div class="form-group full">
-
-              <label>
-                Product Name *
-              </label>
-
-              <input
-                type="text"
-                id="productName"
-                required
-                placeholder="Enter product name">
-
-            </div>
+      </div>
 
 
-            <!-- CATEGORY -->
+      <div class="form-group">
 
-            <div class="form-group">
+        <label>
+          Price
+        </label>
 
-              <label>
-                Category *
-              </label>
+        <input
+          id="price"
+          type="number"
+          step="0.01"
+          min="0"
+          required
+        >
 
-              <input
-                type="text"
-                id="category"
-                required
-                placeholder="e.g. Beverages">
-
-            </div>
-
-
-            <!-- SUPPLIER -->
-
-            <div class="form-group">
-
-              <label>
-                Supplier
-              </label>
-
-              <input
-                type="text"
-                id="supplier"
-                placeholder="Enter supplier">
-
-            </div>
+      </div>
 
 
-            <!-- PRICE -->
+      <div class="form-group">
 
-            <div class="form-group">
+        <label>
+          Initial Quantity
+        </label>
 
-              <label>
-                Price *
-              </label>
+        <input
+          id="quantity"
+          type="number"
+          min="0"
+          value="0"
+        >
 
-              <input
-                type="number"
-                id="price"
-                min="0"
-                step="0.01"
-                required
-                placeholder="0.00">
-
-            </div>
+      </div>
 
 
-            <!-- STOCK -->
+      <div class="form-group">
 
-            <div class="form-group">
+        <label>
+          Reorder Level
+        </label>
 
-              <label>
-                Stock Quantity *
-              </label>
+        <input
+          id="reorderLevel"
+          type="number"
+          min="0"
+          value="10"
+        >
 
-              <input
-                type="number"
-                id="stock"
-                min="0"
-                step="1"
-                required
-                placeholder="0">
-
-            </div>
+      </div>
 
 
-            <!-- REORDER LEVEL -->
+      <button
+        class="btn btn-primary"
+        type="submit"
+      >
+        Save Product
+      </button>
 
-            <div class="form-group">
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="closeModal('productModal')"
+      >
+        Cancel
+      </button>
 
-              <label>
-                Reorder Level
-              </label>
+    </form>
 
-              <input
-                type="number"
-                id="reorderLevel"
-                min="0"
-                step="1"
-                value="10"
-                placeholder="10">
+  </div>
 
-            </div>
-
-
-          </div>
-
-        </div>
+</div>
 
 
+<!-- =====================================================
+     STOCK MODAL
+===================================================== -->
 
-        <div class="modal-footer">
+<div
+  id="stockModal"
+  class="modal"
+>
 
-          <button
-            type="button"
-            class="cancel-btn"
-            onclick="closeModal()">
+  <div class="modal-box">
 
-            Cancel
+    <div class="modal-header">
 
-          </button>
+      <h2>
+        Add Stock
+      </h2>
 
-
-          <button
-            type="submit"
-            class="save-btn"
-            id="saveBtn">
-
-            Save Product
-
-          </button>
-
-        </div>
-
-      </form>
+      <button
+        class="close"
+        onclick="closeModal('stockModal')"
+      >
+        ×
+      </button>
 
     </div>
 
+
+    <form
+      id="stockForm"
+    >
+
+      <div class="form-group">
+
+        <label>
+          Product
+        </label>
+
+        <select
+          id="stockProduct"
+          required
+        ></select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Quantity
+        </label>
+
+        <input
+          id="stockQuantity"
+          type="number"
+          min="1"
+          required
+        >
+
+      </div>
+
+
+      <button
+        class="btn btn-success"
+        type="submit"
+      >
+        Add Stock
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="closeModal('stockModal')"
+      >
+        Cancel
+      </button>
+
+    </form>
+
   </div>
 
+</div>
 
 
-  <!-- =========================================
-       TOAST
-       ========================================= -->
+<!-- =====================================================
+     SALE MODAL
+===================================================== -->
 
-  <div
-    class="toast"
-    id="toast">
+<div
+  id="saleModal"
+  class="modal"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>
+        Record Sale
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeModal('saleModal')"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <form
+      id="saleForm"
+    >
+
+      <div class="form-group">
+
+        <label>
+          Product
+        </label>
+
+        <select
+          id="saleProduct"
+          required
+        ></select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Quantity
+        </label>
+
+        <input
+          id="saleQuantity"
+          type="number"
+          min="1"
+          required
+        >
+
+      </div>
+
+
+      <button
+        class="btn btn-primary"
+        type="submit"
+      >
+        Record Sale
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        type="button"
+        onclick="closeModal('saleModal')"
+      >
+        Cancel
+      </button>
+
+    </form>
+
   </div>
 
+</div>
 
 
-  <script>
+<script>
 
-    /* =================================================
-       GOOGLE APPS SCRIPT API
-       ================================================= */
+/* =========================================================
+   API URL
+========================================================= */
 
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbw0x_4Ki1ZV9m2uj8Z10VyIvlfx616RKNNdzVRLZd7sgyL15AlRrQfZQiiYpaVlOHA1/exec";
-
-
-    /* =================================================
-       VARIABLES
-       ================================================= */
-
-    let allProducts = [];
-
-    let editingProductId = null;
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbxES0pYjbraG8DZdCbqCQY5XOTr3MCWdfHlXOPFfVej_VgXlyPTn0WxvisXsBsey7h7/exec";
 
 
-    /* =================================================
-       INITIALIZATION
-       ================================================= */
+/* =========================================================
+   CURRENT USER
+========================================================= */
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      function() {
+let currentUser =
+  JSON.parse(
+    localStorage.getItem(
+      "miniMartUser"
+    ) || "null"
+  );
 
-        loadUsername();
 
-        loadProducts();
+/* =========================================================
+   API GET
+========================================================= */
+
+async function apiGet(action) {
+
+  const response =
+    await fetch(
+      API_URL +
+      "?action=" +
+      encodeURIComponent(action)
+    );
+
+
+  return await response.json();
+
+}
+
+
+/* =========================================================
+   API POST
+========================================================= */
+
+async function apiPost(data) {
+
+  const response =
+    await fetch(
+      API_URL,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+        body:
+          JSON.stringify(data)
 
       }
     );
 
 
-    /* =================================================
-       USERNAME
-       ================================================= */
+  return await response.json();
 
-    function loadUsername() {
+}
 
-      const username =
-        localStorage.getItem(
-          "username"
-        );
 
-      if (username) {
+/* =========================================================
+   LOGIN
+========================================================= */
 
-        document.getElementById(
-          "username"
-        ).textContent = username;
-
-      }
-
-    }
-
-
-    /* =================================================
-       JSONP API CALL
-       ================================================= */
-
-    function apiRequest(
-      action,
-      params = {}
-    ) {
-
-      return new Promise(
-        function(resolve, reject) {
-
-          const callbackName =
-            "callback_" +
-            Date.now() +
-            "_" +
-            Math.floor(
-              Math.random() * 100000
-            );
-
-
-          const script =
-            document.createElement(
-              "script"
-            );
-
-
-          const query =
-            new URLSearchParams();
-
-
-          query.append(
-            "action",
-            action
-          );
-
-
-          query.append(
-            "callback",
-            callbackName
-          );
-
-
-          Object.keys(params)
-            .forEach(function(key) {
-
-              if (
-                params[key] !== undefined &&
-                params[key] !== null
-              ) {
-
-                query.append(
-                  key,
-                  params[key]
-                );
-
-              }
-
-            });
-
-
-          const timeout =
-            setTimeout(
-              function() {
-
-                cleanup();
-
-                reject(
-                  new Error(
-                    "Request timed out."
-                  )
-                );
-
-              },
-              15000
-            );
-
-
-          window[callbackName] =
-            function(data) {
-
-              clearTimeout(timeout);
-
-              cleanup();
-
-              resolve(data);
-
-            };
-
-
-          function cleanup() {
-
-            delete window[callbackName];
-
-            if (script.parentNode) {
-
-              script.parentNode
-                .removeChild(script);
-
-            }
-
-          }
-
-
-          script.onerror =
-            function() {
-
-              clearTimeout(timeout);
-
-              cleanup();
-
-              reject(
-                new Error(
-                  "Unable to connect to Google Apps Script."
-                )
-              );
-
-            };
-
-
-          script.src =
-            API_URL +
-            "?" +
-            query.toString();
-
-
-          document.body.appendChild(
-            script
-          );
-
-        }
-      );
-
-    }
-
-
-    /* =================================================
-       LOAD PRODUCTS
-       ================================================= */
-
-    async function loadProducts() {
-
-      showLoading(true);
-
-      try {
-
-        const response =
-          await apiRequest(
-            "products"
-          );
-
-
-        if (!response.success) {
-
-          throw new Error(
-            response.message ||
-            "Unable to load products."
-          );
-
-        }
-
-
-        allProducts =
-          response.products || [];
-
-
-        populateCategoryFilter();
-
-        updateStatistics();
-
-        renderProducts(
-          allProducts
-        );
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showToast(
-          error.message ||
-          "Failed to load products.",
-          "error"
-        );
-
-        renderProducts([]);
-
-      } finally {
-
-        showLoading(false);
-
-      }
-
-    }
-
-
-    /* =================================================
-       RENDER PRODUCTS
-       ================================================= */
-
-    function renderProducts(
-      products
-    ) {
-
-      const table =
-        document.getElementById(
-          "productsTable"
-        );
-
-      const body =
-        document.getElementById(
-          "productsBody"
-        );
-
-      const empty =
-        document.getElementById(
-          "emptyState"
-        );
-
-
-      body.innerHTML = "";
-
-
-      if (!products.length) {
-
-        table.style.display = "none";
-
-        empty.style.display = "block";
-
-        return;
-
-      }
-
-
-      table.style.display = "table";
-
-      empty.style.display = "none";
-
-
-      products.forEach(
-        function(product) {
-
-          const row =
-            document.createElement(
-              "tr"
-            );
-
-
-          row.innerHTML = `
-
-            <td>
-
-              <div class="product-name">
-                ${escapeHTML(product.productName)}
-              </div>
-
-            </td>
-
-
-            <td>
-              ${escapeHTML(product.category)}
-            </td>
-
-
-            <td class="price">
-              ₱${formatMoney(product.price)}
-            </td>
-
-
-            <td>
-              ${formatNumber(product.stock)}
-            </td>
-
-
-            <td>
-              ${escapeHTML(product.supplier || "-")}
-            </td>
-
-
-            <td>
-              ${formatNumber(product.reorderLevel)}
-            </td>
-
-
-            <td>
-              ${getStatusBadge(product.status)}
-            </td>
-
-
-            <td>
-
-              <div class="actions">
-
-                <button
-                  class="action-btn edit-btn"
-                  onclick="openEditModal('${escapeJS(product.id)}')">
-
-                  Edit
-
-                </button>
-
-
-                <button
-                  class="action-btn delete-btn"
-                  onclick="deleteProductConfirm('${escapeJS(product.id)}')">
-
-                  Delete
-
-                </button>
-
-              </div>
-
-            </td>
-
-          `;
-
-
-          body.appendChild(row);
-
-        }
-      );
-
-    }
-
-
-    /* =================================================
-       STATUS BADGE
-       ================================================= */
-
-    function getStatusBadge(
-      status
-    ) {
-
-      if (
-        status === "Out of Stock"
-      ) {
-
-        return `
-          <span class="status status-out">
-            Out of Stock
-          </span>
-        `;
-
-      }
-
-
-      if (
-        status === "Low Stock"
-      ) {
-
-        return `
-          <span class="status status-low">
-            Low Stock
-          </span>
-        `;
-
-      }
-
-
-      return `
-        <span class="status status-in">
-          In Stock
-        </span>
-      `;
-
-    }
-
-
-    /* =================================================
-       STATISTICS
-       ================================================= */
-
-    function updateStatistics() {
-
-      let inStock = 0;
-
-      let lowStock = 0;
-
-      let outStock = 0;
-
-
-      allProducts.forEach(
-        function(product) {
-
-          if (
-            product.status === "In Stock"
-          ) {
-
-            inStock++;
-
-          }
-
-          else if (
-            product.status === "Low Stock"
-          ) {
-
-            lowStock++;
-
-          }
-
-          else if (
-            product.status === "Out of Stock"
-          ) {
-
-            outStock++;
-
-          }
-
-        }
-      );
-
-
-      document.getElementById(
-        "totalProducts"
-      ).textContent =
-        allProducts.length;
-
-
-      document.getElementById(
-        "inStock"
-      ).textContent =
-        inStock;
-
-
-      document.getElementById(
-        "lowStock"
-      ).textContent =
-        lowStock;
-
-
-      document.getElementById(
-        "outStock"
-      ).textContent =
-        outStock;
-
-    }
-
-
-    /* =================================================
-       CATEGORY FILTER
-       ================================================= */
-
-    function populateCategoryFilter() {
-
-      const select =
-        document.getElementById(
-          "categoryFilter"
-        );
-
-
-      const current =
-        select.value;
-
-
-      const categories =
-        [
-          ...new Set(
-            allProducts
-              .map(
-                p => p.category
-              )
-              .filter(Boolean)
-          )
-        ]
-        .sort();
-
-
-      select.innerHTML =
-        `<option value="">
-          All Categories
-        </option>`;
-
-
-      categories.forEach(
-        function(category) {
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-          option.value =
-            category;
-
-          option.textContent =
-            category;
-
-          select.appendChild(
-            option
-          );
-
-        }
-      );
-
-
-      select.value =
-        current;
-
-    }
-
-
-    /* =================================================
-       FILTER PRODUCTS
-       ================================================= */
-
-    function filterProducts() {
-
-      const search =
-        document.getElementById(
-          "searchInput"
-        )
-        .value
-        .trim()
-        .toLowerCase();
-
-
-      const category =
-        document.getElementById(
-          "categoryFilter"
-        ).value;
-
-
-      const filtered =
-        allProducts.filter(
-          function(product) {
-
-            const matchesSearch =
-
-              !search ||
-
-              product.productName
-                .toLowerCase()
-                .includes(search)
-
-              ||
-
-              product.category
-                .toLowerCase()
-                .includes(search)
-
-              ||
-
-              (
-                product.supplier || ""
-              )
-              .toLowerCase()
-              .includes(search);
-
-
-            const matchesCategory =
-
-              !category ||
-
-              product.category ===
-              category;
-
-
-            return (
-              matchesSearch &&
-              matchesCategory
-            );
-
-          }
-        );
-
-
-      renderProducts(
-        filtered
-      );
-
-    }
-
-
-    /* =================================================
-       OPEN ADD MODAL
-       ================================================= */
-
-    function openAddModal() {
-
-      editingProductId = null;
-
-
-      document.getElementById(
-        "modalTitle"
-      ).textContent =
-        "Add Product";
-
-
-      document.getElementById(
-        "saveBtn"
-      ).textContent =
-        "Save Product";
-
-
-      document.getElementById(
-        "productForm"
-      ).reset();
-
-
-      document.getElementById(
-        "reorderLevel"
-      ).value = 10;
-
-
-      document.getElementById(
-        "productModal"
-      ).classList.add("show");
-
-    }
-
-
-    /* =================================================
-       OPEN EDIT MODAL
-       ================================================= */
-
-    function openEditModal(
-      productId
-    ) {
-
-      const product =
-        allProducts.find(
-          function(p) {
-
-            return String(p.id) ===
-              String(productId);
-
-          }
-        );
-
-
-      if (!product) {
-
-        showToast(
-          "Product not found.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      editingProductId =
-        product.id;
-
-
-      document.getElementById(
-        "modalTitle"
-      ).textContent =
-        "Edit Product";
-
-
-      document.getElementById(
-        "saveBtn"
-      ).textContent =
-        "Update Product";
-
-
-      document.getElementById(
-        "productName"
-      ).value =
-        product.productName;
-
-
-      document.getElementById(
-        "category"
-      ).value =
-        product.category;
-
-
-      document.getElementById(
-        "supplier"
-      ).value =
-        product.supplier || "";
-
-
-      document.getElementById(
-        "price"
-      ).value =
-        product.price;
-
-
-      document.getElementById(
-        "stock"
-      ).value =
-        product.stock;
-
-
-      document.getElementById(
-        "reorderLevel"
-      ).value =
-        product.reorderLevel;
-
-
-      document.getElementById(
-        "productModal"
-      ).classList.add("show");
-
-    }
-
-
-    /* =================================================
-       CLOSE MODAL
-       ================================================= */
-
-    function closeModal() {
-
-      document.getElementById(
-        "productModal"
-      ).classList.remove("show");
-
-
-      editingProductId = null;
-
-    }
-
-
-    /* =================================================
-       SAVE PRODUCT
-       ================================================= */
-
-    async function saveProduct(
-      event
-    ) {
+document
+  .getElementById("loginForm")
+  .addEventListener(
+    "submit",
+    async function(event) {
 
       event.preventDefault();
 
 
-      const productName =
-        document.getElementById(
-          "productName"
-        ).value.trim();
+      const username =
+        document
+          .getElementById("username")
+          .value
+          .trim();
 
 
-      const category =
-        document.getElementById(
-          "category"
-        ).value.trim();
+      const password =
+        document
+          .getElementById("password")
+          .value;
 
 
-      const supplier =
-        document.getElementById(
-          "supplier"
-        ).value.trim();
+      const message =
+        document
+          .getElementById("loginMessage");
 
 
-      const price =
-        document.getElementById(
-          "price"
-        ).value;
-
-
-      const stock =
-        document.getElementById(
-          "stock"
-        ).value;
-
-
-      const reorderLevel =
-        document.getElementById(
-          "reorderLevel"
-        ).value;
-
-
-      if (!productName) {
-
-        showToast(
-          "Product name is required.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (!category) {
-
-        showToast(
-          "Category is required.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (
-        Number(price) < 0 ||
-        Number(stock) < 0 ||
-        Number(reorderLevel) < 0
-      ) {
-
-        showToast(
-          "Values cannot be negative.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      const saveButton =
-        document.getElementById(
-          "saveBtn"
-        );
-
-
-      saveButton.disabled =
-        true;
-
-
-      saveButton.textContent =
-        "Saving...";
+      message.innerText =
+        "Logging in...";
 
 
       try {
 
-        let response;
+        const result =
+          await apiPost({
+
+            action:
+              "login",
+
+            username:
+              username,
+
+            password:
+              password
+
+          });
 
 
-        if (editingProductId) {
+        if (
+          result.success
+        ) {
 
-          response =
-            await apiRequest(
-              "updateProduct",
-              {
+          currentUser = {
 
-                id:
-                  editingProductId,
+            username:
+              result.username,
 
-                productName:
-                  productName,
+            role:
+              result.role
 
-                category:
-                  category,
+          };
 
-                supplier:
-                  supplier,
 
-                price:
-                  price,
+          localStorage.setItem(
+            "miniMartUser",
+            JSON.stringify(
+              currentUser
+            )
+          );
 
-                stock:
-                  stock,
 
-                reorderLevel:
-                  reorderLevel
-
-              }
-            );
+          openApplication();
 
         }
 
         else {
 
-          response =
-            await apiRequest(
-              "addProduct",
-              {
-
-                productName:
-                  productName,
-
-                category:
-                  category,
-
-                supplier:
-                  supplier,
-
-                price:
-                  price,
-
-                stock:
-                  stock,
-
-                reorderLevel:
-                  reorderLevel
-
-              }
-            );
+          message.innerText =
+            result.message ||
+            "Login failed.";
 
         }
 
+      }
 
-        if (!response.success) {
+      catch (error) {
 
-          throw new Error(
-            response.message ||
-            "Unable to save product."
-          );
-
-        }
-
-
-        closeModal();
-
-
-        showToast(
-          response.message ||
-          "Product saved successfully.",
-          "success"
-        );
-
-
-        await loadProducts();
-
-
-      } catch (error) {
+        message.innerText =
+          "Unable to connect to server.";
 
         console.error(error);
 
-        showToast(
-          error.message ||
-          "Failed to save product.",
-          "error"
-        );
-
-      } finally {
-
-        saveButton.disabled =
-          false;
-
-        saveButton.textContent =
-          editingProductId
-            ? "Update Product"
-            : "Save Product";
-
       }
 
     }
+  );
 
 
-    /* =================================================
-       DELETE PRODUCT
-       ================================================= */
+/* =========================================================
+   OPEN APPLICATION
+========================================================= */
 
-    async function deleteProductConfirm(
-      productId
-    ) {
+function openApplication() {
 
-      const product =
-        allProducts.find(
-          function(p) {
+  document
+    .getElementById("loginScreen")
+    .style.display = "none";
 
-            return String(p.id) ===
-              String(productId);
 
-          }
+  document
+    .getElementById("app")
+    .style.display = "block";
+
+
+  const name =
+    currentUser?.username ||
+    "Admin";
+
+
+  document
+    .getElementById("userName")
+    .innerText =
+      name;
+
+
+  document
+    .getElementById("userAvatar")
+    .innerText =
+      name
+        .charAt(0)
+        .toUpperCase();
+
+
+  loadDashboard();
+
+}
+
+
+/* =========================================================
+   AUTO LOGIN
+========================================================= */
+
+if (currentUser) {
+
+  openApplication();
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
+
+  localStorage.removeItem(
+    "miniMartUser"
+  );
+
+
+  currentUser = null;
+
+
+  document
+    .getElementById("app")
+    .style.display = "none";
+
+
+  document
+    .getElementById("loginScreen")
+    .style.display = "flex";
+
+
+  document
+    .getElementById("username")
+    .value = "";
+
+
+  document
+    .getElementById("password")
+    .value = "";
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(
+  page,
+  button
+) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(
+      function(element) {
+
+        element.classList.remove(
+          "active"
         );
-
-
-      if (!product) {
-
-        showToast(
-          "Product not found.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      const confirmed =
-        confirm(
-          "Are you sure you want to delete \"" +
-          product.productName +
-          "\"?"
-        );
-
-
-      if (!confirmed) {
-
-        return;
-
-      }
-
-
-      try {
-
-        const response =
-          await apiRequest(
-            "deleteProduct",
-            {
-              id: productId
-            }
-          );
-
-
-        if (!response.success) {
-
-          throw new Error(
-            response.message ||
-            "Unable to delete product."
-          );
-
-        }
-
-
-        showToast(
-          response.message ||
-          "Product deleted successfully.",
-          "success"
-        );
-
-
-        await loadProducts();
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showToast(
-          error.message ||
-          "Failed to delete product.",
-          "error"
-        );
-
-      }
-
-    }
-
-
-    /* =================================================
-       LOADING
-       ================================================= */
-
-    function showLoading(
-      show
-    ) {
-
-      const loading =
-        document.getElementById(
-          "loading"
-        );
-
-
-      if (show) {
-
-        loading.style.display =
-          "block";
-
-      }
-
-      else {
-
-        loading.style.display =
-          "none";
-
-      }
-
-    }
-
-
-    /* =================================================
-       TOAST
-       ================================================= */
-
-    function showToast(
-      message,
-      type = "success"
-    ) {
-
-      const toast =
-        document.getElementById(
-          "toast"
-        );
-
-
-      toast.textContent =
-        message;
-
-
-      toast.className =
-        "toast " +
-        type +
-        " show";
-
-
-      setTimeout(
-        function() {
-
-          toast.classList.remove(
-            "show"
-          );
-
-        },
-        3000
-      );
-
-    }
-
-
-    /* =================================================
-       FORMAT MONEY
-       ================================================= */
-
-    function formatMoney(
-      number
-    ) {
-
-      return Number(
-        number || 0
-      ).toLocaleString(
-        "en-PH",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }
-      );
-
-    }
-
-
-    /* =================================================
-       FORMAT NUMBER
-       ================================================= */
-
-    function formatNumber(
-      number
-    ) {
-
-      return Number(
-        number || 0
-      ).toLocaleString(
-        "en-PH"
-      );
-
-    }
-
-
-    /* =================================================
-       ESCAPE HTML
-       ================================================= */
-
-    function escapeHTML(
-      value
-    ) {
-
-      return String(
-        value == null
-          ? ""
-          : value
-      )
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
-      );
-
-    }
-
-
-    /* =================================================
-       ESCAPE JAVASCRIPT
-       ================================================= */
-
-    function escapeJS(
-      value
-    ) {
-
-      return String(
-        value == null
-          ? ""
-          : value
-      )
-      .replace(
-        /\\/g,
-        "\\\\"
-      )
-      .replace(
-        /'/g,
-        "\\'"
-      )
-      .replace(
-        /"/g,
-        '\\"'
-      );
-
-    }
-
-
-    /* =================================================
-       LOGOUT
-       ================================================= */
-
-    function logout() {
-
-      localStorage.removeItem(
-        "loggedIn"
-      );
-
-      localStorage.removeItem(
-        "username"
-      );
-
-
-      window.location.href =
-        "index.html";
-
-    }
-
-
-    /* =================================================
-       CLOSE MODAL WHEN CLICKING OUTSIDE
-       ================================================= */
-
-    document
-      .getElementById("productModal")
-      .addEventListener(
-        "click",
-        function(event) {
-
-          if (
-            event.target ===
-            this
-          ) {
-
-            closeModal();
-
-          }
-
-        }
-      );
-
-
-    /* =================================================
-       ESC KEY
-       ================================================= */
-
-    document.addEventListener(
-      "keydown",
-      function(event) {
-
-        if (
-          event.key === "Escape"
-        ) {
-
-          closeModal();
-
-        }
 
       }
     );
 
-  </script>
 
-</body>
+  document
+    .getElementById(
+      "page-" + page
+    )
+    .classList.add(
+      "active"
+    );
 
-</html>
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(
+      function(element) {
+
+        element.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+
+  button.classList.add(
+    "active"
+  );
+
+
+  updateTitle(page);
+
+
+  if (page === "dashboard") {
+    loadDashboard();
+  }
+
+  if (page === "products") {
+    loadProducts();
+  }
+
+  if (page === "stock") {
+    loadStock();
+  }
+
+  if (page === "sales") {
+    loadSales();
+  }
+
+  if (page === "lowstock") {
+    loadLowStock();
+  }
+
+  if (page === "reports") {
+    loadReport();
+  }
+
+}
+
+
+function showPageByName(
+  page
+) {
+
+  const buttons =
+    document
+      .querySelectorAll(
+        ".nav-item"
+      );
+
+
+  let target = null;
+
+
+  buttons.forEach(
+    function(button) {
+
+      if (
+        button
+          .getAttribute("onclick")
+          ?.includes(
+            "'" + page + "'"
+          )
+      ) {
+
+        target =
+          button;
+
+      }
+
+    }
+  );
+
+
+  if (target) {
+
+    showPage(
+      page,
+      target
+    );
+
+  }
+
+}
+
+
+function updateTitle(page) {
+
+  const titles = {
+
+    dashboard:
+      "Dashboard",
+
+    products:
+      "Products",
+
+    stock:
+      "Stock",
+
+    sales:
+      "Sales",
+
+    lowstock:
+      "Low Stock",
+
+    reports:
+      "Reports"
+
+  };
+
+
+  document
+    .getElementById(
+      "topbarTitle"
+    )
+    .innerText =
+      titles[page] ||
+      "Mini-Mart";
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+async function loadDashboard() {
+
+  try {
+
+    const result =
+      await apiGet(
+        "dashboard"
+      );
+
+
+    if (
+      !result.success
+    ) {
+      return;
+    }
+
+
+    document
+      .getElementById(
+        "totalProducts"
+      )
+      .innerText =
+        result.totalProducts;
+
+
+    document
+      .getElementById(
+        "availableStock"
+      )
+      .innerText =
+        result.availableStock;
+
+
+    document
+      .getElementById(
+        "lowStock"
+      )
+      .innerText =
+        result.lowStock;
+
+
+    document
+      .getElementById(
+        "outOfStock"
+      )
+      .innerText =
+        result.outOfStock;
+
+
+    document
+      .getElementById(
+        "dashboardSales"
+      )
+      .innerText =
+        formatCurrency(
+          result.totalSales
+        );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Dashboard:",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+async function loadProducts() {
+
+  try {
+
+    const result =
+      await apiGet(
+        "products"
+      );
+
+
+    const table =
+      document
+        .getElementById(
+          "productsTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (
+      !result.products ||
+      result.products.length === 0
+    ) {
+
+      table.innerHTML =
+        `<tr>
+          <td colspan="8">
+            No products found.
+          </td>
+        </tr>`;
+
+      return;
+
+    }
+
+
+    result.products.forEach(
+      function(product) {
+
+        let badge =
+          "badge-active";
+
+
+        let statusText =
+          "Active";
+
+
+        if (
+          product.quantity === 0
+        ) {
+
+          badge =
+            "badge-out";
+
+          statusText =
+            "Out of Stock";
+
+        }
+
+        else if (
+          product.quantity <=
+          product.reorderLevel
+        ) {
+
+          badge =
+            "badge-low";
+
+          statusText =
+            "Low Stock";
+
+        }
+
+
+        table.innerHTML +=
+
+          `<tr>
+
+            <td>
+              ${escapeHtml(product.productId)}
+            </td>
+
+            <td>
+              ${escapeHtml(product.productName)}
+            </td>
+
+            <td>
+              ${escapeHtml(product.category)}
+            </td>
+
+            <td>
+              ${formatCurrency(product.price)}
+            </td>
+
+            <td>
+              ${product.quantity}
+            </td>
+
+            <td>
+              ${product.reorderLevel}
+            </td>
+
+            <td>
+              <span class="badge ${badge}">
+                ${statusText}
+              </span>
+            </td>
+
+            <td>
+
+              <button
+                class="btn btn-danger"
+                onclick="deleteProduct('${escapeAttribute(product.productId)}')"
+              >
+                Delete
+              </button>
+
+            </td>
+
+          </tr>`;
+
+      }
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   ADD PRODUCT
+========================================================= */
+
+document
+  .getElementById(
+    "productForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const data = {
+
+        action:
+          "addProduct",
+
+        productName:
+          document
+            .getElementById(
+              "productName"
+            )
+            .value
+            .trim(),
+
+        category:
+          document
+            .getElementById(
+              "category"
+            )
+            .value
+            .trim(),
+
+        price:
+          document
+            .getElementById(
+              "price"
+            )
+            .value,
+
+        quantity:
+          document
+            .getElementById(
+              "quantity"
+            )
+            .value,
+
+        reorderLevel:
+          document
+            .getElementById(
+              "reorderLevel"
+            )
+            .value,
+
+        user:
+          currentUser?.username ||
+          "admin"
+
+      };
+
+
+      try {
+
+        const result =
+          await apiPost(
+            data
+          );
+
+
+        alert(
+          result.message
+        );
+
+
+        if (
+          result.success
+        ) {
+
+          closeModal(
+            "productModal"
+          );
+
+          this.reset();
+
+          loadProducts();
+
+          loadDashboard();
+
+        }
+
+      }
+
+      catch (error) {
+
+        alert(
+          "Unable to save product."
+        );
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   DELETE PRODUCT
+========================================================= */
+
+async function deleteProduct(
+  productId
+) {
+
+  if (
+    !confirm(
+      "Delete this product?"
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    const result =
+      await apiPost({
+
+        action:
+          "deleteProduct",
+
+        productId:
+          productId,
+
+        user:
+          currentUser?.username ||
+          "admin"
+
+      });
+
+
+    alert(
+      result.message
+    );
+
+
+    if (
+      result.success
+    ) {
+
+      loadProducts();
+
+      loadDashboard();
+
+    }
+
+  }
+
+  catch (error) {
+
+    alert(
+      "Unable to delete product."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   STOCK
+========================================================= */
+
+async function loadStock() {
+
+  try {
+
+    const result =
+      await apiGet(
+        "stock"
+      );
+
+
+    const table =
+      document
+        .getElementById(
+          "stockTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (
+      !result.stock ||
+      result.stock.length === 0
+    ) {
+
+      table.innerHTML =
+        `<tr>
+          <td colspan="6">
+            No stock transactions found.
+          </td>
+        </tr>`;
+
+      return;
+
+    }
+
+
+    result.stock.forEach(
+      function(item) {
+
+        const badge =
+          item.type === "IN"
+            ? "badge-active"
+            : "badge-out";
+
+
+        table.innerHTML +=
+
+          `<tr>
+
+            <td>
+              ${escapeHtml(item.stockId)}
+            </td>
+
+            <td>
+              ${escapeHtml(item.productName)}
+            </td>
+
+            <td>
+              <span class="badge ${badge}">
+                ${escapeHtml(item.type)}
+              </span>
+            </td>
+
+            <td>
+              ${item.quantity}
+            </td>
+
+            <td>
+              ${escapeHtml(item.date)}
+            </td>
+
+            <td>
+              ${escapeHtml(item.user)}
+            </td>
+
+          </tr>`;
+
+      }
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   STOCK MODAL
+========================================================= */
+
+async function openStockModal() {
+
+  await populateProductSelect(
+    "stockProduct"
+  );
+
+
+  document
+    .getElementById(
+      "stockModal"
+    )
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+document
+  .getElementById(
+    "stockForm"
+  )
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      try {
+
+        const result =
+          await apiPost({
+
+            action:
+              "addStock",
+
+            productId:
+              document
+                .getElementById(
+                  "stockProduct"
+                )
+                .value,
+
+            quantity:
+              document
+                .getElementById(
+                  "stockQuantity"
+                )
+                .value,
+
+            user:
+              currentUser?.username ||
+              "admin"
+
+          });
+
+
+        alert(
+          result.message
+        );
+
+
+        if (
+          result.success
+        ) {
+
+          closeModal(
+            "stockModal"
+          );
+
+          this.reset();
+
+          loadStock();
+
+          loadDashboard();
+
+        }
+
+      }
+
+      catch (error) {
+
+        alert(
+          "Unable to add stock."
+        );
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   SALES
+========================================================= */
+
+async function loadSales() {
+
+  try {
+
+    const result
