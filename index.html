@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,18 +6,15 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Mini-Mart Inventory System</title>
 
 <style>
 
-/* =====================================================
+/* =========================================================
    RESET
-===================================================== */
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -31,22 +29,21 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    LOGIN
-===================================================== */
+========================================================= */
 
 .login-screen {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background:
-    linear-gradient(
-      135deg,
-      #1d4ed8,
-      #2563eb,
-      #60a5fa
-    );
+  background: linear-gradient(
+    135deg,
+    #1d4ed8,
+    #2563eb,
+    #60a5fa
+  );
 }
 
 .login-card {
@@ -55,8 +52,7 @@ body {
   background: white;
   padding: 35px;
   border-radius: 18px;
-  box-shadow:
-    0 15px 40px rgba(0,0,0,.2);
+  box-shadow: 0 15px 40px rgba(0,0,0,.2);
 }
 
 .login-logo {
@@ -126,9 +122,9 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    APPLICATION
-===================================================== */
+========================================================= */
 
 .app {
   display: none;
@@ -145,6 +141,7 @@ body {
   color: white;
   padding: 20px 15px;
   overflow-y: auto;
+  z-index: 100;
 }
 
 .logo {
@@ -222,9 +219,9 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    PAGES
-===================================================== */
+========================================================= */
 
 .page {
   display: none;
@@ -252,14 +249,13 @@ body {
 }
 
 
-/* =====================================================
-   DASHBOARD CARDS
-===================================================== */
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 .cards {
   display: grid;
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   margin-bottom: 25px;
 }
@@ -268,8 +264,7 @@ body {
   background: white;
   padding: 20px;
   border-radius: 13px;
-  box-shadow:
-    0 2px 10px rgba(0,0,0,.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
 }
 
 .card-label {
@@ -284,9 +279,9 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    BUTTONS
-===================================================== */
+========================================================= */
 
 .btn {
   border: none;
@@ -294,6 +289,7 @@ body {
   border-radius: 7px;
   cursor: pointer;
   font-weight: bold;
+  margin-right: 5px;
 }
 
 .btn-primary {
@@ -320,17 +316,21 @@ body {
   opacity: .9;
 }
 
+.btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
 
-/* =====================================================
+
+/* =========================================================
    TABLE
-===================================================== */
+========================================================= */
 
 .table-container {
   background: white;
   border-radius: 12px;
   overflow-x: auto;
-  box-shadow:
-    0 2px 10px rgba(0,0,0,.05);
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
 }
 
 table {
@@ -360,9 +360,9 @@ tr:hover {
 }
 
 
-/* =====================================================
+/* =========================================================
    BADGES
-===================================================== */
+========================================================= */
 
 .badge {
   padding: 5px 9px;
@@ -387,9 +387,9 @@ tr:hover {
 }
 
 
-/* =====================================================
+/* =========================================================
    MODAL
-===================================================== */
+========================================================= */
 
 .modal {
   display: none;
@@ -418,6 +418,7 @@ tr:hover {
 .modal-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -429,14 +430,38 @@ tr:hover {
 }
 
 
-/* =====================================================
+/* =========================================================
+   FORM MESSAGE
+========================================================= */
+
+.form-message {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 7px;
+  display: none;
+  font-size: 14px;
+}
+
+.form-message.success {
+  display: block;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.form-message.error {
+  display: block;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* =========================================================
    REPORT
-===================================================== */
+========================================================= */
 
 .report-grid {
   display: grid;
-  grid-template-columns:
-    repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -447,15 +472,25 @@ tr:hover {
 }
 
 
-/* =====================================================
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading {
+  text-align: center;
+  padding: 25px;
+  color: #6b7280;
+}
+
+
+/* =========================================================
    RESPONSIVE
-===================================================== */
+========================================================= */
 
 @media (max-width: 1000px) {
 
   .cards {
-    grid-template-columns:
-      repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
 }
@@ -490,8 +525,7 @@ tr:hover {
   }
 
   .cards {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 
   .content {
@@ -506,24 +540,26 @@ tr:hover {
     grid-template-columns: 1fr;
   }
 
+  .page-header {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
 }
 
 </style>
 
 </head>
 
-
 <body>
 
 
-<!-- =====================================================
-     LOGIN SCREEN
-===================================================== -->
+<!-- =========================================================
+     LOGIN
+========================================================= -->
 
-<div
-  id="loginScreen"
-  class="login-screen"
->
+<div id="loginScreen" class="login-screen">
 
   <div class="login-card">
 
@@ -539,44 +575,38 @@ tr:hover {
       Admin Login Portal
     </div>
 
-
-    <form
-      id="loginForm"
-    >
+    <form id="loginForm">
 
       <div class="form-group">
 
-        <label>
-          Username
-        </label>
+        <label>Username</label>
 
         <input
           id="username"
           type="text"
           placeholder="Enter username"
+          autocomplete="username"
           required
         >
 
       </div>
 
-
       <div class="form-group">
 
-        <label>
-          Password
-        </label>
+        <label>Password</label>
 
         <input
           id="password"
           type="password"
           placeholder="Enter password"
+          autocomplete="current-password"
           required
         >
 
       </div>
 
-
       <button
+        id="loginButton"
         class="login-btn"
         type="submit"
       >
@@ -584,7 +614,6 @@ tr:hover {
       </button>
 
     </form>
-
 
     <div
       id="loginMessage"
@@ -596,15 +625,11 @@ tr:hover {
 </div>
 
 
-<!-- =====================================================
+<!-- =========================================================
      APPLICATION
-===================================================== -->
+========================================================= -->
 
-<div
-  id="app"
-  class="app"
->
-
+<div id="app" class="app">
 
   <!-- SIDEBAR -->
 
@@ -614,14 +639,12 @@ tr:hover {
       🛒 Mini-Mart
     </div>
 
-
     <button
       class="nav-item active"
       onclick="showPage('dashboard', this)"
     >
       📊 Dashboard
     </button>
-
 
     <button
       class="nav-item"
@@ -630,14 +653,12 @@ tr:hover {
       📦 Products
     </button>
 
-
     <button
       class="nav-item"
       onclick="showPage('stock', this)"
     >
       📥 Stock
     </button>
-
 
     <button
       class="nav-item"
@@ -646,7 +667,6 @@ tr:hover {
       🧾 Sales
     </button>
 
-
     <button
       class="nav-item"
       onclick="showPage('lowstock', this)"
@@ -654,14 +674,12 @@ tr:hover {
       ⚠️ Low Stock
     </button>
 
-
     <button
       class="nav-item"
       onclick="showPage('reports', this)"
     >
       📈 Reports
     </button>
-
 
     <button
       class="nav-item logout-btn"
@@ -677,9 +695,6 @@ tr:hover {
 
   <main class="main">
 
-
-    <!-- TOPBAR -->
-
     <header class="topbar">
 
       <div
@@ -689,12 +704,9 @@ tr:hover {
         Dashboard
       </div>
 
-
       <div class="user-info">
 
-        <div
-          id="userName"
-        >
+        <div id="userName">
           Admin
         </div>
 
@@ -713,9 +725,9 @@ tr:hover {
     <section class="content">
 
 
-      <!-- =================================================
+      <!-- =====================================================
            DASHBOARD
-      ================================================= -->
+      ===================================================== -->
 
       <div
         id="page-dashboard"
@@ -850,9 +862,9 @@ tr:hover {
       </div>
 
 
-      <!-- =================================================
+      <!-- =====================================================
            PRODUCTS
-      ================================================= -->
+      ===================================================== -->
 
       <div
         id="page-products"
@@ -891,45 +903,27 @@ tr:hover {
 
               <tr>
 
-                <th>
-                  Product ID
-                </th>
+                <th>Product ID</th>
 
-                <th>
-                  Product Name
-                </th>
+                <th>Product Name</th>
 
-                <th>
-                  Category
-                </th>
+                <th>Category</th>
 
-                <th>
-                  Price
-                </th>
+                <th>Price</th>
 
-                <th>
-                  Quantity
-                </th>
+                <th>Quantity</th>
 
-                <th>
-                  Reorder Level
-                </th>
+                <th>Reorder Level</th>
 
-                <th>
-                  Status
-                </th>
+                <th>Status</th>
 
-                <th>
-                  Actions
-                </th>
+                <th>Actions</th>
 
               </tr>
 
             </thead>
 
-            <tbody
-              id="productsTable"
-            ></tbody>
+            <tbody id="productsTable"></tbody>
 
           </table>
 
@@ -938,9 +932,9 @@ tr:hover {
       </div>
 
 
-      <!-- =================================================
+      <!-- =====================================================
            STOCK
-      ================================================= -->
+      ===================================================== -->
 
       <div
         id="page-stock"
@@ -979,37 +973,23 @@ tr:hover {
 
               <tr>
 
-                <th>
-                  Stock ID
-                </th>
+                <th>Stock ID</th>
 
-                <th>
-                  Product
-                </th>
+                <th>Product</th>
 
-                <th>
-                  Type
-                </th>
+                <th>Type</th>
 
-                <th>
-                  Quantity
-                </th>
+                <th>Quantity</th>
 
-                <th>
-                  Date
-                </th>
+                <th>Date</th>
 
-                <th>
-                  User
-                </th>
+                <th>User</th>
 
               </tr>
 
             </thead>
 
-            <tbody
-              id="stockTable"
-            ></tbody>
+            <tbody id="stockTable"></tbody>
 
           </table>
 
@@ -1018,9 +998,9 @@ tr:hover {
       </div>
 
 
-      <!-- =================================================
+      <!-- =====================================================
            SALES
-      ================================================= -->
+      ===================================================== -->
 
       <div
         id="page-sales"
@@ -1059,41 +1039,25 @@ tr:hover {
 
               <tr>
 
-                <th>
-                  Sale ID
-                </th>
+                <th>Sale ID</th>
 
-                <th>
-                  Product
-                </th>
+                <th>Product</th>
 
-                <th>
-                  Quantity
-                </th>
+                <th>Quantity</th>
 
-                <th>
-                  Unit Price
-                </th>
+                <th>Unit Price</th>
 
-                <th>
-                  Total
-                </th>
+                <th>Total</th>
 
-                <th>
-                  Date
-                </th>
+                <th>Date</th>
 
-                <th>
-                  User
-                </th>
+                <th>User</th>
 
               </tr>
 
             </thead>
 
-            <tbody
-              id="salesTable"
-            ></tbody>
+            <tbody id="salesTable"></tbody>
 
           </table>
 
@@ -1102,9 +1066,9 @@ tr:hover {
       </div>
 
 
-      <!-- =================================================
+      <!-- =====================================================
            LOW STOCK
-      ================================================= -->
+      ===================================================== -->
 
       <div
         id="page-lowstock"
@@ -1143,37 +1107,23 @@ tr:hover {
 
               <tr>
 
-                <th>
-                  Product ID
-                </th>
+                <th>Product ID</th>
 
-                <th>
-                  Product
-                </th>
+                <th>Product</th>
 
-                <th>
-                  Category
-                </th>
+                <th>Category</th>
 
-                <th>
-                  Quantity
-                </th>
+                <th>Quantity</th>
 
-                <th>
-                  Reorder Level
-                </th>
+                <th>Reorder Level</th>
 
-                <th>
-                  Status
-                </th>
+                <th>Status</th>
 
               </tr>
 
             </thead>
 
-            <tbody
-              id="lowStockTable"
-            ></tbody>
+            <tbody id="lowStockTable"></tbody>
 
           </table>
 
@@ -1182,9 +1132,9 @@ tr:hover {
       </div>
 
 
-      <!-- =================================================
+      <!-- =====================================================
            REPORTS
-      ================================================= -->
+      ===================================================== -->
 
       <div
         id="page-reports"
@@ -1225,9 +1175,7 @@ tr:hover {
 
             <br>
 
-            <h2
-              id="inventoryValue"
-            >
+            <h2 id="inventoryValue">
               ₱0.00
             </h2>
 
@@ -1242,9 +1190,7 @@ tr:hover {
 
             <br>
 
-            <h2
-              id="reportSales"
-            >
+            <h2 id="reportSales">
               ₱0.00
             </h2>
 
@@ -1259,9 +1205,7 @@ tr:hover {
 
             <br>
 
-            <h2
-              id="itemsSold"
-            >
+            <h2 id="itemsSold">
               0
             </h2>
 
@@ -1276,9 +1220,7 @@ tr:hover {
 
             <br>
 
-            <h2
-              id="stockTransactions"
-            >
+            <h2 id="stockTransactions">
               0
             </h2>
 
@@ -1288,7 +1230,6 @@ tr:hover {
 
       </div>
 
-
     </section>
 
   </main>
@@ -1296,9 +1237,9 @@ tr:hover {
 </div>
 
 
-<!-- =====================================================
+<!-- =========================================================
      PRODUCT MODAL
-===================================================== -->
+========================================================= -->
 
 <div
   id="productModal"
@@ -1315,6 +1256,7 @@ tr:hover {
 
       <button
         class="close"
+        type="button"
         onclick="closeModal('productModal')"
       >
         ×
@@ -1323,18 +1265,18 @@ tr:hover {
     </div>
 
 
-    <form
-      id="productForm"
-    >
+    <form id="productForm">
 
       <div class="form-group">
 
         <label>
-          Product Name
+          Product Name *
         </label>
 
         <input
           id="productName"
+          type="text"
+          placeholder="Enter product name"
           required
         >
 
@@ -1349,6 +1291,7 @@ tr:hover {
 
         <input
           id="category"
+          type="text"
           placeholder="e.g. Beverages"
         >
 
@@ -1358,7 +1301,7 @@ tr:hover {
       <div class="form-group">
 
         <label>
-          Price
+          Price *
         </label>
 
         <input
@@ -1366,6 +1309,7 @@ tr:hover {
           type="number"
           step="0.01"
           min="0"
+          placeholder="0.00"
           required
         >
 
@@ -1405,6 +1349,7 @@ tr:hover {
 
 
       <button
+        id="saveProductButton"
         class="btn btn-primary"
         type="submit"
       >
@@ -1419,6 +1364,12 @@ tr:hover {
         Cancel
       </button>
 
+
+      <div
+        id="productMessage"
+        class="form-message"
+      ></div>
+
     </form>
 
   </div>
@@ -1426,9 +1377,9 @@ tr:hover {
 </div>
 
 
-<!-- =====================================================
+<!-- =========================================================
      STOCK MODAL
-===================================================== -->
+========================================================= -->
 
 <div
   id="stockModal"
@@ -1445,6 +1396,7 @@ tr:hover {
 
       <button
         class="close"
+        type="button"
         onclick="closeModal('stockModal')"
       >
         ×
@@ -1453,14 +1405,12 @@ tr:hover {
     </div>
 
 
-    <form
-      id="stockForm"
-    >
+    <form id="stockForm">
 
       <div class="form-group">
 
         <label>
-          Product
+          Product *
         </label>
 
         <select
@@ -1474,7 +1424,7 @@ tr:hover {
       <div class="form-group">
 
         <label>
-          Quantity
+          Quantity *
         </label>
 
         <input
@@ -1509,9 +1459,9 @@ tr:hover {
 </div>
 
 
-<!-- =====================================================
+<!-- =========================================================
      SALE MODAL
-===================================================== -->
+========================================================= -->
 
 <div
   id="saleModal"
@@ -1528,6 +1478,7 @@ tr:hover {
 
       <button
         class="close"
+        type="button"
         onclick="closeModal('saleModal')"
       >
         ×
@@ -1536,14 +1487,12 @@ tr:hover {
     </div>
 
 
-    <form
-      id="saleForm"
-    >
+    <form id="saleForm">
 
       <div class="form-group">
 
         <label>
-          Product
+          Product *
         </label>
 
         <select
@@ -1557,7 +1506,7 @@ tr:hover {
       <div class="form-group">
 
         <label>
-          Quantity
+          Quantity *
         </label>
 
         <input
@@ -1599,7 +1548,7 @@ tr:hover {
 ========================================================= */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbxmjzhR_rUnqZ8Inl3STZ6skkItBojlhuTs_VBabbTrcM8rKUrP2hVAqh8SlvXXE0L9/exec";
+  "https://script.google.com/macros/s/AKfycbwVc631mmKuxuYujhlbE2pxxmKSGXEv-MwpdW4WnAKt-0sYpE_xT7AqtnBg6mNd-mQ6/exec";
 
 
 /* =========================================================
@@ -1608,9 +1557,7 @@ const API_URL =
 
 let currentUser =
   JSON.parse(
-    localStorage.getItem(
-      "miniMartUser"
-    ) || "null"
+    localStorage.getItem("miniMartUser") || "null"
   );
 
 
@@ -1624,9 +1571,20 @@ async function apiGet(action) {
     await fetch(
       API_URL +
       "?action=" +
-      encodeURIComponent(action)
+      encodeURIComponent(action) +
+      "&_=" +
+      Date.now(),
+      {
+        method: "GET",
+        cache: "no-store"
+      }
     );
 
+  if (!response.ok) {
+    throw new Error(
+      "HTTP error: " + response.status
+    );
+  }
 
   return await response.json();
 
@@ -1644,18 +1602,20 @@ async function apiPost(data) {
       API_URL,
       {
         method: "POST",
-
         headers: {
           "Content-Type":
             "text/plain;charset=utf-8"
         },
-
         body:
           JSON.stringify(data)
-
       }
     );
 
+  if (!response.ok) {
+    throw new Error(
+      "HTTP error: " + response.status
+    );
+  }
 
   return await response.json();
 
@@ -1674,49 +1634,45 @@ document
 
       event.preventDefault();
 
-
       const username =
         document
           .getElementById("username")
           .value
           .trim();
 
-
       const password =
         document
           .getElementById("password")
           .value;
 
-
       const message =
         document
           .getElementById("loginMessage");
 
+      const button =
+        document
+          .getElementById("loginButton");
 
       message.innerText =
         "Logging in...";
 
+      button.disabled = true;
 
       try {
 
         const result =
           await apiPost({
 
-            action:
-              "login",
+            action: "login",
 
-            username:
-              username,
+            username: username,
 
-            password:
-              password
+            password: password
 
           });
 
 
-        if (
-          result.success
-        ) {
+        if (result.success) {
 
           currentUser = {
 
@@ -1728,14 +1684,12 @@ document
 
           };
 
-
           localStorage.setItem(
             "miniMartUser",
-            JSON.stringify(
-              currentUser
-            )
+            JSON.stringify(currentUser)
           );
 
+          message.innerText = "";
 
           openApplication();
 
@@ -1753,10 +1707,19 @@ document
 
       catch (error) {
 
-        message.innerText =
-          "Unable to connect to server.";
+        console.error(
+          "Login error:",
+          error
+        );
 
-        console.error(error);
+        message.innerText =
+          "Unable to connect to Google Apps Script.";
+
+      }
+
+      finally {
+
+        button.disabled = false;
 
       }
 
@@ -1774,30 +1737,23 @@ function openApplication() {
     .getElementById("loginScreen")
     .style.display = "none";
 
-
   document
     .getElementById("app")
     .style.display = "block";
 
-
   const name =
     currentUser?.username ||
     "Admin";
-
 
   document
     .getElementById("userName")
     .innerText =
       name;
 
-
   document
     .getElementById("userAvatar")
     .innerText =
-      name
-        .charAt(0)
-        .toUpperCase();
-
+      name.charAt(0).toUpperCase();
 
   loadDashboard();
 
@@ -1809,9 +1765,7 @@ function openApplication() {
 ========================================================= */
 
 if (currentUser) {
-
   openApplication();
-
 }
 
 
@@ -1825,24 +1779,19 @@ function logout() {
     "miniMartUser"
   );
 
-
   currentUser = null;
-
 
   document
     .getElementById("app")
     .style.display = "none";
 
-
   document
     .getElementById("loginScreen")
     .style.display = "flex";
 
-
   document
     .getElementById("username")
     .value = "";
-
 
   document
     .getElementById("password")
@@ -1862,42 +1811,48 @@ function showPage(
 
   document
     .querySelectorAll(".page")
-    .forEach(
-      function(element) {
+    .forEach(function(element) {
 
-        element.classList.remove(
-          "active"
-        );
+      element.classList.remove(
+        "active"
+      );
 
-      }
+    });
+
+
+  const targetPage =
+    document.getElementById(
+      "page-" + page
     );
 
 
-  document
-    .getElementById(
-      "page-" + page
-    )
-    .classList.add(
+  if (targetPage) {
+
+    targetPage.classList.add(
       "active"
     );
+
+  }
 
 
   document
     .querySelectorAll(".nav-item")
-    .forEach(
-      function(element) {
+    .forEach(function(element) {
 
-        element.classList.remove(
-          "active"
-        );
+      element.classList.remove(
+        "active"
+      );
 
-      }
+    });
+
+
+  if (button) {
+
+    button.classList.add(
+      "active"
     );
 
-
-  button.classList.add(
-    "active"
-  );
+  }
 
 
   updateTitle(page);
@@ -1930,38 +1885,31 @@ function showPage(
 }
 
 
-function showPageByName(
-  page
-) {
+function showPageByName(page) {
 
   const buttons =
-    document
-      .querySelectorAll(
-        ".nav-item"
-      );
-
+    document.querySelectorAll(
+      ".nav-item"
+    );
 
   let target = null;
 
+  buttons.forEach(function(button) {
 
-  buttons.forEach(
-    function(button) {
+    const onclick =
+      button.getAttribute("onclick") || "";
 
-      if (
-        button
-          .getAttribute("onclick")
-          ?.includes(
-            "'" + page + "'"
-          )
-      ) {
+    if (
+      onclick.includes(
+        "'" + page + "'"
+      )
+    ) {
 
-        target =
-          button;
-
-      }
+      target = button;
 
     }
-  );
+
+  });
 
 
   if (target) {
@@ -1980,31 +1928,23 @@ function updateTitle(page) {
 
   const titles = {
 
-    dashboard:
-      "Dashboard",
+    dashboard: "Dashboard",
 
-    products:
-      "Products",
+    products: "Products",
 
-    stock:
-      "Stock",
+    stock: "Stock",
 
-    sales:
-      "Sales",
+    sales: "Sales",
 
-    lowstock:
-      "Low Stock",
+    lowstock: "Low Stock",
 
-    reports:
-      "Reports"
+    reports: "Reports"
 
   };
 
 
   document
-    .getElementById(
-      "topbarTitle"
-    )
+    .getElementById("topbarTitle")
     .innerText =
       titles[page] ||
       "Mini-Mart";
@@ -2021,57 +1961,43 @@ async function loadDashboard() {
   try {
 
     const result =
-      await apiGet(
-        "dashboard"
-      );
+      await apiGet("dashboard");
 
 
-    if (
-      !result.success
-    ) {
+    if (!result.success) {
       return;
     }
 
 
     document
-      .getElementById(
-        "totalProducts"
-      )
+      .getElementById("totalProducts")
       .innerText =
-        result.totalProducts;
+        result.totalProducts || 0;
 
 
     document
-      .getElementById(
-        "availableStock"
-      )
+      .getElementById("availableStock")
       .innerText =
-        result.availableStock;
+        result.availableStock || 0;
 
 
     document
-      .getElementById(
-        "lowStock"
-      )
+      .getElementById("lowStock")
       .innerText =
-        result.lowStock;
+        result.lowStock || 0;
 
 
     document
-      .getElementById(
-        "outOfStock"
-      )
+      .getElementById("outOfStock")
       .innerText =
-        result.outOfStock;
+        result.outOfStock || 0;
 
 
     document
-      .getElementById(
-        "dashboardSales"
-      )
+      .getElementById("dashboardSales")
       .innerText =
         formatCurrency(
-          result.totalSales
+          result.totalSales || 0
         );
 
   }
@@ -2089,37 +2015,42 @@ async function loadDashboard() {
 
 
 /* =========================================================
-   PRODUCTS
+   LOAD PRODUCTS
 ========================================================= */
 
 async function loadProducts() {
 
+  const table =
+    document.getElementById(
+      "productsTable"
+    );
+
+  table.innerHTML =
+    `<tr>
+      <td colspan="8" class="loading">
+        Loading products...
+      </td>
+    </tr>`;
+
+
   try {
 
     const result =
-      await apiGet(
-        "products"
-      );
-
-
-    const table =
-      document
-        .getElementById(
-          "productsTable"
-        );
+      await apiGet("products");
 
 
     table.innerHTML = "";
 
 
     if (
+      !result.success ||
       !result.products ||
       result.products.length === 0
     ) {
 
       table.innerHTML =
         `<tr>
-          <td colspan="8">
+          <td colspan="8" class="loading">
             No products found.
           </td>
         </tr>`;
@@ -2135,13 +2066,12 @@ async function loadProducts() {
         let badge =
           "badge-active";
 
-
         let statusText =
           "Active";
 
 
         if (
-          product.quantity === 0
+          Number(product.quantity) === 0
         ) {
 
           badge =
@@ -2153,8 +2083,8 @@ async function loadProducts() {
         }
 
         else if (
-          product.quantity <=
-          product.reorderLevel
+          Number(product.quantity) <=
+          Number(product.reorderLevel)
         ) {
 
           badge =
@@ -2187,11 +2117,11 @@ async function loadProducts() {
             </td>
 
             <td>
-              ${product.quantity}
+              ${Number(product.quantity) || 0}
             </td>
 
             <td>
-              ${product.reorderLevel}
+              ${Number(product.reorderLevel) || 0}
             </td>
 
             <td>
@@ -2221,10 +2151,84 @@ async function loadProducts() {
   catch (error) {
 
     console.error(
+      "Load products:",
       error
     );
 
+    table.innerHTML =
+      `<tr>
+        <td colspan="8" class="loading">
+          Unable to load products.
+        </td>
+      </tr>`;
+
   }
+
+}
+
+
+/* =========================================================
+   OPEN PRODUCT MODAL
+========================================================= */
+
+function openProductModal() {
+
+  document
+    .getElementById("productForm")
+    .reset();
+
+  document
+    .getElementById("quantity")
+    .value = 0;
+
+  document
+    .getElementById("reorderLevel")
+    .value = 10;
+
+  clearProductMessage();
+
+  document
+    .getElementById("productModal")
+    .classList.add("show");
+
+}
+
+
+/* =========================================================
+   PRODUCT MESSAGE
+========================================================= */
+
+function showProductMessage(
+  message,
+  type
+) {
+
+  const box =
+    document.getElementById(
+      "productMessage"
+    );
+
+  box.innerText =
+    message;
+
+  box.className =
+    "form-message " +
+    type;
+
+}
+
+
+function clearProductMessage() {
+
+  const box =
+    document.getElementById(
+      "productMessage"
+    );
+
+  box.innerText = "";
+
+  box.className =
+    "form-message";
 
 }
 
@@ -2234,9 +2238,7 @@ async function loadProducts() {
 ========================================================= */
 
 document
-  .getElementById(
-    "productForm"
-  )
+  .getElementById("productForm")
   .addEventListener(
     "submit",
     async function(event) {
@@ -2244,81 +2246,200 @@ document
       event.preventDefault();
 
 
-      const data = {
+      const saveButton =
+        document.getElementById(
+          "saveProductButton"
+        );
 
-        action:
-          "addProduct",
 
-        productName:
+      const productName =
+        document
+          .getElementById("productName")
+          .value
+          .trim();
+
+
+      const category =
+        document
+          .getElementById("category")
+          .value
+          .trim();
+
+
+      const price =
+        Number(
           document
-            .getElementById(
-              "productName"
-            )
+            .getElementById("price")
             .value
-            .trim(),
+        );
 
-        category:
+
+      const quantity =
+        Number(
           document
-            .getElementById(
-              "category"
-            )
+            .getElementById("quantity")
             .value
-            .trim(),
+        );
 
-        price:
+
+      const reorderLevel =
+        Number(
           document
-            .getElementById(
-              "price"
-            )
-            .value,
+            .getElementById("reorderLevel")
+            .value
+        );
 
-        quantity:
-          document
-            .getElementById(
-              "quantity"
-            )
-            .value,
 
-        reorderLevel:
-          document
-            .getElementById(
-              "reorderLevel"
-            )
-            .value,
+      if (!productName) {
 
-        user:
-          currentUser?.username ||
-          "admin"
+        showProductMessage(
+          "Product name is required.",
+          "error"
+        );
 
-      };
+        return;
+
+      }
+
+
+      if (
+        isNaN(price) ||
+        price < 0
+      ) {
+
+        showProductMessage(
+          "Please enter a valid price.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        isNaN(quantity) ||
+        quantity < 0
+      ) {
+
+        showProductMessage(
+          "Please enter a valid quantity.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        isNaN(reorderLevel) ||
+        reorderLevel < 0
+      ) {
+
+        showProductMessage(
+          "Please enter a valid reorder level.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      saveButton.disabled = true;
+
+      saveButton.innerText =
+        "Saving...";
+
+
+      showProductMessage(
+        "Saving product...",
+        "success"
+      );
 
 
       try {
 
         const result =
-          await apiPost(
-            data
-          );
+          await apiPost({
+
+            action:
+              "addProduct",
+
+            productName:
+              productName,
+
+            category:
+              category,
+
+            price:
+              price,
+
+            quantity:
+              quantity,
+
+            reorderLevel:
+              reorderLevel,
+
+            user:
+              currentUser?.username ||
+              "admin"
+
+          });
 
 
-        alert(
-          result.message
+        console.log(
+          "Add product response:",
+          result
         );
 
 
-        if (
-          result.success
-        ) {
+        if (result.success) {
+
+          showProductMessage(
+            "Product added successfully!",
+            "success"
+          );
+
+
+          alert(
+            "Product added successfully!\n\nProduct ID: " +
+            result.productId
+          );
+
 
           closeModal(
             "productModal"
           );
 
+
           this.reset();
 
-          loadProducts();
 
-          loadDashboard();
+          document
+            .getElementById("quantity")
+            .value = 0;
+
+
+          document
+            .getElementById("reorderLevel")
+            .value = 10;
+
+
+          await loadProducts();
+
+          await loadDashboard();
+
+        }
+
+        else {
+
+          showProductMessage(
+            result.message ||
+            "Unable to add product.",
+            "error"
+          );
 
         }
 
@@ -2326,9 +2447,31 @@ document
 
       catch (error) {
 
-        alert(
-          "Unable to save product."
+        console.error(
+          "Add Product Error:",
+          error
         );
+
+
+        showProductMessage(
+          "Unable to connect to Google Apps Script. Check the deployment URL.",
+          "error"
+        );
+
+
+        alert(
+          "Unable to add product.\n\n" +
+          error.message
+        );
+
+      }
+
+      finally {
+
+        saveButton.disabled = false;
+
+        saveButton.innerText =
+          "Save Product";
 
       }
 
@@ -2374,23 +2517,27 @@ async function deleteProduct(
 
 
     alert(
-      result.message
+      result.message ||
+      "Delete completed."
     );
 
 
-    if (
-      result.success
-    ) {
+    if (result.success) {
 
-      loadProducts();
+      await loadProducts();
 
-      loadDashboard();
+      await loadDashboard();
 
     }
 
   }
 
   catch (error) {
+
+    console.error(
+      "Delete:",
+      error
+    );
 
     alert(
       "Unable to delete product."
@@ -2407,19 +2554,24 @@ async function deleteProduct(
 
 async function loadStock() {
 
+  const table =
+    document.getElementById(
+      "stockTable"
+    );
+
+
+  table.innerHTML =
+    `<tr>
+      <td colspan="6" class="loading">
+        Loading stock...
+      </td>
+    </tr>`;
+
+
   try {
 
     const result =
-      await apiGet(
-        "stock"
-      );
-
-
-    const table =
-      document
-        .getElementById(
-          "stockTable"
-        );
+      await apiGet("stock");
 
 
     table.innerHTML = "";
@@ -2432,7 +2584,7 @@ async function loadStock() {
 
       table.innerHTML =
         `<tr>
-          <td colspan="6">
+          <td colspan="6" class="loading">
             No stock transactions found.
           </td>
         </tr>`;
@@ -2470,7 +2622,7 @@ async function loadStock() {
             </td>
 
             <td>
-              ${item.quantity}
+              ${Number(item.quantity) || 0}
             </td>
 
             <td>
@@ -2491,8 +2643,16 @@ async function loadStock() {
   catch (error) {
 
     console.error(
+      "Stock:",
       error
     );
+
+    table.innerHTML =
+      `<tr>
+        <td colspan="6" class="loading">
+          Unable to load stock.
+        </td>
+      </tr>`;
 
   }
 
@@ -2511,25 +2671,56 @@ async function openStockModal() {
 
 
   document
-    .getElementById(
-      "stockModal"
-    )
-    .classList.add(
-      "show"
-    );
+    .getElementById("stockQuantity")
+    .value = "";
+
+
+  document
+    .getElementById("stockModal")
+    .classList.add("show");
 
 }
 
 
+/* =========================================================
+   ADD STOCK
+========================================================= */
+
 document
-  .getElementById(
-    "stockForm"
-  )
+  .getElementById("stockForm")
   .addEventListener(
     "submit",
     async function(event) {
 
       event.preventDefault();
+
+
+      const productId =
+        document
+          .getElementById("stockProduct")
+          .value;
+
+
+      const quantity =
+        Number(
+          document
+            .getElementById("stockQuantity")
+            .value
+        );
+
+
+      if (
+        !productId ||
+        quantity <= 0
+      ) {
+
+        alert(
+          "Please enter a valid product and quantity."
+        );
+
+        return;
+
+      }
 
 
       try {
@@ -2541,18 +2732,10 @@ document
               "addStock",
 
             productId:
-              document
-                .getElementById(
-                  "stockProduct"
-                )
-                .value,
+              productId,
 
             quantity:
-              document
-                .getElementById(
-                  "stockQuantity"
-                )
-                .value,
+              quantity,
 
             user:
               currentUser?.username ||
@@ -2566,9 +2749,7 @@ document
         );
 
 
-        if (
-          result.success
-        ) {
+        if (result.success) {
 
           closeModal(
             "stockModal"
@@ -2576,15 +2757,22 @@ document
 
           this.reset();
 
-          loadStock();
+          await loadStock();
 
-          loadDashboard();
+          await loadProducts();
+
+          await loadDashboard();
 
         }
 
       }
 
       catch (error) {
+
+        console.error(
+          "Add stock:",
+          error
+        );
 
         alert(
           "Unable to add stock."
@@ -2602,19 +2790,24 @@ document
 
 async function loadSales() {
 
+  const table =
+    document.getElementById(
+      "salesTable"
+    );
+
+
+  table.innerHTML =
+    `<tr>
+      <td colspan="7" class="loading">
+        Loading sales...
+      </td>
+    </tr>`;
+
+
   try {
 
     const result =
-      await apiGet(
-        "sales"
-      );
-
-
-    const table =
-      document
-        .getElementById(
-          "salesTable"
-        );
+      await apiGet("sales");
 
 
     table.innerHTML = "";
@@ -2627,7 +2820,7 @@ async function loadSales() {
 
       table.innerHTML =
         `<tr>
-          <td colspan="7">
+          <td colspan="7" class="loading">
             No sales records found.
           </td>
         </tr>`;
@@ -2653,7 +2846,7 @@ async function loadSales() {
             </td>
 
             <td>
-              ${sale.quantity}
+              ${Number(sale.quantity) || 0}
             </td>
 
             <td>
@@ -2686,6 +2879,13 @@ async function loadSales() {
       error
     );
 
+    table.innerHTML =
+      `<tr>
+        <td colspan="7" class="loading">
+          Unable to load sales.
+        </td>
+      </tr>`;
+
   }
 
 }
@@ -2703,19 +2903,13 @@ async function openSaleModal() {
 
 
   document
-    .getElementById(
-      "saleQuantity"
-    )
+    .getElementById("saleQuantity")
     .value = "";
 
 
   document
-    .getElementById(
-      "saleModal"
-    )
-    .classList.add(
-      "show"
-    );
+    .getElementById("saleModal")
+    .classList.add("show");
 
 }
 
@@ -2725,9 +2919,7 @@ async function openSaleModal() {
 ========================================================= */
 
 document
-  .getElementById(
-    "saleForm"
-  )
+  .getElementById("saleForm")
   .addEventListener(
     "submit",
     async function(event) {
@@ -2737,23 +2929,21 @@ document
 
       const productId =
         document
-          .getElementById(
-            "saleProduct"
-          )
+          .getElementById("saleProduct")
           .value;
 
 
       const quantity =
-        document
-          .getElementById(
-            "saleQuantity"
-          )
-          .value;
+        Number(
+          document
+            .getElementById("saleQuantity")
+            .value
+        );
 
 
       if (
         !productId ||
-        Number(quantity) <= 0
+        quantity <= 0
       ) {
 
         alert(
@@ -2767,11 +2957,17 @@ document
 
       try {
 
+        /*
+         * IMPORTANT:
+         * Code.gs uses "addSale",
+         * NOT "recordSale".
+         */
+
         const result =
           await apiPost({
 
             action:
-              "recordSale",
+              "addSale",
 
             productId:
               productId,
@@ -2792,21 +2988,19 @@ document
         );
 
 
-        if (
-          result.success
-        ) {
+        if (result.success) {
 
           closeModal(
             "saleModal"
           );
 
-
           this.reset();
 
+          await loadSales();
 
-          loadSales();
+          await loadProducts();
 
-          loadDashboard();
+          await loadDashboard();
 
         }
 
@@ -2818,7 +3012,6 @@ document
           "Record Sale:",
           error
         );
-
 
         alert(
           "Unable to record sale."
@@ -2839,10 +3032,9 @@ async function populateProductSelect(
 ) {
 
   const select =
-    document
-      .getElementById(
-        selectId
-      );
+    document.getElementById(
+      selectId
+    );
 
 
   select.innerHTML =
@@ -2854,9 +3046,7 @@ async function populateProductSelect(
   try {
 
     const result =
-      await apiGet(
-        "products"
-      );
+      await apiGet("products");
 
 
     select.innerHTML =
@@ -2911,7 +3101,7 @@ async function populateProductSelect(
   catch (error) {
 
     console.error(
-      "Products:",
+      "Product select:",
       error
     );
 
@@ -2932,36 +3122,48 @@ async function populateProductSelect(
 
 async function loadLowStock() {
 
+  const table =
+    document.getElementById(
+      "lowStockTable"
+    );
+
+
+  table.innerHTML =
+    `<tr>
+      <td colspan="6" class="loading">
+        Loading low-stock products...
+      </td>
+    </tr>`;
+
+
   try {
 
     const result =
-      await apiGet(
-        "lowstock"
-      );
-
-
-    const table =
-      document
-        .getElementById(
-          "lowStockTable"
-        );
+      await apiGet("lowstock");
 
 
     table.innerHTML = "";
 
 
+    /*
+     * IMPORTANT:
+     * Code.gs returns:
+     * { success:true, lowStock:[...] }
+     */
+
+    const products =
+      result.lowStock || [];
+
+
     if (
-      !result.products ||
-      result.products.length === 0
+      products.length === 0
     ) {
 
       table.innerHTML =
         `<tr>
-
-          <td colspan="6">
+          <td colspan="6" class="loading">
             No low-stock products.
           </td>
-
         </tr>`;
 
       return;
@@ -2969,12 +3171,11 @@ async function loadLowStock() {
     }
 
 
-    result.products.forEach(
+    products.forEach(
       function(product) {
 
         let badge =
           "badge-low";
-
 
         let status =
           "Low Stock";
@@ -3010,18 +3211,16 @@ async function loadLowStock() {
             </td>
 
             <td>
-              ${product.quantity}
+              ${Number(product.quantity) || 0}
             </td>
 
             <td>
-              ${product.reorderLevel}
+              ${Number(product.reorderLevel) || 0}
             </td>
 
             <td>
 
-              <span
-                class="badge ${badge}"
-              >
+              <span class="badge ${badge}">
                 ${status}
               </span>
 
@@ -3041,13 +3240,20 @@ async function loadLowStock() {
       error
     );
 
+    table.innerHTML =
+      `<tr>
+        <td colspan="6" class="loading">
+          Unable to load low-stock products.
+        </td>
+      </tr>`;
+
   }
 
 }
 
 
 /* =========================================================
-   REPORTS
+   REPORT
 ========================================================= */
 
 async function loadReport() {
@@ -3055,14 +3261,10 @@ async function loadReport() {
   try {
 
     const result =
-      await apiGet(
-        "report"
-      );
+      await apiGet("report");
 
 
-    if (
-      !result.success
-    ) {
+    if (!result.success) {
 
       console.error(
         result.message
@@ -3074,9 +3276,7 @@ async function loadReport() {
 
 
     document
-      .getElementById(
-        "inventoryValue"
-      )
+      .getElementById("inventoryValue")
       .innerText =
         formatCurrency(
           result.inventoryValue || 0
@@ -3084,9 +3284,7 @@ async function loadReport() {
 
 
     document
-      .getElementById(
-        "reportSales"
-      )
+      .getElementById("reportSales")
       .innerText =
         formatCurrency(
           result.totalSales || 0
@@ -3094,17 +3292,13 @@ async function loadReport() {
 
 
     document
-      .getElementById(
-        "itemsSold"
-      )
+      .getElementById("itemsSold")
       .innerText =
-        result.itemsSold || 0;
+        result.totalItemsSold || 0;
 
 
     document
-      .getElementById(
-        "stockTransactions"
-      )
+      .getElementById("stockTransactions")
       .innerText =
         result.stockTransactions || 0;
 
@@ -3123,26 +3317,32 @@ async function loadReport() {
 
 
 /* =========================================================
-   MODAL FUNCTIONS
+   CLOSE MODAL
 ========================================================= */
 
 function closeModal(
   modalId
 ) {
 
-  document
-    .getElementById(
+  const modal =
+    document.getElementById(
       modalId
-    )
-    .classList.remove(
+    );
+
+
+  if (modal) {
+
+    modal.classList.remove(
       "show"
     );
+
+  }
 
 }
 
 
 /* =========================================================
-   CLOSE MODAL WHEN CLICKING OUTSIDE
+   CLICK OUTSIDE MODAL
 ========================================================= */
 
 document.addEventListener(
@@ -3166,12 +3366,42 @@ document.addEventListener(
 
 
 /* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      document
+        .querySelectorAll(
+          ".modal.show"
+        )
+        .forEach(
+          function(modal) {
+
+            modal.classList.remove(
+              "show"
+            );
+
+          }
+        );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
    ESCAPE HTML
 ========================================================= */
 
-function escapeHtml(
-  value
-) {
+function escapeHtml(value) {
 
   if (
     value === null ||
@@ -3217,9 +3447,7 @@ function escapeHtml(
    ESCAPE ATTRIBUTE
 ========================================================= */
 
-function escapeAttribute(
-  value
-) {
+function escapeAttribute(value) {
 
   return String(
     value || ""
@@ -3244,12 +3472,10 @@ function escapeAttribute(
 
 
 /* =========================================================
-   CURRENCY FORMAT
+   CURRENCY
 ========================================================= */
 
-function formatCurrency(
-  value
-) {
+function formatCurrency(value) {
 
   const number =
     Number(value) || 0;
@@ -3258,14 +3484,9 @@ function formatCurrency(
   return number.toLocaleString(
     "en-PH",
     {
-      style:
-        "currency",
-
-      currency:
-        "PHP",
-
-      minimumFractionDigits:
-        2
+      style: "currency",
+      currency: "PHP",
+      minimumFractionDigits: 2
     }
   );
 
@@ -3280,14 +3501,7 @@ document.addEventListener(
   "DOMContentLoaded",
   function() {
 
-    /*
-     * If the user is already logged in,
-     * openApplication() handles the dashboard.
-     */
-
-    if (
-      currentUser
-    ) {
+    if (currentUser) {
 
       openApplication();
 
@@ -3298,39 +3512,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   KEYBOARD SUPPORT
-========================================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (
-      event.key === "Escape"
-    ) {
-
-      document
-        .querySelectorAll(
-          ".modal.show"
-        )
-        .forEach(
-          function(modal) {
-
-            modal.classList.remove(
-              "show"
-            );
-
-          }
-        );
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   PERIODIC DASHBOARD REFRESH
+   AUTO REFRESH
 ========================================================= */
 
 setInterval(
@@ -3338,12 +3520,8 @@ setInterval(
 
     if (
       currentUser &&
-      document
-        .getElementById(
-          "app"
-        )
-        .style.display !==
-        "none"
+      document.getElementById("app")
+        .style.display !== "none"
     ) {
 
       loadDashboard();
@@ -3359,3 +3537,4 @@ setInterval(
 </body>
 
 </html>
+```
