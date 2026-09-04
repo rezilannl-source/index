@@ -1,21 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inventory System</title>
 
 <style>
-
-/* ==============================
-   RESET
-============================== */
-
 * {
     margin: 0;
     padding: 0;
@@ -29,12 +19,117 @@ body {
 }
 
 /* ==============================
-   LAYOUT
+   LOGIN
+============================== */
+
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #321545;
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-logo h1 {
+    color: #321545;
+    margin-bottom: 8px;
+}
+
+.login-logo p {
+    color: #777;
+}
+
+.login-form-group {
+    margin-bottom: 18px;
+}
+
+.login-form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.login-form-group input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.login-form-group input:focus {
+    outline: none;
+    border-color: #66328a;
+}
+
+.login-button {
+    width: 100%;
+    padding: 13px;
+    background: #66328a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.login-button:hover {
+    background: #51216f;
+}
+
+.login-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.login-error {
+    display: none;
+    background: #ffdede;
+    color: #a32929;
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.login-error.show {
+    display: block;
+}
+
+.default-login {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+}
+
+/* ==============================
+   APP
 ============================== */
 
 .app {
-    display: flex;
+    display: none;
     min-height: 100vh;
+}
+
+.app.show {
+    display: flex;
 }
 
 /* ==============================
@@ -50,11 +145,12 @@ body {
     top: 0;
     bottom: 0;
     padding: 25px 15px;
+    overflow-y: auto;
 }
 
 .logo {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .logo h2 {
@@ -65,6 +161,23 @@ body {
     font-size: 13px;
     color: #cdbbd7;
     margin-top: 5px;
+}
+
+.user-info {
+    background: #47205d;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.user-info strong {
+    display: block;
+    font-size: 14px;
+}
+
+.user-info small {
+    color: #d7c7df;
 }
 
 .nav-item {
@@ -84,6 +197,13 @@ body {
 
 .nav-item span {
     margin-right: 8px;
+}
+
+.logout-button {
+    margin-top: 20px;
+    width: 100%;
+    background: #8f2930;
+    color: white;
 }
 
 /* ==============================
@@ -122,9 +242,7 @@ body {
 
 .cards {
     display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(200px, 1fr));
-
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 18px;
     margin-bottom: 25px;
 }
@@ -344,8 +462,7 @@ tr:hover {
 
 .report-summary {
     display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
 }
 
@@ -363,6 +480,16 @@ tr:hover {
 }
 
 /* ==============================
+   LOADING
+============================== */
+
+.loading {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+}
+
+/* ==============================
    MOBILE
 ============================== */
 
@@ -373,8 +500,14 @@ tr:hover {
     }
 
     .logo h2,
-    .logo p {
+    .logo p,
+    .user-info strong,
+    .user-info small {
         display: none;
+    }
+
+    .user-info {
+        padding: 5px;
     }
 
     .nav-item {
@@ -387,6 +520,16 @@ tr:hover {
         margin: 0;
     }
 
+    .logout-button {
+        font-size: 0;
+        padding: 13px 5px;
+    }
+
+    .logout-button::before {
+        content: "↪";
+        font-size: 18px;
+    }
+
     .main {
         margin-left: 70px;
         width: calc(100% - 70px);
@@ -396,20 +539,89 @@ tr:hover {
     .form-row {
         grid-template-columns: 1fr;
     }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
-<div class="app">
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
 
-<!-- =========================================
+<div id="loginScreen" class="login-screen">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+
+            <h1>Inventory System</h1>
+
+            <p>Administrator Login</p>
+
+        </div>
+
+        <div id="loginError" class="login-error"></div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+
+            <div class="login-form-group">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="Enter username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+            <div class="login-form-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+            <button
+                type="submit"
+                id="loginButton"
+                class="login-button">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <div class="default-login">
+            Default account: admin / admin123
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     INVENTORY APPLICATION
+===================================================== -->
+
+<div id="app" class="app">
+
+<!-- =====================================================
      SIDEBAR
-========================================= -->
+===================================================== -->
 
 <aside class="sidebar">
 
@@ -421,85 +633,106 @@ tr:hover {
 
     </div>
 
-    <div class="nav-item active"
-         onclick="showPage('dashboard', this)">
+    <div class="user-info">
+
+        <strong id="currentUsername">Admin</strong>
+
+        <small id="currentRole">Administrator</small>
+
+    </div>
+
+    <div
+        class="nav-item active"
+        onclick="showPage('dashboard', this)">
 
         <span>📊</span>
         Dashboard
 
     </div>
 
-    <div class="nav-item"
-         onclick="showPage('products', this)">
+    <div
+        class="nav-item"
+        onclick="showPage('products', this)">
 
         <span>📦</span>
         Products
 
     </div>
 
-    <div class="nav-item"
-         onclick="showPage('categories', this)">
+    <div
+        class="nav-item"
+        onclick="showPage('categories', this)">
 
         <span>🗂️</span>
         Categories
 
     </div>
 
-    <div class="nav-item"
-         onclick="showPage('stockin', this)">
+    <div
+        class="nav-item"
+        onclick="showPage('stockin', this)">
 
         <span>📥</span>
         Stock In
 
     </div>
 
-    <div class="nav-item"
-         onclick="showPage('stockout', this)">
+    <div
+        class="nav-item"
+        onclick="showPage('stockout', this)">
 
         <span>📤</span>
         Stock Out / Sales
 
     </div>
 
-    <div class="nav-item"
-         onclick="showPage('inventory', this)">
+    <div
+        class="nav-item"
+        onclick="showPage('inventory', this)">
 
         <span>📋</span>
         Inventory
 
     </div>
 
-    <div class="nav-item"
-         onclick="showPage('reports', this)">
+    <div
+        class="nav-item"
+        onclick="showPage('reports', this)">
 
         <span>📑</span>
         Reports
 
     </div>
 
+    <button
+        class="logout-button"
+        onclick="handleLogout()">
+
+        Logout
+
+    </button>
+
 </aside>
 
 
-<!-- =========================================
+<!-- =====================================================
      MAIN
-========================================= -->
+===================================================== -->
 
 <main class="main">
 
 
-<!-- =========================================
+<!-- =====================================================
      DASHBOARD
-========================================= -->
+===================================================== -->
 
-<section id="dashboard"
-         class="page active">
+<section id="dashboard" class="page active">
 
     <div class="page-title">
 
         <h1>Dashboard</h1>
 
     </div>
-
 
     <div class="cards">
 
@@ -509,13 +742,15 @@ tr:hover {
                 Total Products
             </div>
 
-            <div class="card-value"
-                 id="dashboardProducts">
+            <div
+                class="card-value"
+                id="dashboardProducts">
+
                 0
+
             </div>
 
         </div>
-
 
         <div class="card">
 
@@ -523,13 +758,15 @@ tr:hover {
                 Total Stock
             </div>
 
-            <div class="card-value"
-                 id="dashboardStock">
+            <div
+                class="card-value"
+                id="dashboardStock">
+
                 0
+
             </div>
 
         </div>
-
 
         <div class="card">
 
@@ -537,13 +774,15 @@ tr:hover {
                 Low Stock
             </div>
 
-            <div class="card-value"
-                 id="dashboardLowStock">
+            <div
+                class="card-value"
+                id="dashboardLowStock">
+
                 0
+
             </div>
 
         </div>
-
 
         <div class="card">
 
@@ -551,13 +790,15 @@ tr:hover {
                 Out of Stock
             </div>
 
-            <div class="card-value"
-                 id="dashboardOutStock">
+            <div
+                class="card-value"
+                id="dashboardOutStock">
+
                 0
+
             </div>
 
         </div>
-
 
         <div class="card">
 
@@ -565,13 +806,15 @@ tr:hover {
                 Inventory Value
             </div>
 
-            <div class="card-value"
-                 id="dashboardValue">
+            <div
+                class="card-value"
+                id="dashboardValue">
+
                 ₱0.00
+
             </div>
 
         </div>
-
 
         <div class="card">
 
@@ -579,15 +822,17 @@ tr:hover {
                 Total Sales
             </div>
 
-            <div class="card-value"
-                 id="dashboardSales">
+            <div
+                class="card-value"
+                id="dashboardSales">
+
                 ₱0.00
+
             </div>
 
         </div>
 
     </div>
-
 
     <div class="box">
 
@@ -604,13 +849,11 @@ tr:hover {
                 <thead>
 
                     <tr>
-
                         <th>Product</th>
                         <th>Type</th>
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Date</th>
-
                     </tr>
 
                 </thead>
@@ -628,12 +871,11 @@ tr:hover {
 </section>
 
 
-<!-- =========================================
+<!-- =====================================================
      PRODUCTS
-========================================= -->
+===================================================== -->
 
-<section id="products"
-         class="page">
+<section id="products" class="page">
 
     <div class="page-title">
 
@@ -641,22 +883,21 @@ tr:hover {
 
     </div>
 
-
     <div class="box">
 
         <div class="box-header">
 
             <h2>Product Management</h2>
 
-            <button class="btn-primary"
-                    onclick="openProductModal()">
+            <button
+                class="btn-primary"
+                onclick="openProductModal()">
 
                 + Add Product
 
             </button>
 
         </div>
-
 
         <input
             class="search"
@@ -665,7 +906,6 @@ tr:hover {
             oninput="renderProducts()"
         >
 
-
         <div class="table-wrapper">
 
             <table>
@@ -673,7 +913,6 @@ tr:hover {
                 <thead>
 
                     <tr>
-
                         <th>Code</th>
                         <th>Product Name</th>
                         <th>Category</th>
@@ -682,7 +921,6 @@ tr:hover {
                         <th>Reorder</th>
                         <th>Status</th>
                         <th>Actions</th>
-
                     </tr>
 
                 </thead>
@@ -700,12 +938,11 @@ tr:hover {
 </section>
 
 
-<!-- =========================================
+<!-- =====================================================
      CATEGORIES
-========================================= -->
+===================================================== -->
 
-<section id="categories"
-         class="page">
+<section id="categories" class="page">
 
     <div class="page-title">
 
@@ -713,22 +950,21 @@ tr:hover {
 
     </div>
 
-
     <div class="box">
 
         <div class="box-header">
 
             <h2>Category Management</h2>
 
-            <button class="btn-primary"
-                    onclick="openCategoryModal()">
+            <button
+                class="btn-primary"
+                onclick="openCategoryModal()">
 
                 + Add Category
 
             </button>
 
         </div>
-
 
         <div class="table-wrapper">
 
@@ -737,11 +973,9 @@ tr:hover {
                 <thead>
 
                     <tr>
-
                         <th>Category Name</th>
                         <th>Created</th>
                         <th>Actions</th>
-
                     </tr>
 
                 </thead>
@@ -759,19 +993,17 @@ tr:hover {
 </section>
 
 
-<!-- =========================================
+<!-- =====================================================
      STOCK IN
-========================================= -->
+===================================================== -->
 
-<section id="stockin"
-         class="page">
+<section id="stockin" class="page">
 
     <div class="page-title">
 
         <h1>Stock In</h1>
 
     </div>
-
 
     <div class="box">
 
@@ -783,12 +1015,9 @@ tr:hover {
 
             <label>Product</label>
 
-            <select id="stockInProduct">
-
-            </select>
+            <select id="stockInProduct"></select>
 
         </div>
-
 
         <div class="form-group">
 
@@ -802,20 +1031,17 @@ tr:hover {
 
         </div>
 
-
         <div class="form-group">
 
             <label>Notes</label>
 
-            <textarea
-                id="stockInNotes"
-            ></textarea>
+            <textarea id="stockInNotes"></textarea>
 
         </div>
 
-
-        <button class="btn-success"
-                onclick="saveStockIn()">
+        <button
+            class="btn-success"
+            onclick="saveStockIn()">
 
             Add Stock
 
@@ -826,19 +1052,17 @@ tr:hover {
 </section>
 
 
-<!-- =========================================
+<!-- =====================================================
      STOCK OUT
-========================================= -->
+===================================================== -->
 
-<section id="stockout"
-         class="page">
+<section id="stockout" class="page">
 
     <div class="page-title">
 
         <h1>Stock Out / Sales</h1>
 
     </div>
-
 
     <div class="box">
 
@@ -850,12 +1074,9 @@ tr:hover {
 
             <label>Product</label>
 
-            <select id="stockOutProduct">
-
-            </select>
+            <select id="stockOutProduct"></select>
 
         </div>
-
 
         <div class="form-group">
 
@@ -869,20 +1090,17 @@ tr:hover {
 
         </div>
 
-
         <div class="form-group">
 
             <label>Notes</label>
 
-            <textarea
-                id="stockOutNotes"
-            ></textarea>
+            <textarea id="stockOutNotes"></textarea>
 
         </div>
 
-
-        <button class="btn-primary"
-                onclick="saveStockOut()">
+        <button
+            class="btn-primary"
+            onclick="saveStockOut()">
 
             Record Sale
 
@@ -893,19 +1111,17 @@ tr:hover {
 </section>
 
 
-<!-- =========================================
+<!-- =====================================================
      INVENTORY
-========================================= -->
+===================================================== -->
 
-<section id="inventory"
-         class="page">
+<section id="inventory" class="page">
 
     <div class="page-title">
 
         <h1>Inventory Monitoring</h1>
 
     </div>
-
 
     <div class="cards">
 
@@ -915,8 +1131,9 @@ tr:hover {
                 Total Items
             </div>
 
-            <div class="card-value"
-                 id="inventoryItems">
+            <div
+                class="card-value"
+                id="inventoryItems">
 
                 0
 
@@ -924,15 +1141,15 @@ tr:hover {
 
         </div>
 
-
         <div class="card">
 
             <div class="card-title">
                 Inventory Value
             </div>
 
-            <div class="card-value"
-                 id="inventoryValue">
+            <div
+                class="card-value"
+                id="inventoryValue">
 
                 ₱0.00
 
@@ -941,7 +1158,6 @@ tr:hover {
         </div>
 
     </div>
-
 
     <div class="box">
 
@@ -952,7 +1168,6 @@ tr:hover {
                 <thead>
 
                     <tr>
-
                         <th>Code</th>
                         <th>Product</th>
                         <th>Category</th>
@@ -960,7 +1175,6 @@ tr:hover {
                         <th>Stock</th>
                         <th>Reorder Level</th>
                         <th>Status</th>
-
                     </tr>
 
                 </thead>
@@ -978,19 +1192,17 @@ tr:hover {
 </section>
 
 
-<!-- =========================================
+<!-- =====================================================
      REPORTS
-========================================= -->
+===================================================== -->
 
-<section id="reports"
-         class="page">
+<section id="reports" class="page">
 
     <div class="page-title">
 
         <h1>Reports</h1>
 
     </div>
-
 
     <div class="box">
 
@@ -1006,7 +1218,6 @@ tr:hover {
 
             </div>
 
-
             <div class="report-item">
 
                 Stock In
@@ -1016,7 +1227,6 @@ tr:hover {
                 </strong>
 
             </div>
-
 
             <div class="report-item">
 
@@ -1028,7 +1238,6 @@ tr:hover {
 
             </div>
 
-
             <div class="report-item">
 
                 Total Sales
@@ -1038,7 +1247,6 @@ tr:hover {
                 </strong>
 
             </div>
-
 
             <div class="report-item">
 
@@ -1054,22 +1262,21 @@ tr:hover {
 
     </div>
 
-
     <div class="box">
 
         <div class="box-header">
 
             <h2>Transaction Report</h2>
 
-            <button class="btn-primary"
-                    onclick="window.print()">
+            <button
+                class="btn-primary"
+                onclick="window.print()">
 
                 Print Report
 
             </button>
 
         </div>
-
 
         <div class="table-wrapper">
 
@@ -1078,13 +1285,11 @@ tr:hover {
                 <thead>
 
                     <tr>
-
                         <th>Product</th>
                         <th>Type</th>
                         <th>Quantity</th>
                         <th>Total</th>
                         <th>Date</th>
-
                     </tr>
 
                 </thead>
@@ -1101,18 +1306,16 @@ tr:hover {
 
 </section>
 
-
 </main>
 
 </div>
 
 
-<!-- =========================================
+<!-- =====================================================
      ADD PRODUCT MODAL
-========================================= -->
+===================================================== -->
 
-<div class="modal"
-     id="productModal">
+<div class="modal" id="productModal">
 
     <div class="modal-content">
 
@@ -1120,8 +1323,9 @@ tr:hover {
 
             <h2>Add Product</h2>
 
-            <span class="close"
-                  onclick="closeProductModal()">
+            <span
+                class="close"
+                onclick="closeProductModal()">
 
                 ×
 
@@ -1129,41 +1333,29 @@ tr:hover {
 
         </div>
 
-
         <div class="form-group">
 
             <label>Product Code / SKU</label>
 
-            <input
-                id="productCode"
-                type="text"
-            >
+            <input id="productCode" type="text">
 
         </div>
-
 
         <div class="form-group">
 
             <label>Product Name</label>
 
-            <input
-                id="productName"
-                type="text"
-            >
+            <input id="productName" type="text">
 
         </div>
-
 
         <div class="form-group">
 
             <label>Category</label>
 
-            <select id="productCategory">
-
-            </select>
+            <select id="productCategory"></select>
 
         </div>
-
 
         <div class="form-row">
 
@@ -1180,7 +1372,6 @@ tr:hover {
 
             </div>
 
-
             <div class="form-group">
 
                 <label>Stock</label>
@@ -1195,7 +1386,6 @@ tr:hover {
 
         </div>
 
-
         <div class="form-group">
 
             <label>Reorder Level</label>
@@ -1208,7 +1398,6 @@ tr:hover {
             >
 
         </div>
-
 
         <button
             class="btn-primary"
@@ -1224,12 +1413,11 @@ tr:hover {
 </div>
 
 
-<!-- =========================================
+<!-- =====================================================
      CATEGORY MODAL
-========================================= -->
+===================================================== -->
 
-<div class="modal"
-     id="categoryModal">
+<div class="modal" id="categoryModal">
 
     <div class="modal-content">
 
@@ -1237,15 +1425,15 @@ tr:hover {
 
             <h2>Add Category</h2>
 
-            <span class="close"
-                  onclick="closeCategoryModal()">
+            <span
+                class="close"
+                onclick="closeCategoryModal()">
 
                 ×
 
             </span>
 
         </div>
-
 
         <div class="form-group">
 
@@ -1258,7 +1446,6 @@ tr:hover {
             >
 
         </div>
-
 
         <button
             class="btn-primary"
@@ -1277,10 +1464,11 @@ tr:hover {
 
 /************************************************
  * APPS SCRIPT API
+ * NEW DEPLOYMENT URL
  ************************************************/
 
 const API_URL =
-'https://script.google.com/macros/s/AKfycbxn6LgXxUSD-gB4GfpGzE0AZNlChfpKO7LiJBpLkLV7fBgLwWjNHIFYZgFScyqBl_6l/exec';
+'https://script.google.com/macros/s/AKfycbwfgAX3kqo8ryIFGsnbju3NumVf9ezVTjHnQ9u1sz6l5yV3Ohzt_xQFjCU1r_HCjNo/exec';
 
 
 /************************************************
@@ -1288,10 +1476,9 @@ const API_URL =
  ************************************************/
 
 let products = [];
-
 let categories = [];
-
 let transactions = [];
+let sessionToken = localStorage.getItem('inventoryToken') || '';
 
 
 /************************************************
@@ -1314,21 +1501,23 @@ function api(action, params = {}) {
         const query =
             new URLSearchParams();
 
-        query.append(
-            'action',
-            action
-        );
+        query.append('action', action);
+        query.append('callback', callbackName);
 
-        query.append(
-            'callback',
-            callbackName
-        );
+        if (sessionToken) {
+
+            query.append(
+                'token',
+                sessionToken
+            );
+
+        }
 
         Object.keys(params).forEach(function(key) {
 
             query.append(
                 key,
-                params[key]
+                params[key] ?? ''
             );
 
         });
@@ -1338,8 +1527,36 @@ function api(action, params = {}) {
             '?' +
             query.toString();
 
+        let finished = false;
+
+        const timeout =
+            setTimeout(function() {
+
+                if (finished) return;
+
+                finished = true;
+
+                delete window[callbackName];
+
+                script.remove();
+
+                reject(
+                    new Error(
+                        'Request timed out.'
+                    )
+                );
+
+            }, 15000);
+
+
         window[callbackName] =
             function(data) {
+
+                if (finished) return;
+
+                finished = true;
+
+                clearTimeout(timeout);
 
                 delete window[callbackName];
 
@@ -1349,8 +1566,15 @@ function api(action, params = {}) {
 
             };
 
+
         script.onerror =
             function() {
+
+                if (finished) return;
+
+                finished = true;
+
+                clearTimeout(timeout);
 
                 delete window[callbackName];
 
@@ -1364,9 +1588,436 @@ function api(action, params = {}) {
 
             };
 
+
         document.body.appendChild(script);
 
     });
+
+}
+
+
+/************************************************
+ * LOGIN
+ ************************************************/
+
+async function handleLogin(event) {
+
+    event.preventDefault();
+
+    const username =
+        document
+            .getElementById('loginUsername')
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById('loginPassword')
+            .value;
+
+    const button =
+        document.getElementById('loginButton');
+
+    const errorBox =
+        document.getElementById('loginError');
+
+
+    errorBox.classList.remove('show');
+    errorBox.textContent = '';
+
+
+    if (!username || !password) {
+
+        showLoginError(
+            'Please enter username and password.'
+        );
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+    button.textContent = 'Logging in...';
+
+
+    try {
+
+        const result =
+            await apiWithoutToken(
+                'login',
+                {
+                    username: username,
+                    password: password
+                }
+            );
+
+
+        if (!result.success) {
+
+            showLoginError(
+                result.message ||
+                'Invalid username or password.'
+            );
+
+            return;
+
+        }
+
+
+        sessionToken =
+            result.token;
+
+        localStorage.setItem(
+            'inventoryToken',
+            sessionToken
+        );
+
+
+        showApplication(
+            result.user
+        );
+
+
+        await initializeApplication();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showLoginError(
+            'Unable to connect to the server. Check your Apps Script deployment.'
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = 'Login';
+
+    }
+
+}
+
+
+/************************************************
+ * API CALL WITHOUT TOKEN
+ * Used for LOGIN and SETUP
+ ************************************************/
+
+function apiWithoutToken(action, params = {}) {
+
+    return new Promise(function(resolve, reject) {
+
+        const callbackName =
+            'public_callback_' +
+            Date.now() +
+            '_' +
+            Math.floor(Math.random() * 10000);
+
+        const script =
+            document.createElement('script');
+
+        const query =
+            new URLSearchParams();
+
+        query.append(
+            'action',
+            action
+        );
+
+        query.append(
+            'callback',
+            callbackName
+        );
+
+
+        Object.keys(params).forEach(function(key) {
+
+            query.append(
+                key,
+                params[key] ?? ''
+            );
+
+        });
+
+
+        script.src =
+            API_URL +
+            '?' +
+            query.toString();
+
+
+        let finished = false;
+
+
+        const timeout =
+            setTimeout(function() {
+
+                if (finished) return;
+
+                finished = true;
+
+                delete window[callbackName];
+
+                script.remove();
+
+                reject(
+                    new Error(
+                        'Request timed out.'
+                    )
+                );
+
+            }, 15000);
+
+
+        window[callbackName] =
+            function(data) {
+
+                if (finished) return;
+
+                finished = true;
+
+                clearTimeout(timeout);
+
+                delete window[callbackName];
+
+                script.remove();
+
+                resolve(data);
+
+            };
+
+
+        script.onerror =
+            function() {
+
+                if (finished) return;
+
+                finished = true;
+
+                clearTimeout(timeout);
+
+                delete window[callbackName];
+
+                script.remove();
+
+                reject(
+                    new Error(
+                        'Cannot connect to Apps Script.'
+                    )
+                );
+
+            };
+
+
+        document.body.appendChild(script);
+
+    });
+
+}
+
+
+/************************************************
+ * LOGIN ERROR
+ ************************************************/
+
+function showLoginError(message) {
+
+    const errorBox =
+        document.getElementById(
+            'loginError'
+        );
+
+    errorBox.textContent =
+        message;
+
+    errorBox.classList.add(
+        'show'
+    );
+
+}
+
+
+/************************************************
+ * SHOW APPLICATION
+ ************************************************/
+
+function showApplication(user) {
+
+    document
+        .getElementById('loginScreen')
+        .style.display = 'none';
+
+
+    document
+        .getElementById('app')
+        .classList.add('show');
+
+
+    if (user) {
+
+        document
+            .getElementById(
+                'currentUsername'
+            )
+            .textContent =
+            user.username || 'Admin';
+
+
+        document
+            .getElementById(
+                'currentRole'
+            )
+            .textContent =
+            user.role || 'Administrator';
+
+    }
+
+}
+
+
+/************************************************
+ * CHECK EXISTING SESSION
+ ************************************************/
+
+async function checkExistingSession() {
+
+    if (!sessionToken) {
+
+        return false;
+
+    }
+
+
+    try {
+
+        const result =
+            await api('getCurrentUser');
+
+
+        if (
+            result.success &&
+            result.authenticated
+        ) {
+
+            showApplication(
+                result.user
+            );
+
+            return true;
+
+        }
+
+
+        clearSession();
+
+        return false;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        return false;
+
+    }
+
+}
+
+
+/************************************************
+ * LOGOUT
+ ************************************************/
+
+async function handleLogout() {
+
+    if (!confirm(
+        'Are you sure you want to logout?'
+    )) {
+
+        return;
+
+    }
+
+
+    try {
+
+        if (sessionToken) {
+
+            await api('logout');
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+
+    clearSession();
+
+}
+
+
+/************************************************
+ * CLEAR SESSION
+ ************************************************/
+
+function clearSession() {
+
+    sessionToken = '';
+
+    localStorage.removeItem(
+        'inventoryToken'
+    );
+
+
+    document
+        .getElementById('app')
+        .classList.remove('show');
+
+
+    document
+        .getElementById('loginScreen')
+        .style.display = 'flex';
+
+
+    document
+        .getElementById('loginUsername')
+        .value = '';
+
+    document
+        .getElementById('loginPassword')
+        .value = '';
+
+}
+
+
+/************************************************
+ * HANDLE UNAUTHORIZED RESPONSE
+ ************************************************/
+
+function handleUnauthorized(result) {
+
+    if (
+        result &&
+        result.authenticated === false
+    ) {
+
+        clearSession();
+
+        showLoginError(
+            result.message ||
+            'Your session has expired. Please login again.'
+        );
+
+        return true;
+
+    }
+
+    return false;
 
 }
 
@@ -1381,7 +2032,9 @@ function showPage(pageId, element) {
         .querySelectorAll('.page')
         .forEach(function(page) {
 
-            page.classList.remove('active');
+            page.classList.remove(
+                'active'
+            );
 
         });
 
@@ -1390,19 +2043,33 @@ function showPage(pageId, element) {
         .querySelectorAll('.nav-item')
         .forEach(function(item) {
 
-            item.classList.remove('active');
+            item.classList.remove(
+                'active'
+            );
 
         });
 
 
-    document
-        .getElementById(pageId)
-        .classList.add('active');
+    const page =
+        document.getElementById(
+            pageId
+        );
+
+
+    if (page) {
+
+        page.classList.add(
+            'active'
+        );
+
+    }
 
 
     if (element) {
 
-        element.classList.add('active');
+        element.classList.add(
+            'active'
+        );
 
     }
 
@@ -1413,11 +2080,13 @@ function showPage(pageId, element) {
 
     }
 
+
     if (pageId === 'products') {
 
         loadProducts();
 
     }
+
 
     if (pageId === 'categories') {
 
@@ -1425,18 +2094,23 @@ function showPage(pageId, element) {
 
     }
 
-    if (pageId === 'stockin' ||
-        pageId === 'stockout') {
+
+    if (
+        pageId === 'stockin' ||
+        pageId === 'stockout'
+    ) {
 
         loadProducts();
 
     }
+
 
     if (pageId === 'inventory') {
 
         loadInventory();
 
     }
+
 
     if (pageId === 'reports') {
 
@@ -1456,29 +2130,46 @@ async function loadProducts() {
     try {
 
         const result =
-            await api('getProducts');
+            await api(
+                'getProducts'
+            );
 
-        if (!result.success) {
 
-            alert(result.message);
+        if (
+            handleUnauthorized(result)
+        ) {
 
             return;
 
         }
 
+
+        if (!result.success) {
+
+            alert(
+                result.message
+            );
+
+            return;
+
+        }
+
+
         products =
             result.products || [];
+
 
         renderProducts();
 
         populateProductSelects();
+
 
     } catch (error) {
 
         console.error(error);
 
         alert(
-            'Cannot load products. Check Apps Script deployment.'
+            'Cannot load products.'
         );
 
     }
@@ -1497,6 +2188,10 @@ function renderProducts() {
             'productTable'
         );
 
+
+    if (!table) return;
+
+
     const search =
         (
             document.getElementById(
@@ -1506,76 +2201,110 @@ function renderProducts() {
 
 
     const filtered =
-        products.filter(function(product) {
+        products.filter(
+            function(product) {
 
-            return (
+                return (
 
-                String(product.code)
+                    String(
+                        product.code
+                    )
                     .toLowerCase()
                     .includes(search)
 
-                ||
+                    ||
 
-                String(product.name)
+                    String(
+                        product.name
+                    )
                     .toLowerCase()
                     .includes(search)
 
-                ||
+                    ||
 
-                String(product.category)
+                    String(
+                        product.category
+                    )
                     .toLowerCase()
                     .includes(search)
 
-            );
+                );
 
-        });
+            }
+        );
 
 
     table.innerHTML = '';
 
 
-    filtered.forEach(function(product) {
+    if (!filtered.length) {
 
-        const tr =
-            document.createElement('tr');
+        table.innerHTML =
+            '<tr><td colspan="8" style="text-align:center;">No products found.</td></tr>';
 
+        return;
 
-        tr.innerHTML = `
-
-            <td>${escapeHTML(product.code)}</td>
-
-            <td>${escapeHTML(product.name)}</td>
-
-            <td>${escapeHTML(product.category)}</td>
-
-            <td>₱${Number(product.price).toFixed(2)}</td>
-
-            <td>${product.stock}</td>
-
-            <td>${product.reorderLevel}</td>
-
-            <td>
-                ${statusHTML(product.status)}
-            </td>
-
-            <td>
-
-                <button
-                    class="btn-danger"
-                    onclick="deleteProduct('${product.id}')">
-
-                    Delete
-
-                </button>
-
-            </td>
-
-        `;
+    }
 
 
-        table.appendChild(tr);
+    filtered.forEach(
+        function(product) {
 
-    });
+            const tr =
+                document.createElement(
+                    'tr'
+                );
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${escapeHTML(product.code)}
+                </td>
+
+                <td>
+                    ${escapeHTML(product.name)}
+                </td>
+
+                <td>
+                    ${escapeHTML(product.category)}
+                </td>
+
+                <td>
+                    ${formatMoney(product.price)}
+                </td>
+
+                <td>
+                    ${product.stock}
+                </td>
+
+                <td>
+                    ${product.reorderLevel}
+                </td>
+
+                <td>
+                    ${statusHTML(product.status)}
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn-danger"
+                        onclick="deleteProduct('${escapeJS(product.id)}')">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(tr);
+
+        }
+    );
 
 }
 
@@ -1596,6 +2325,7 @@ function statusHTML(status) {
 
     }
 
+
     if (status === 'Low Stock') {
 
         return `
@@ -1605,6 +2335,7 @@ function statusHTML(status) {
         `;
 
     }
+
 
     return `
         <span class="status status-out">
@@ -1621,11 +2352,16 @@ function statusHTML(status) {
 
 function openProductModal() {
 
-    document
-        .getElementById('productModal')
-        .classList.add('show');
-
     populateCategorySelect();
+
+
+    document
+        .getElementById(
+            'productModal'
+        )
+        .classList.add(
+            'show'
+        );
 
 }
 
@@ -1633,8 +2369,12 @@ function openProductModal() {
 function closeProductModal() {
 
     document
-        .getElementById('productModal')
-        .classList.remove('show');
+        .getElementById(
+            'productModal'
+        )
+        .classList.remove(
+            'show'
+        );
 
 }
 
@@ -1647,34 +2387,51 @@ async function saveProduct() {
 
     const code =
         document
-            .getElementById('productCode')
+            .getElementById(
+                'productCode'
+            )
             .value
             .trim();
+
 
     const name =
         document
-            .getElementById('productName')
+            .getElementById(
+                'productName'
+            )
             .value
             .trim();
 
+
     const category =
         document
-            .getElementById('productCategory')
+            .getElementById(
+                'productCategory'
+            )
             .value;
+
 
     const price =
         document
-            .getElementById('productPrice')
+            .getElementById(
+                'productPrice'
+            )
             .value;
+
 
     const stock =
         document
-            .getElementById('productStock')
+            .getElementById(
+                'productStock'
+            )
             .value;
+
 
     const reorderLevel =
         document
-            .getElementById('reorderLevel')
+            .getElementById(
+                'reorderLevel'
+            )
             .value;
 
 
@@ -1711,8 +2468,10 @@ async function saveProduct() {
     }
 
 
-    if (price === '' ||
-        Number(price) < 0) {
+    if (
+        price === '' ||
+        Number(price) < 0
+    ) {
 
         alert(
             'Please enter a valid price.'
@@ -1723,8 +2482,10 @@ async function saveProduct() {
     }
 
 
-    if (stock === '' ||
-        Number(stock) < 0) {
+    if (
+        stock === '' ||
+        Number(stock) < 0
+    ) {
 
         alert(
             'Please enter valid stock.'
@@ -1742,9 +2503,7 @@ async function saveProduct() {
 
 
     button.disabled = true;
-
-    button.innerText =
-        'Saving...';
+    button.innerText = 'Saving...';
 
 
     try {
@@ -1764,45 +2523,56 @@ async function saveProduct() {
             );
 
 
-        if (result.success) {
+        if (
+            handleUnauthorized(result)
+        ) {
 
-            alert(
-                'Product saved successfully!'
-            );
+            return;
+
+        }
+
+
+        alert(
+            result.message
+        );
+
+
+        if (result.success) {
 
             document
                 .getElementById(
                     'productCode'
-                ).value = '';
+                )
+                .value = '';
 
             document
                 .getElementById(
                     'productName'
-                ).value = '';
+                )
+                .value = '';
 
             document
                 .getElementById(
                     'productPrice'
-                ).value = '';
+                )
+                .value = '';
 
             document
                 .getElementById(
                     'productStock'
-                ).value = '';
+                )
+                .value = '';
+
 
             closeProductModal();
+
 
             await loadProducts();
 
             await loadDashboard();
 
-        } else {
-
-            alert(
-                result.message
-            );
-
         }
+
 
     } catch (error) {
 
@@ -1812,13 +2582,12 @@ async function saveProduct() {
             'Error saving product.'
         );
 
+    } finally {
+
+        button.disabled = false;
+        button.innerText = 'Save Product';
+
     }
-
-
-    button.disabled = false;
-
-    button.innerText =
-        'Save Product';
 
 }
 
@@ -1849,6 +2618,15 @@ async function deleteProduct(id) {
             );
 
 
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
+
+
         alert(
             result.message
         );
@@ -1856,13 +2634,16 @@ async function deleteProduct(id) {
 
         if (result.success) {
 
-            loadProducts();
+            await loadProducts();
 
-            loadDashboard();
+            await loadDashboard();
 
         }
 
+
     } catch (error) {
+
+        console.error(error);
 
         alert(
             'Error deleting product.'
@@ -1874,7 +2655,7 @@ async function deleteProduct(id) {
 
 
 /************************************************
- * CATEGORIES
+ * LOAD CATEGORIES
  ************************************************/
 
 async function loadCategories() {
@@ -1882,12 +2663,25 @@ async function loadCategories() {
     try {
 
         const result =
-            await api('getCategories');
+            await api(
+                'getCategories'
+            );
+
+
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
 
 
         if (!result.success) {
 
-            alert(result.message);
+            alert(
+                result.message
+            );
 
             return;
 
@@ -1928,43 +2722,60 @@ function renderCategories() {
         );
 
 
+    if (!table) return;
+
+
     table.innerHTML = '';
 
 
-    categories.forEach(function(category) {
+    if (!categories.length) {
 
-        const tr =
-            document.createElement('tr');
+        table.innerHTML =
+            '<tr><td colspan="3" style="text-align:center;">No categories found.</td></tr>';
 
+        return;
 
-        tr.innerHTML = `
-
-            <td>
-                ${escapeHTML(category.name)}
-            </td>
-
-            <td>
-                ${formatDate(category.createdAt)}
-            </td>
-
-            <td>
-
-                <button
-                    class="btn-danger"
-                    onclick="deleteCategory('${category.id}')">
-
-                    Delete
-
-                </button>
-
-            </td>
-
-        `;
+    }
 
 
-        table.appendChild(tr);
+    categories.forEach(
+        function(category) {
 
-    });
+            const tr =
+                document.createElement(
+                    'tr'
+                );
+
+
+            tr.innerHTML = `
+
+                <td>
+                    ${escapeHTML(category.name)}
+                </td>
+
+                <td>
+                    ${formatDate(category.createdAt)}
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn-danger"
+                        onclick="deleteCategory('${escapeJS(category.id)}')">
+
+                        Delete
+
+                    </button>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(tr);
+
+        }
+    );
 
 }
 
@@ -1976,8 +2787,12 @@ function renderCategories() {
 function openCategoryModal() {
 
     document
-        .getElementById('categoryModal')
-        .classList.add('show');
+        .getElementById(
+            'categoryModal'
+        )
+        .classList.add(
+            'show'
+        );
 
 }
 
@@ -1985,8 +2800,12 @@ function openCategoryModal() {
 function closeCategoryModal() {
 
     document
-        .getElementById('categoryModal')
-        .classList.remove('show');
+        .getElementById(
+            'categoryModal'
+        )
+        .classList.remove(
+            'show'
+        );
 
 }
 
@@ -2028,6 +2847,15 @@ async function saveCategory() {
             );
 
 
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
+
+
         alert(
             result.message
         );
@@ -2041,13 +2869,17 @@ async function saveCategory() {
                 )
                 .value = '';
 
+
             closeCategoryModal();
 
-            loadCategories();
+            await loadCategories();
 
         }
 
+
     } catch (error) {
+
+        console.error(error);
 
         alert(
             'Error saving category.'
@@ -2084,6 +2916,15 @@ async function deleteCategory(id) {
             );
 
 
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
+
+
         alert(
             result.message
         );
@@ -2091,11 +2932,14 @@ async function deleteCategory(id) {
 
         if (result.success) {
 
-            loadCategories();
+            await loadCategories();
 
         }
 
+
     } catch (error) {
+
+        console.error(error);
 
         alert(
             'Error deleting category.'
@@ -2125,22 +2969,29 @@ function populateCategorySelect() {
         '<option value="">Select Category</option>';
 
 
-    categories.forEach(function(category) {
+    categories.forEach(
+        function(category) {
 
-        const option =
-            document.createElement('option');
-
-
-        option.value =
-            category.name;
-
-        option.textContent =
-            category.name;
+            const option =
+                document.createElement(
+                    'option'
+                );
 
 
-        select.appendChild(option);
+            option.value =
+                category.name;
 
-    });
+
+            option.textContent =
+                category.name;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
 
 }
 
@@ -2156,42 +3007,60 @@ function populateProductSelects() {
             'stockInProduct'
         );
 
+
     const stockOut =
         document.getElementById(
             'stockOutProduct'
         );
 
 
+    if (!stockIn || !stockOut) return;
+
+
     stockIn.innerHTML =
         '<option value="">Select Product</option>';
+
 
     stockOut.innerHTML =
         '<option value="">Select Product</option>';
 
 
-    products.forEach(function(product) {
+    products.forEach(
+        function(product) {
 
-        const option1 =
-            document.createElement('option');
-
-        option1.value =
-            product.id;
-
-        option1.textContent =
-            product.name +
-            ' - Stock: ' +
-            product.stock;
+            const option1 =
+                document.createElement(
+                    'option'
+                );
 
 
-        const option2 =
-            option1.cloneNode(true);
+            option1.value =
+                product.id;
 
 
-        stockIn.appendChild(option1);
+            option1.textContent =
+                product.name +
+                ' - Stock: ' +
+                product.stock;
 
-        stockOut.appendChild(option2);
 
-    });
+            const option2 =
+                option1.cloneNode(
+                    true
+                );
+
+
+            stockIn.appendChild(
+                option1
+            );
+
+
+            stockOut.appendChild(
+                option2
+            );
+
+        }
+    );
 
 }
 
@@ -2209,12 +3078,14 @@ async function saveStockIn() {
             )
             .value;
 
+
     const quantity =
         document
             .getElementById(
                 'stockInQuantity'
             )
             .value;
+
 
     const notes =
         document
@@ -2267,6 +3138,15 @@ async function saveStockIn() {
             );
 
 
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
+
+
         alert(
             result.message
         );
@@ -2280,19 +3160,24 @@ async function saveStockIn() {
                 )
                 .value = '';
 
+
             document
                 .getElementById(
                     'stockInNotes'
                 )
                 .value = '';
 
-            loadProducts();
 
-            loadDashboard();
+            await loadProducts();
+
+            await loadDashboard();
 
         }
 
+
     } catch (error) {
+
+        console.error(error);
 
         alert(
             'Error recording stock.'
@@ -2316,12 +3201,14 @@ async function saveStockOut() {
             )
             .value;
 
+
     const quantity =
         document
             .getElementById(
                 'stockOutQuantity'
             )
             .value;
+
 
     const notes =
         document
@@ -2374,6 +3261,15 @@ async function saveStockOut() {
             );
 
 
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
+
+
         alert(
             result.message
         );
@@ -2387,19 +3283,24 @@ async function saveStockOut() {
                 )
                 .value = '';
 
+
             document
                 .getElementById(
                     'stockOutNotes'
                 )
                 .value = '';
 
-            loadProducts();
 
-            loadDashboard();
+            await loadProducts();
+
+            await loadDashboard();
 
         }
 
+
     } catch (error) {
+
+        console.error(error);
 
         alert(
             'Error recording sale.'
@@ -2424,9 +3325,20 @@ async function loadInventory() {
             );
 
 
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
+
+
         if (!result.success) {
 
-            alert(result.message);
+            alert(
+                result.message
+            );
 
             return;
 
@@ -2460,6 +3372,16 @@ async function loadInventory() {
         table.innerHTML = '';
 
 
+        if (!result.products.length) {
+
+            table.innerHTML =
+                '<tr><td colspan="7" style="text-align:center;">No inventory records found.</td></tr>';
+
+            return;
+
+        }
+
+
         result.products.forEach(
             function(product) {
 
@@ -2484,7 +3406,7 @@ async function loadInventory() {
                     </td>
 
                     <td>
-                        ₱${Number(product.price).toFixed(2)}
+                        ${formatMoney(product.price)}
                     </td>
 
                     <td>
@@ -2502,13 +3424,17 @@ async function loadInventory() {
                 `;
 
 
-                table.appendChild(tr);
+                table.appendChild(
+                    tr
+                );
 
             }
         );
 
 
     } catch (error) {
+
+        console.error(error);
 
         alert(
             'Error loading inventory.'
@@ -2531,6 +3457,15 @@ async function loadDashboard() {
             await api(
                 'getDashboard'
             );
+
+
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
 
 
         if (!result.success) {
@@ -2601,51 +3536,68 @@ async function loadDashboard() {
         table.innerHTML = '';
 
 
-        result.recentTransactions
-            .forEach(function(transaction) {
+        if (
+            !result.recentTransactions ||
+            !result.recentTransactions.length
+        ) {
 
-                const tr =
-                    document.createElement(
-                        'tr'
+            table.innerHTML =
+                '<tr><td colspan="5" style="text-align:center;">No transactions found.</td></tr>';
+
+            return;
+
+        }
+
+
+        result.recentTransactions
+            .forEach(
+                function(transaction) {
+
+                    const tr =
+                        document.createElement(
+                            'tr'
+                        );
+
+
+                    tr.innerHTML = `
+
+                        <td>
+                            ${escapeHTML(
+                                transaction.productName
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                transaction.type
+                            )}
+                        </td>
+
+                        <td>
+                            ${transaction.quantity}
+                        </td>
+
+                        <td>
+                            ${formatMoney(
+                                transaction.total
+                            )}
+                        </td>
+
+                        <td>
+                            ${formatDate(
+                                transaction.date
+                            )}
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(
+                        tr
                     );
 
-
-                tr.innerHTML = `
-
-                    <td>
-                        ${escapeHTML(
-                            transaction.productName
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            transaction.type
-                        )}
-                    </td>
-
-                    <td>
-                        ${transaction.quantity}
-                    </td>
-
-                    <td>
-                        ${formatMoney(
-                            transaction.total
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatDate(
-                            transaction.date
-                        )}
-                    </td>
-
-                `;
-
-
-                table.appendChild(tr);
-
-            });
+                }
+            );
 
 
     } catch (error) {
@@ -2669,6 +3621,15 @@ async function loadReports() {
             await api(
                 'getReports'
             );
+
+
+        if (
+            handleUnauthorized(result)
+        ) {
+
+            return;
+
+        }
 
 
         if (!result.success) {
@@ -2731,52 +3692,124 @@ async function loadReports() {
         table.innerHTML = '';
 
 
-        result.transactions
-            .forEach(function(transaction) {
+        if (
+            !result.transactions ||
+            !result.transactions.length
+        ) {
 
-                const tr =
-                    document.createElement(
-                        'tr'
+            table.innerHTML =
+                '<tr><td colspan="5" style="text-align:center;">No transactions found.</td></tr>';
+
+            return;
+
+        }
+
+
+        result.transactions
+            .forEach(
+                function(transaction) {
+
+                    const tr =
+                        document.createElement(
+                            'tr'
+                        );
+
+
+                    tr.innerHTML = `
+
+                        <td>
+                            ${escapeHTML(
+                                transaction.productName
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                transaction.type
+                            )}
+                        </td>
+
+                        <td>
+                            ${transaction.quantity}
+                        </td>
+
+                        <td>
+                            ${formatMoney(
+                                transaction.total
+                            )}
+                        </td>
+
+                        <td>
+                            ${formatDate(
+                                transaction.date
+                            )}
+                        </td>
+
+                    `;
+
+
+                    table.appendChild(
+                        tr
                     );
 
-
-                tr.innerHTML = `
-
-                    <td>
-                        ${escapeHTML(
-                            transaction.productName
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            transaction.type
-                        )}
-                    </td>
-
-                    <td>
-                        ${transaction.quantity}
-                    </td>
-
-                    <td>
-                        ${formatMoney(
-                            transaction.total
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatDate(
-                            transaction.date
-                        )}
-                    </td>
-
-                `;
+                }
+            );
 
 
-                table.appendChild(tr);
+    } catch (error) {
 
-            });
+        console.error(error);
 
+    }
+
+}
+
+
+/************************************************
+ * INITIALIZE APPLICATION
+ ************************************************/
+
+async function initializeApplication() {
+
+    try {
+
+        await loadCategories();
+
+        await loadProducts();
+
+        await loadDashboard();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            'Unable to load the inventory system.'
+        );
+
+    }
+
+}
+
+
+/************************************************
+ * INITIALIZE
+ ************************************************/
+
+async function initialize() {
+
+    try {
+
+        const loggedIn =
+            await checkExistingSession();
+
+
+        if (loggedIn) {
+
+            await initializeApplication();
+
+        }
 
     } catch (error) {
 
@@ -2814,17 +3847,29 @@ function formatDate(value) {
 
     if (!value) return '';
 
+
     const date =
         new Date(value);
 
-    if (isNaN(date.getTime())) {
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
 
         return String(value);
 
     }
 
+
     return date.toLocaleDateString(
-        'en-PH'
+        'en-PH',
+        {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        }
     );
 
 }
@@ -2836,50 +3881,118 @@ function formatDate(value) {
 
 function escapeHTML(value) {
 
-    return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    return String(
+        value ?? ''
+    )
+    .replace(
+        /&/g,
+        '&amp;'
+    )
+    .replace(
+        /</g,
+        '&lt;'
+    )
+    .replace(
+        />/g,
+        '&gt;'
+    )
+    .replace(
+        /"/g,
+        '&quot;'
+    )
+    .replace(
+        /'/g,
+        '&#039;'
+    );
 
 }
 
 
 /************************************************
- * INITIALIZE
+ * JAVASCRIPT STRING ESCAPE
  ************************************************/
 
-async function initialize() {
+function escapeJS(value) {
 
-    try {
-
-        await api('setup');
-
-        await loadCategories();
-
-        await loadProducts();
-
-        await loadDashboard();
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            'Unable to connect to the inventory database.'
-        );
-
-    }
+    return String(
+        value ?? ''
+    )
+    .replace(
+        /\\/g,
+        '\\\\'
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    )
+    .replace(
+        /"/g,
+        '\\"'
+    )
+    .replace(
+        /\n/g,
+        '\\n'
+    )
+    .replace(
+        /\r/g,
+        '\\r'
+    );
 
 }
 
 
-window.onload =
-    initialize;
+/************************************************
+ * CLOSE MODALS WHEN CLICKING OUTSIDE
+ ************************************************/
+
+window.addEventListener(
+    'click',
+    function(event) {
+
+        const productModal =
+            document.getElementById(
+                'productModal'
+            );
+
+        const categoryModal =
+            document.getElementById(
+                'categoryModal'
+            );
+
+
+        if (
+            event.target ===
+            productModal
+        ) {
+
+            closeProductModal();
+
+        }
+
+
+        if (
+            event.target ===
+            categoryModal
+        ) {
+
+            closeCategoryModal();
+
+        }
+
+    }
+);
+
+
+/************************************************
+ * START SYSTEM
+ ************************************************/
+
+window.addEventListener(
+    'load',
+    initialize
+);
 
 </script>
 
 </body>
-
 </html>
